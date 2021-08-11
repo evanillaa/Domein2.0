@@ -1,6 +1,6 @@
-Framework = nil
+HDCore = nil
 
-TriggerEvent('Framework:GetObject', function(obj) Framework = obj end)
+TriggerEvent('HDCore:GetObject', function(obj) HDCore = obj end)
 
 RegisterServerEvent('chat:init')
 RegisterServerEvent('chat:addTemplate')
@@ -71,7 +71,7 @@ RegisterCommand('clear', function(source, args, rawCommand)
     TriggerClientEvent('chat:clear', source)
 end, false)
 
-Framework.Commands.Add("clearall", "Clear iedereen zijn chat", {}, false, function(source, args)
+HDCore.Commands.Add("clearall", "Clear iedereen zijn chat", {}, false, function(source, args)
     TriggerClientEvent('chat:clear', -1)
 end, 'admin')
 
