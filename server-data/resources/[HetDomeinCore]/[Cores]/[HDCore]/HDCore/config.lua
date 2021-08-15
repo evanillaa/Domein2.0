@@ -21,8 +21,6 @@ Config.Server.Badchars = "You cannot use forbidden chars in your name"
 Config.Server.Forbiddenname = "Wrong name (drop/table/database)"
 Config.Server.Checkingsteam = "Checking identifiers..."
 Config.Server.Nosocial = "No Social Account found."
-Config.Server.License = "HD-" -- Your licensekey obtained from HighDevelopment.eu
-Config.Server.Shorttag = "HD-" -- Wish to change shorttags ?
 Config.Player.MaxWeight = 225000
 Config.Player.MaxInvSlots = 30
 

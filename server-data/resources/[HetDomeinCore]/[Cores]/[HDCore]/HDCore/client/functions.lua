@@ -91,8 +91,6 @@ HDCore.Functions.GetPlayers = function()
     return players
 end
 
--- this is for translation
-
 HDCore.Functions.Locale = function(str, ...)
     --local text = HDCore.Functions.Locales[Config.Locale][str]
     local text = Config.Locale[str]
@@ -281,9 +279,8 @@ HDCore.Functions.ShowFloatingHelpNotification = function(msg, coords)
 	EndTextCommandDisplayHelp(2, false, false, -1)
 end
 
-
 HDCore.Functions.Progressbar = function(name, label, duration, useWhileDead, canCancel, disableControls, animation, prop, propTwo, onFinish, onCancel)
-    exports[''..Config.Server.Shorttag..'progressbar']:Progress({
+    exports['HD-progressbar']:Progress({
         name = name:lower(),
         duration = duration,
         label = label,

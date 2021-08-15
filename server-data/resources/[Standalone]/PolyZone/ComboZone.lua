@@ -157,9 +157,6 @@ end
 function ComboZone:Create(zones, options)
   local zone = ComboZone:new(zones, options)
   _initDebug(zone, options)
-  AddEventHandler("polyzone:pzcomboinfo", function ()
-      zone:printInfo()
-  end)
   return zone
 end
 
@@ -195,7 +192,7 @@ function ComboZone:AddZone(zone)
   if self.debugBlip then zone:addDebugBlip() end
 end
 
-function ComboZone:isPointInside(point, zoneName)
+function ComboZone:isPointInside(point)
   if self.destroyed then
     print("[PolyZone] Warning: Called isPointInside on destroyed zone {name=" .. self.name .. "}")
     return false, {}
@@ -206,7 +203,7 @@ function ComboZone:isPointInside(point, zoneName)
 
   for i=1, #zones do
     local zone = zones[i]
-    if zone and (zoneName == nil or zoneName == zone.name) and zone:isPointInside(point) then
+    if zone and zone:isPointInside(point) then
       return true, zone
     end
   end
@@ -301,21 +298,6 @@ function ComboZone:onPlayerInOutExhaustive(onPointInOutCb, waitInMS)
   self:onPointInOutExhaustive(PolyZone.getPlayerPosition, onPointInOutCb, waitInMS)
 end
 
-function ComboZone:addEvent(eventName, zoneName)
-  if self.events == nil then self.events = {} end
-  local internalEventName = eventPrefix .. eventName
-  RegisterNetEvent(internalEventName)
-  self.events[eventName] = AddEventHandler(internalEventName, function (...)
-    if self:isPointInside(PolyZone.getPlayerPosition(), zoneName) then
-      TriggerEvent(eventName, ...)
-    end
-  end)
-end
-
-function ComboZone:removeEvent(name)
-  PolyZone.removeEvent(self, name)
-end
-
 function ComboZone:addDebugBlip()
   self.debugBlip = true
   local zones = self.zones
@@ -323,31 +305,6 @@ function ComboZone:addDebugBlip()
     local zone = zones[i]
     if zone then zone:addDebugBlip() end
   end
-end
-
-function ComboZone:printInfo()
-  local zones = self.zones
-  local polyCount, boxCount, circleCount, entityCount, comboCount = 0, 0, 0, 0, 0
-  for i=1, #zones do
-    local zone = zones[i]
-    if zone then
-      if zone.isEntityZone then entityCount = entityCount + 1
-      elseif zone.isCircleZone then circleCount = circleCount + 1
-      elseif zone.isComboZone then comboCount = comboCount + 1
-      elseif zone.isBoxZone then boxCount = boxCount + 1
-      elseif zone.isPolyZone then polyCount = polyCount + 1 end
-    end
-  end
-  local name = self.name ~= nil and ("\"" .. self.name .. "\"") or nil
-  print("-----------------------------------------------------")
-  print("[PolyZone] Info for ComboZone { name = " .. tostring(name) .. " }:")
-  print("[PolyZone]   Total zones: " .. #zones)
-  if boxCount > 0 then print("[PolyZone]   BoxZones: " .. boxCount) end
-  if circleCount > 0 then print("[PolyZone]   CircleZones: " .. circleCount) end
-  if polyCount > 0 then print("[PolyZone]   PolyZones: " .. polyCount) end
-  if entityCount > 0 then print("[PolyZone]   EntityZones: " .. entityCount) end
-  if comboCount > 0 then print("[PolyZone]   ComboZones: " .. comboCount) end
-  print("-----------------------------------------------------")
 end
 
 function ComboZone:setPaused(paused)

@@ -130,7 +130,7 @@ end
 
 function EntityZone:destroy()
   for i=1, #self.damageEventHandlers do
-    print("Schade vernietigenEventHandler:", self.damageEventHandlers[i])
+    print("Destroying damageEventHandler:", self.damageEventHandlers[i])
     RemoveEventHandler(self.damageEventHandlers[i])
   end
   self.damageEventHandlers = {}

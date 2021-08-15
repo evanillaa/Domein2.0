@@ -6,7 +6,6 @@ server_scripts {
 	"server/main.lua",
 	"server/functions.lua",
 	"server/player.lua",
-	--"server/loops.lua",
 	"server/events.lua",
 	"server/commands.lua",
 	"server/debug.lua",

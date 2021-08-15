@@ -45,7 +45,7 @@ AddEventHandler('HDCore:Command:SpawnVehicle', function(model)
 	 exports['HD-vehiclekeys']:SetVehicleKey(GetVehicleNumberPlateText(vehicle), true)
 	 Citizen.Wait(100)
 	 exports['HD-fuel']:SetFuelLevel(vehicle, GetVehicleNumberPlateText(vehicle), 100, true)
-	 HDCore.Functions.Notify('Vehicle spawned', 'success')
+	 HDCore.Functions.Notify('Succesvol voertuig ingespawned!', 'success')
 	end, nil, true, true)
 end)
 
@@ -57,7 +57,7 @@ AddEventHandler('HDCore:Command:DeleteVehicle', function()
 		local vehicle = HDCore.Functions.GetClosestVehicle()
 		HDCore.Functions.DeleteVehicle(vehicle)
 	end
-	HDCore.Functions.Notify('Vehicle deleted', 'error')
+	HDCore.Functions.Notify('Succesvol voertuig verwijderd!', 'error')
 end)
 
 RegisterNetEvent('HDCore:Command:Revive')

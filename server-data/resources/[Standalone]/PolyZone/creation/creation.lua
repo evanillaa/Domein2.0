@@ -5,7 +5,7 @@ createdZone = nil
 drawZone = false
 
 RegisterNetEvent("polyzone:pzcreate")
-AddEventHandler("polyzone:pzcreate", function(zoneType, name, args)
+AddEventHandler("polyzone:pzcreate", function(zoneType, name)
   if createdZone ~= nil then
     TriggerEvent('chat:addMessage', {
       color = { 255, 0, 0},
@@ -14,13 +14,11 @@ AddEventHandler("polyzone:pzcreate", function(zoneType, name, args)
     })
     return
   end
-
+  
   if zoneType == 'poly' then
     polyStart(name)
   elseif zoneType == "circle" then
-    local radius = nil
-    if #args >= 3 then radius = tonumber(args[3])
-    else radius = tonumber(GetUserInput("Enter radius:")) end
+    local radius = tonumber(GetUserInput("Enter radius:"))
     if radius == nil then
       TriggerEvent('chat:addMessage', {
         color = { 255, 0, 0},
@@ -31,9 +29,7 @@ AddEventHandler("polyzone:pzcreate", function(zoneType, name, args)
     end
     circleStart(name, radius)
   elseif zoneType == "box" then
-    local length = nil
-    if #args >= 3 then length = tonumber(args[3])
-    else length = tonumber(GetUserInput("Enter length:")) end
+    local length = tonumber(GetUserInput("Enter length:"))
     if length == nil or length < 0.0 then
       TriggerEvent('chat:addMessage', {
         color = { 255, 0, 0},
@@ -42,9 +38,7 @@ AddEventHandler("polyzone:pzcreate", function(zoneType, name, args)
       })
       return
     end
-    local width = nil
-    if #args >= 4 then width = tonumber(args[4])
-    else width = tonumber(GetUserInput("Enter width:")) end
+    local width = tonumber(GetUserInput("Enter width:"))
     if width == nil or width < 0.0 then
       TriggerEvent('chat:addMessage', {
         color = { 255, 0, 0},
@@ -53,6 +47,7 @@ AddEventHandler("polyzone:pzcreate", function(zoneType, name, args)
       })
       return
     end
+    
     boxStart(name, 0, length, width)
   else
     return

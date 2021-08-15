@@ -23,17 +23,17 @@ AddEventHandler('playerConnecting', function(playerName, setKickReason, deferral
 	Wait(1500)
 	local name = GetPlayerName(src)
 	if name == nil then 
-		HDCore.Functions.Kick(src, 'Start your steam or check your name.', setKickReason, deferrals)
+		HDCore.Functions.Kick(src, 'Gelieve geen lege steam naam te gebruiken.', setKickReason, deferrals)
         CancelEvent()
         return false
 	end
 	if(string.match(name, "[*%%'=`\"]")) then
-        HDCore.Functions.Kick(src, 'You cannot use the following chars in your name ('..string.match(name, "[*%%'=`\"]")..')', setKickReason, deferrals)
+        HDCore.Functions.Kick(src, 'Je hebt in je naam een teken('..string.match(name, "[*%%'=`\"]")..') zitten wat niet is toegestaan.\nGelieven deze uit je steam-naam te halen.', setKickReason, deferrals)
         CancelEvent()
         return false
 	end
 	if (string.match(name, "drop") or string.match(name, "table") or string.match(name, "database")) then
-        HDCore.Functions.Kick(src, 'Wrong name (drop/table/database)', setKickReason, deferrals)
+        HDCore.Functions.Kick(src, 'Je hebt in je naam een woord (drop/table/database) zitten wat niet is toegestaan.\nGelieven je steam naam te veranderen.', setKickReason, deferrals)
         CancelEvent()
         return false
 	end
@@ -44,11 +44,11 @@ AddEventHandler('playerConnecting', function(playerName, setKickReason, deferral
 	local steamid = identifiers[1]
 	local license = identifiers[2]
     if (Config.IdentifierType == "steam" and (steamid:sub(1,6) == "steam:") == false) then
-        HDCore.Functions.Kick(src, 'Turn on Steam if you want to play here.', setKickReason, deferrals)
+        HDCore.Functions.Kick(src, 'Je moet steam aan hebben staan om te spelen.', setKickReason, deferrals)
         CancelEvent()
 		return false
 	elseif (Config.IdentifierType == "license" and (steamid:sub(1,6) == "license:") == false) then
-		HDCore.Functions.Kick(src, 'No socialclub license has been found.', setKickReason, deferrals)
+		HDCore.Functions.Kick(src, 'Geen socialclub license gevonden.', setKickReason, deferrals)
         CancelEvent()
 		return false
 	end
@@ -97,6 +97,15 @@ AddEventHandler('HDCore:Salary', function(data)
 	end
 end)
 
+--[[RegisterServerEvent("Cube:Salary")
+AddEventHandler('Cube:Salary', function(data)
+	local Player = Cube.Functions.GetPlayer(source)
+	if Player ~= nil then
+		Player.Functions.AddItem('paycheck', 1, false, {worth = Player.PlayerData.job.payment})
+		TriggerClientEvent('Cube:Notify', source, "Je hebt je loonstrook ontvangen..", "success")
+	end
+end)]]
+
 RegisterServerEvent("HDCore:UpdatePlayerPosition")
 AddEventHandler("HDCore:UpdatePlayerPosition", function(position)
 	local src = source
@@ -131,7 +140,7 @@ AddEventHandler('chatMessage', function(source, n, message)
 				table.remove(args, 1)
 				if (HDCore.Functions.HasPermission(source, "god") or HDCore.Functions.HasPermission(source, HDCore.Commands.List[command].permission)) then
 					if (HDCore.Commands.List[command].argsrequired and #HDCore.Commands.List[command].arguments ~= 0 and args[#HDCore.Commands.List[command].arguments] == nil) then
-					    TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Invalid parameters")
+					    TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Alle argumenten moeten ingevuld worden!")
 					    local agus = ""
 					    for name, help in pairs(HDCore.Commands.List[command].arguments) do
 					    	agus = agus .. " ["..help.name.."]"
@@ -141,7 +150,7 @@ AddEventHandler('chatMessage', function(source, n, message)
 						HDCore.Commands.List[command].callback(source, args)
 					end
 				else
-					TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "No access for this cmd..")
+					TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Je hebt geen toegang tot dit commando..")
 				end
 			end
 		end
@@ -163,7 +172,7 @@ AddEventHandler('HDCore:CallCommand', function(command, args)
 		if Player ~= nil then
 			if (HDCore.Functions.HasPermission(source, "god")) or (HDCore.Functions.HasPermission(source, HDCore.Commands.List[command].permission)) or (HDCore.Commands.List[command].permission == Player.PlayerData.job.name) then
 				if (HDCore.Commands.List[command].argsrequired and #HDCore.Commands.List[command].arguments ~= 0 and args[#HDCore.Commands.List[command].arguments] == nil) then
-					TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Invalid parameters")
+					TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Alle argumenten moeten ingevuld worden!")
 					local agus = ""
 					for name, help in pairs(HDCore.Commands.List[command].arguments) do
 						agus = agus .. " ["..help.name.."]"
@@ -173,7 +182,7 @@ AddEventHandler('HDCore:CallCommand', function(command, args)
 					HDCore.Commands.List[command].callback(source, args)
 				end
 			else
-				TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "No access for this cmd..")
+				TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Je hebt geen toegang tot dit commando..")
 			end
 		end
 	end
@@ -189,12 +198,20 @@ AddEventHandler('HDCore:ToggleDuty', function(Value)
 	local Player = HDCore.Functions.GetPlayer(source)
 	if Value then
 		Player.Functions.SetJobDuty(true)
-		TriggerClientEvent('HDCore:Notify', source, "You are now on duty")
+		TriggerClientEvent('HDCore:Notify', source, "Je bent nu in dienst!")
 		TriggerClientEvent("HDCore:Client:SetDuty", source, true)
+		if Player.PlayerData.job.name == 'police' then
+			TriggerEvent("HD-police:server:UpdateCurrentCops")
+			TriggerClientEvent('HD-radialmenu:client:update:duty:vehicles', source)
+		end
 	else
 		Player.Functions.SetJobDuty(false)
-		TriggerClientEvent('HDCore:Notify', source, "You are now off duty")
+		TriggerClientEvent('HDCore:Notify', source, "Je bent nu uit dienst!")
 		TriggerClientEvent("HDCore:Client:SetDuty", source, false)
+		if Player.PlayerData.job.name == 'police' then
+			TriggerEvent("HD-police:server:UpdateCurrentCops")
+			TriggerClientEvent('HD-radialmenu:client:update:duty:vehicles', source)
+		end
  	end
 end)
 

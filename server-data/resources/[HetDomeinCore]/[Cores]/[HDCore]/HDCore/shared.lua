@@ -305,6 +305,8 @@ Shared.Items = {
 	-- Apple Store
 	["laptop"] 				 		 = {["name"] = "laptop", 			 	  		["label"] = "Laptop", 					["weight"] = 450, 		["type"] = "item", 		["image"] = "laptop.png", 		["unique"] = false, 	["useable"] = false, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "Good looking i7 laptop"},
 	["tablet"] 				 		 = {["name"] = "tablet", 			 			["label"] = "Tablet", 					["weight"] = 450, 		["type"] = "item", 		["image"] = "tablet.png", 		["unique"] = false, 	["useable"] = false, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "Pretty Tablet"},
+	-- Extra ---
+	["stethoscoop"] 				 = {["name"] = "stethoscoop", 				   	["label"] = "Stethoscoop", 		    	["weight"] = 100, 		["type"] = "item", 		["image"] = "stethoscoop.png", 			["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,   ["combinable"] = nil,   ["description"] = "*Klopt klop, klop klop, klop klo..*."},
 
 }
 	
@@ -313,7 +315,6 @@ Shared.StarterItems = {
   ["id-card"] = {amount = 1, item = "id-card"},
   ["water"] = {amount = 5, item = "water"},
   ["sandwich"] = {amount = 5, item = "sandwich"},
-  ["lockpick"] = {amount = 2, item = "lockpick"},
 }
 
 -- // VEHICLES // --

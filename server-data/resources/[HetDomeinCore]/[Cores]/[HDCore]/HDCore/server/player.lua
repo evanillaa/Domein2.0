@@ -16,7 +16,7 @@ HDCore.Player.Login = function(Source, IsCharNew, CitizenId, newData)
 		  HDCore.Player.CheckPlayerData(Source, PlayerData)
 		  return true
 		else
-		 HDCore.Functions.ExecuteSql(false, "SELECT * FROM `characters_metadata` WHERE `citizenid` = '"..CitizenId.."'", function(result)
+		 HDCore.Functions.ExecuteSql(false, "SELECT * FROM `player_metadata` WHERE `citizenid` = '"..CitizenId.."'", function(result)
 		 	local PlayerData = result[1]
 		 	if PlayerData ~= nil then
 		 		PlayerData.money = json.decode(PlayerData.money)
@@ -59,8 +59,8 @@ HDCore.Player.CheckPlayerData = function(source, PlayerData)
 	PlayerData.charinfo.birthdate = PlayerData.charinfo.birthdate ~= nil and PlayerData.charinfo.birthdate or "00-00-0000"
 	PlayerData.charinfo.gender = PlayerData.charinfo.gender ~= nil and PlayerData.charinfo.gender or 0
 	PlayerData.charinfo.nationality = PlayerData.charinfo.nationality ~= nil and PlayerData.charinfo.nationality or "Nederlands"
-	PlayerData.charinfo.phone = PlayerData.charinfo.phone ~= nil and PlayerData.charinfo.phone or "06"..math.random(11111111, 99999999)
-	PlayerData.charinfo.account = PlayerData.charinfo.account ~= nil and PlayerData.charinfo.account or "NL0"..math.random(1,9)..HDCore.Shared.RandomInt(3):upper()..math.random(1111,9999)..math.random(1111,9999)..math.random(11,99)
+	PlayerData.charinfo.phone = PlayerData.charinfo.phone ~= nil and PlayerData.charinfo.phone or "04"..math.random(11111111, 99999999)
+	PlayerData.charinfo.account = PlayerData.charinfo.account ~= nil and PlayerData.charinfo.account or "BE0"..math.random(1,9)..HDCore.Shared.RandomInt(3):upper()..math.random(1111,9999)..math.random(1111,9999)..math.random(11,99)
     PlayerData.metadata = PlayerData.metadata ~= nil and PlayerData.metadata or {}
     --Health Shit
     PlayerData.metadata["health"]  = PlayerData.metadata["health"]  ~= nil and PlayerData.metadata["health"] or 100
@@ -84,9 +84,9 @@ HDCore.Player.CheckPlayerData = function(source, PlayerData)
 	PlayerData.metadata["attachmentcraftingrep"] = PlayerData.metadata["attachmentcraftingrep"] ~= nil and PlayerData.metadata["attachmentcraftingrep"] or 0
 	--Work Shizzle
 	PlayerData.metadata["jailitems"] = PlayerData.metadata["jailitems"] ~= nil and PlayerData.metadata["jailitems"] or {}
-	PlayerData.metadata["callsign"] = PlayerData.metadata["callsign"] ~= nil and PlayerData.metadata["callsign"] or "NO CALLSIGN"
-	PlayerData.metadata["duty-vehicles"] = PlayerData.metadata["duty-vehicles"] ~= nil and PlayerData.metadata["duty-vehicles"] or {Standard = false, Audi = false, Unmarked = false, Motor = false, Heli = false}
-	PlayerData.metadata["ishighcommand"] = PlayerData.metadata["ishighcommand"] ~= nil and PlayerData.metadata["ishighcommand"] or false
+	PlayerData.metadata["dienstnummer"] = PlayerData.metadata["dienstnummer"] ~= nil and PlayerData.metadata["dienstnummer"] or "Geen dienstnummer"
+	PlayerData.metadata["duty-vehicles"] = PlayerData.metadata["duty-vehicles"] ~= nil and PlayerData.metadata["duty-vehicles"] or {Standard = false, Audi = false, Unmarked = false, Motor = false, Heli = false, DSU = false}
+	PlayerData.metadata["leidinggevende"] = PlayerData.metadata["leidinggevende"] ~= nil and PlayerData.metadata["leidinggevende"] or false
 	--Appartment \\ 
 	PlayerData.metadata["appartment-tier"] = PlayerData.metadata["appartment-tier"] ~= nil and PlayerData.metadata["appartment-tier"] or math.random(1,2)
 	PlayerData.metadata["appartment-data"] = PlayerData.metadata["appartment-data"] ~= nil and PlayerData.metadata["appartment-data"] or {Id = HDCore.Player.CreateAppartmentId(), Name = nil}
@@ -252,7 +252,7 @@ HDCore.Player.CreatePlayer = function(PlayerData)
 	self.Functions.AddItem = function(item, amount, slot, info)
 		local totalWeight = HDCore.Player.GetTotalWeight(self.PlayerData.items)
 		local itemInfo = HDCore.Shared.Items[item:lower()]
-		if itemInfo == nil then TriggerClientEvent('chatMessage', -1, "SYSTEM",  "warning", "No item found?? Check core! Missing item: " .. itemInfo .."") return end
+		if itemInfo == nil then TriggerClientEvent('chatMessage', -1, "SYSTEM",  "warning", "Geen artikel gevonden?? Controleer de Core! Ontbrekend item: " .. itemInfo .."") return end
 		local amount = tonumber(amount)
 		local slot = tonumber(slot) ~= nil and tonumber(slot) or HDCore.Player.GetFirstSlotByItem(self.PlayerData.items, item)
 		if itemInfo["type"] == "weapon" and info == nil then
@@ -364,11 +364,11 @@ end
 HDCore.Player.Save = function(source)
 	local PlayerData = HDCore.Players[source].PlayerData
 	if PlayerData ~= nil then
-		HDCore.Functions.ExecuteSql(true, "SELECT * FROM `characters_metadata` WHERE `citizenid` = '"..PlayerData.citizenid.."'", function(result)
+		HDCore.Functions.ExecuteSql(true, "SELECT * FROM `player_metadata` WHERE `citizenid` = '"..PlayerData.citizenid.."'", function(result)
 			if result[1] == nil then
-				HDCore.Functions.ExecuteSql(true, "INSERT INTO `characters_metadata` (`citizenid`, `cid`, `steam`, `license`, `name`, `money`, `charinfo`, `position`, `job`, `gang`, `globals`) VALUES ('"..PlayerData.citizenid.."', '"..tonumber(PlayerData.cid).."', '"..PlayerData.steam.."', '"..PlayerData.license.."', '"..PlayerData.name.."', '"..json.encode(PlayerData.money).."', '"..HDCore.EscapeSqli(json.encode(PlayerData.charinfo)).."', '"..json.encode(PlayerData.position).."', '"..json.encode(PlayerData.job).."', '"..json.encode(PlayerData.gang).."' ,'"..json.encode(PlayerData.metadata).."')")
+				HDCore.Functions.ExecuteSql(true, "INSERT INTO `player_metadata` (`citizenid`, `cid`, `steam`, `license`, `name`, `money`, `charinfo`, `position`, `job`, `gang`, `globals`) VALUES ('"..PlayerData.citizenid.."', '"..tonumber(PlayerData.cid).."', '"..PlayerData.steam.."', '"..PlayerData.license.."', '"..PlayerData.name.."', '"..json.encode(PlayerData.money).."', '"..HDCore.EscapeSqli(json.encode(PlayerData.charinfo)).."', '"..json.encode(PlayerData.position).."', '"..json.encode(PlayerData.job).."', '"..json.encode(PlayerData.gang).."' ,'"..json.encode(PlayerData.metadata).."')")
 			else
-				HDCore.Functions.ExecuteSql(true, "UPDATE `characters_metadata` SET steam='"..PlayerData.steam.."', name='"..HDCore.EscapeSqli(PlayerData.name).."', money='"..HDCore.EscapeSqli(json.encode(PlayerData.money)).."',charinfo='"..HDCore.EscapeSqli(json.encode(PlayerData.charinfo)).."',position='"..HDCore.EscapeSqli(json.encode(PlayerData.position)).."',job='"..HDCore.EscapeSqli(json.encode(PlayerData.job)).."' ,globals='"..HDCore.EscapeSqli(json.encode(PlayerData.metadata)).."' WHERE `citizenid` = '"..PlayerData.citizenid.."'")
+				HDCore.Functions.ExecuteSql(true, "UPDATE `player_metadata` SET steam='"..PlayerData.steam.."', name='"..HDCore.EscapeSqli(PlayerData.name).."', money='"..HDCore.EscapeSqli(json.encode(PlayerData.money)).."',charinfo='"..HDCore.EscapeSqli(json.encode(PlayerData.charinfo)).."',position='"..HDCore.EscapeSqli(json.encode(PlayerData.position)).."',job='"..HDCore.EscapeSqli(json.encode(PlayerData.job)).."' ,globals='"..HDCore.EscapeSqli(json.encode(PlayerData.metadata)).."' WHERE `citizenid` = '"..PlayerData.citizenid.."'")
 			end
 			HDCore.Player.SaveInventory(source)
 		end)
@@ -388,25 +388,25 @@ HDCore.Player.Logout = function(source)
 end
 
 HDCore.Player.DeleteCharacter = function(source, citizenid)
-  HDCore.Functions.ExecuteSql(false, "SELECT * FROM `characters_metadata` WHERE `citizenid` = '"..HDCore.EscapeSqli(citizenid).."'", function(result)
-	if result[1] ~= nil then
-		if result[1].steam == GetPlayerIdentifiers(source)[1] then
-		   HDCore.Functions.ExecuteSql(true, "DELETE FROM `characters_metadata` WHERE `citizenid` = '"..citizenid.."'")
-		   TriggerClientEvent('HD-character:client:chooseChar', source)
-	       TriggerEvent("HD-logs:server:SendLog", "joinleave", "Character Deleted", "red", "**".. GetPlayerName(source) .. "** ("..GetPlayerIdentifiers(source)[1]..") deleted **"..citizenid.."**..")
-		else
-			TriggerClientEvent('HD-character:client:chooseChar', source)
-			TriggerEvent("HD-logs:server:SendLog", "joinleave", "Character Cheats", "red", GetPlayerName(source) .." tries to remove char "..citizenid.." which is not his..", true)
-		end
-	else
-		TriggerClientEvent('HD-character:client:chooseChar', source)
-	    TriggerEvent("HD-logs:server:SendLog", "joinleave", "Character Cheats", "red", GetPlayerName(source) .." tries to remove char "..citizenid.." which is not his..", true)
-	end
-  end)
-end
+	HDCore.Functions.ExecuteSql(false, "SELECT * FROM `player_metadata` WHERE `citizenid` = '"..HDCore.EscapeSqli(citizenid).."'", function(result)
+	  if result[1] ~= nil then
+		  if result[1].steam == GetPlayerIdentifiers(source)[1] then
+			 HDCore.Functions.ExecuteSql(true, "DELETE FROM `player_metadata` WHERE `citizenid` = '"..citizenid.."'")
+			 TriggerClientEvent('HD-multicharacter:client:chooseChar', source)
+			 TriggerEvent("HD-logs:server:SendLog", "joinleave", "Character Deleted", "red", "**".. GetPlayerName(source) .. "** ("..GetPlayerIdentifiers(source)[1]..") deleted **"..citizenid.."**..")
+		  else
+			  TriggerClientEvent('HD-multicharacter:client:chooseChar', source)
+			  TriggerEvent("HD-logs:server:SendLog", "joinleave", "Character Cheats", "red", GetPlayerName(source) .." tries to remove char "..citizenid.." which is not his..", true)
+		  end
+	  else
+		  TriggerClientEvent('HD-multicharacter:client:chooseChar', source)
+		  TriggerEvent("HD-logs:server:SendLog", "joinleave", "Character Cheats", "red", GetPlayerName(source) .." tries to remove char "..citizenid.." which is not his..", true)
+	  end
+	end)
+  end
 HDCore.Player.LoadInventory = function(PlayerData)
 	PlayerData.items = {}
-		HDCore.Functions.ExecuteSql(true, "SELECT * FROM `characters_metadata` WHERE `citizenid` = '"..PlayerData.citizenid.."'", function(result)
+		HDCore.Functions.ExecuteSql(true, "SELECT * FROM `player_metadata` WHERE `citizenid` = '"..PlayerData.citizenid.."'", function(result)
 			if result[1] ~= nil then 
 				if result[1].inventory ~= nil then
 					plyInventory = json.decode(result[1].inventory)
@@ -455,7 +455,7 @@ HDCore.Player.SaveInventory = function(source)
 					})
 				end
 			end
-			HDCore.Functions.ExecuteSql(true, "UPDATE `characters_metadata` SET `inventory` = '"..HDCore.EscapeSqli(json.encode(ItemsJson)).."' WHERE `citizenid` = '"..PlayerData.citizenid.."'")
+			HDCore.Functions.ExecuteSql(true, "UPDATE `player_metadata` SET `inventory` = '"..HDCore.EscapeSqli(json.encode(ItemsJson)).."' WHERE `citizenid` = '"..PlayerData.citizenid.."'")
 		end
 	end
 end
@@ -498,7 +498,7 @@ HDCore.Player.CreateCitizenId = function()
 	local CitizenId = nil
 	while not UniqueFound do
 		CitizenId = tostring(HDCore.Shared.RandomStr(3) .. HDCore.Shared.RandomInt(5)):upper()
-		HDCore.Functions.ExecuteSql(true, "SELECT COUNT(*) as count FROM `characters_metadata` WHERE `citizenid` = '"..CitizenId.."'", function(result)
+		HDCore.Functions.ExecuteSql(true, "SELECT COUNT(*) as count FROM `player_metadata` WHERE `citizenid` = '"..CitizenId.."'", function(result)
             if result[1].count == 0 then
 				UniqueFound = true
 			end

@@ -13,7 +13,7 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(7)
 		if isLoggedIn then
-			Citizen.Wait((1000 * 60) * 7)
+			Citizen.Wait((1000 * 20) * 7)
 			TriggerEvent("HDCore:Player:UpdatePlayerData")
 		else
 			Citizen.Wait(5000)
@@ -25,7 +25,7 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(7)
 		if isLoggedIn then
-			Citizen.Wait((1000 * 60) * 10)
+			Citizen.Wait((1000 * 90) * 10)
 			TriggerEvent("HDCore:Player:Salary")
 		else
 			Citizen.Wait(5000)
