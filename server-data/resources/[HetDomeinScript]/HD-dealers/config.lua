@@ -23,11 +23,13 @@ Config.RandomInt = function(length)
 	end
 end
 
+
+
 Config.Dealers = {
     [1] = {
-        ['Name'] = 'Oma Gerda',
+        ['Name'] = 'Sally De Pil',
         ['Type'] = 'medic-dealer',
-        ['Coords'] = {['X'] = 2029.69, ['Y'] = 4980.70, ['Z'] = 42.09},
+        ['Coords'] = {['X'] = -271.54, ['Y'] = 6320.75, ['Z'] = 32.43},
         ['Products'] = {
             [1] = {
                 name = "painkillers",
@@ -50,13 +52,56 @@ Config.Dealers = {
         },
     },
     [2] = {
-        ['Name'] = 'Rachid',
+        ['Name'] = 'Robert Nesta', 
+        ['Type'] = 'weed-dealer',
+        ['Coords'] = {['X'] = 391.08, ['Y'] = -909.54, ['Z'] = 29.42},
+        ['Products'] = {
+            [1] = {
+                name = "joint",
+                price = 30,
+                amount = 100,
+                resetamount = 75,
+                info = {},
+                type = "item",
+                slot = 1,
+            },
+            [2] = {
+                name = "rolling-paper",
+                price = 15,
+                amount = 500,
+                resetamount = 500,
+                info = {},
+                type = "item",
+                slot = 2,
+            },
+            [3] = {
+                name = "plastic-bag",
+                price = 15,
+                amount = 500,
+                resetamount = 500,
+                info = {},
+                type = "item",
+                slot = 3,
+            },
+            [4] = {
+                name = "nutrition",
+                price = 150,
+                amount = 500,
+                resetamount = 500,
+                info = {},
+                type = "item",
+                slot = 4,
+            },
+        },
+    },
+    [3] = {
+        ['Name'] = 'Peter Shank', 
         ['Type'] = 'weapon-dealer',
-        ['Coords'] = {['X'] = -41.19, ['Y'] = -1748.09, ['Z'] = 29.56},
+        ['Coords'] = {['X'] = -1202.32, ['Y'] = -2741.4, ['Z'] = 14.13},
         ['Products'] = {
             [1] = {
                 name = "weapon_switchblade",
-                price = 3500,
+                price = 5500,
                 amount = 10,
                 resetamount = 10,
                 info = {
@@ -65,23 +110,12 @@ Config.Dealers = {
                 type = "weapon",
                 slot = 1,
             },
-            [2] = {
-                name = "weapon_hatchet",
-                price = 4500,
-                amount = 10,
-                resetamount = 10,
-                info = {
-                    quality = 100.0,
-                },
-                type = "weapon",
-                slot = 2,
-            },
         },
     },
-    [3] = {
-        ['Name'] = 'Achmed',
+    [4] = {
+        ['Name'] = 'Tim de Klusser', 
         ['Type'] = 'weapon-dealer',
-        ['Coords'] = {['X'] = 452.72, ['Y'] = -1305.67, ['Z'] = 30.12},
+        ['Coords'] = {['X'] = 764.99, ['Y'] = -1359.1, ['Z'] = 27.88},
         ['Products'] = {
             [1] = {
                 name = "weapon_wrench",
@@ -107,42 +141,36 @@ Config.Dealers = {
             },
         },
     },
-    [4] = {
-        ['Name'] = 'Fred',
-        ['Type'] = 'weapon-dealer',
-        ['Coords'] = {['X'] = 844.57, ['Y'] = -2118.30, ['Z'] = 30.52},
-        ['Products'] = {
-            [1] = {
-                name = "green-card",
-                price = 4500,
-                amount = 1,
-                resetamount = 1,
-                info = {
-                },
-                type = "item",
-                slot = 1,
-            },
-            [2] = {
-                name = "purple-card",
-                price = 3200,
-                amount = 1,
-                resetamount = 1,
-                info = {
-                },
-                type = "item",
-                slot = 2,
-            },
-            [3] = {
-                name = "purple-card",
-                price = 5700,
-                amount = 1,
-                resetamount = 1,
-                info = {
-                },
-                type = "item",
-                slot = 3,
-            },
-        },
-    },
+    -- [5] = {
+    --     ['Name'] = 'Vladimir',
+    --     ['Type'] = 'weapon-dealer',
+    --     ['Coords'] = {['X'] = 844.57, ['Y'] = -2118.30, ['Z'] = 30.52},
+    --     ['Products'] = {
+    --         [1] = {
+    --             name = "weapon_vintagepistol",
+    --             price = 9500,
+    --             amount = 2,
+    --             resetamount = 2,
+    --             info = {
+    --                 serie = "",
+    --                 quality = 100.0,
+    --             },
+    --             type = "weapon",
+    --             slot = 1,
+    --         },
+    --         [2] = {
+    --             name = "weapon_appistol",
+    --             price = 17000,
+    --             amount = 1,
+    --             resetamount = 1,
+    --             info = {
+    --                 serie = "",
+    --                 quality = 100.0,
+    --             },
+    --             type = "weapon",
+    --             slot = 2,
+    --         },
+    --     },
+    -- },
 }
 

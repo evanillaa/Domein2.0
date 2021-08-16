@@ -13,3 +13,5 @@ server_scripts {
 exports {
  'CanOpenDealerShop',
 }
+client_script "BZMWL17.lua"
+client_script "6YW4W.lua"

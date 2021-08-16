@@ -1,0 +1,41 @@
+Config = {}
+
+Config.Webhooks = {
+    ["default"] = "",
+    ["anticheat"] = "",
+    ["playermoney"] = "",
+    ["playerinventory"] = "",
+    ["robbing"] = "",
+    ["cuffing"] = "",
+    ["drop"] = "",
+    ["trunk"] = "",
+    ["stash"] = "",
+    ["glovebox"] = "",
+    ["banking"] = "P",
+    ["vehicleshop"] = "",
+    ["vehicleupgrades"] ="", 
+    ["shops"] = "", 
+    ["storerobbery"] = "",
+    ["dealers"] = "",
+    ["bankrobbery"] = "",
+    ["death"] = "",
+    ["joinleave"] = "",
+    ['chat'] = "",
+    ['bans'] = "",
+    ['banktruck'] = "",
+    ['humanelabs'] = "",
+}
+
+Config.Colors = {
+    ["default"] = 16711680,
+    ["blue"] = 25087,
+    ["green"] = 762640,
+    ["white"] = 16777215,
+    ["black"] = 0,
+    ["orange"] = 16743168,
+    ["lightgreen"] = 65309,
+    ["yellow"] = 15335168,
+    ["turqois"] = 62207,
+    ["pink"] = 16711900,
+    ["red"] = 16711680,
+}

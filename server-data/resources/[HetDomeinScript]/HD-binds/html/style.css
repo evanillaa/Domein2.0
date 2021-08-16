@@ -1,0 +1,178 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: none;
+    height: 100vh;
+}
+
+.keys-block {
+    position: relative;
+    height: 50vh;
+    width: 40vh;
+    background: rgb(0, 0, 0, 0.8);
+    margin: 0 auto;
+    top: 20vh;
+    border-radius: 25px;
+    box-shadow: 0px 0px 15px 0px rgb(0, 0, 0);
+}
+
+.keys-block-header {
+    position: absolute;
+    width: 100%;
+    height: 5%;
+    background: rgb(65, 164, 221, 0.8);
+    text-align: center;
+    top: 0;
+    line-height: 0.5vh;
+    z-index: 101;
+    border-radius: 25px 25px 0px 0px;
+}
+
+.keys-block-header > p {
+    color: white;
+    font-weight: bold;
+    font-size: 1vh;
+    font-family: sans-serif;
+    letter-spacing: 0.1vh;
+    text-transform: uppercase;
+}
+
+.keys {
+    position: relative;
+    overflow-y: scroll;
+    height: 85%;
+    max-height: 85%;
+    z-index: 90;
+    width: 80%;
+    top: 1vh;
+    margin: 0 auto;
+}
+
+.command {
+    position: absolute;
+    bottom: 0;
+    left: 7vh;
+    height: 3vh;
+    width: 9vh;
+    background: none;
+    border: 1px solid rgb(65, 164, 221, 0.8);
+    outline: none;
+    background: rgb(0, 0, 0);
+    border-radius: 25px;
+    transition: all 0.1s linear;
+}
+
+input[type="text"] {
+    padding-left: 1vh;
+    font-weight: bold;
+    font-size: 1vh;
+    font-family: sans-serif;
+    letter-spacing: 0.1vh;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+}
+
+.command::-webkit-input-placeholder {
+    font-weight: bold;
+    font-size: 1vh;
+    font-family: sans-serif;
+    letter-spacing: 0.1vh;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.argument {
+    position: absolute;
+    bottom: 0;
+    left: 19vh;
+    height: 3vh;
+    width: 9vh;
+    background: none;
+    border: 1px solid rgb(65, 164, 221);;
+    outline: none;
+    background: rgb(0, 0, 0);
+    border-radius: 25px;
+
+    transition: all 0.1s linear;
+}
+
+.argument:focus, .command:focus {
+    background: rgb(0, 0, 0);
+}
+
+input[type="text"] {
+    padding-left: 1vh;
+    font-weight: bold;
+    font-size: 1vh;
+    font-family: sans-serif;
+    letter-spacing: 0.1vh;
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+}
+
+.argument::-webkit-input-placeholder {
+    font-weight: bold;
+    font-size: 1vh;
+    font-family: sans-serif;
+    letter-spacing: 0.1vh;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.keys-block-binding {
+    position: relative;
+    width: 100%;
+    height: 5vh;
+    top: 5vh;
+    border-bottom: 1px solid rgb(65, 164, 221, 0);
+    margin-bottom: 1.2vh;
+}
+
+.keys-block-binding-keyprefix {
+    color: rgb(255, 255, 255);
+    height: 96%;
+    width: 5vh;
+    text-align: center;
+    line-height: 5vh;
+    font-weight: bold;
+    font-size: 1.2vh;
+    font-family: sans-serif;
+    letter-spacing: 0.1vh;
+    text-transform: uppercase;
+    background: rgb(0, 0, 0);
+    border-radius: 30px;
+    border: 1px solid rgb(65, 164, 221);
+}
+
+.save-bindings {
+    position: absolute;
+    width: 100%;
+    height: 3vh;
+    bottom: 0;
+    text-align: center;
+    background: rgb(65, 164, 221, 0.8);
+    line-height: 0.8vh;
+    transition: all 0.1s linear;
+    border-radius: 0px 0px 25px 25px;
+}
+
+.save-bindings > p {
+    color: white;
+    font-weight: bold;
+    font-size: 1.2vh;
+    font-family: sans-serif;
+    letter-spacing: 0.1vh;
+    text-transform: uppercase;
+}
+
+.save-bindings:hover {
+    background: rgb(65, 164, 221);
+    border-bottom: 3px solid white;
+}

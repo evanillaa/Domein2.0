@@ -32,13 +32,13 @@ $(document).on('keydown', function() {
     }
 });
 
-$(document).on('keyup', function(){
-    switch(event.keyCode) {
-        case 17: // TAB
-            ControlPressed = false;
-            break;
-    }
-});
+//$(document).on('keyup', function(){
+  //  switch(event.keyCode) {
+    //    case 17: // TAB
+      //      ControlPressed = false;
+        //    break;
+    //}
+//});
 
 $(document).on("mouseenter", ".item-slot", function(e){
     e.preventDefault();

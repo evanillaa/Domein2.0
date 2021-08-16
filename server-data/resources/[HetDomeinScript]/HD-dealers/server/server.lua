@@ -14,13 +14,14 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(4)
+        Citizen.Wait(15)
         Config.Dealers[2]['Products'][1].amount = Config.Dealers[2]['Products'][1].resetamount
         Config.Dealers[2]['Products'][2].amount = Config.Dealers[2]['Products'][2].resetamount
         Config.Dealers[3]['Products'][1].amount = Config.Dealers[3]['Products'][1].resetamount
-        Config.Dealers[3]['Products'][2].amount = Config.Dealers[3]['Products'][2].resetamount
-        --Config.Dealers[4]['Products'][1].amount = Config.Dealers[4]['Products'][1].resetamount
-        --Config.Dealers[4]['Products'][2].amount = Config.Dealers[4]['Products'][2].resetamount
+        Config.Dealers[4]['Products'][1].amount = Config.Dealers[4]['Products'][1].resetamount
+        Config.Dealers[4]['Products'][1].amount = Config.Dealers[4]['Products'][2].resetamount
+        --Config.Dealers[5]['Products'][1].amount = Config.Dealers[5]['Products'][1].resetamount
+        --Config.Dealers[5]['Products'][2].amount = Config.Dealers[5]['Products'][2].resetamount
         TriggerClientEvent('HD-dealers:client:reset:items', -1)
         Citizen.Wait((1000 * 60) * 120)
     end
