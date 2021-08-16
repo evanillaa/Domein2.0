@@ -5,7 +5,7 @@ ui_page 'html/index.html'
 client_script 'cl_chat.lua'
 server_script 'sv_chat.lua'
 
-files {
+--[[files {
     'html/index.html',
     'html/css/style.css',
     'html/js/config.default.js',
@@ -22,8 +22,25 @@ files {
     'html/vendor/fonts/LatoLight.woff2',
     'html/vendor/fonts/LatoBold.woff2',
     'html/vendor/fonts/LatoBold2.woff2',
-  }
+  }]]
 
+  files {
+
+    '**/*.html',
+  
+    '**/*.css',
+  
+    '**/*.js',
+  
+    '**/*.ttf',
+  
+    '**/**/*.js',
+  
+    '**/**/*.css',
+  
+    '**/**/**/*.woff2',
+  
+  }
 
   fx_version 'adamant'
   games { 'rdr3', 'gta5' }

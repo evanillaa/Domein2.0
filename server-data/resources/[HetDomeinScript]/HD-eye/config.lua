@@ -431,22 +431,28 @@ Config.ObjectOptions = {
 
 Config.VehicleMenu = {
     [1] = {
-        ['Name'] = 'Trunk',
+        ['Name'] = 'Kofferbak openen',
         ['EventType'] = 'Client',
         ['Logo'] = '<i class="fas fa-truck-loading"></i>',
         ['EventName'] = 'HD-eye:client:open:trunk',
     },
     [2] = {
-        ['Name'] = 'In Trunk',
+        ['Name'] = 'In kofferbak',
         ['EventType'] = 'Client',
         ['Logo'] = '<i class="fas fa-couch"></i>',
         ['EventName'] = 'HD-eye:client:getin:trunk',
     },
     [3] = {
-        ['Name'] = 'Out Trunk',
+        ['Name'] = 'Uit kofferbak',
         ['EventType'] = 'Client',
         ['Logo'] = '<i class="fas fa-couch"></i>',
         ['EventName'] = 'HD-eye:client:getout:trunk',
+    },
+    [4] = {
+        ['Name'] = 'Tanken',
+        ['EventType'] = 'Client',
+        ['Logo'] = '<i class="fas fa-couch"></i>',
+        ['EventName'] = 'HD-fuel:server:can:fuel',
     },
 }
 

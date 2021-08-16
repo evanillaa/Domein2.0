@@ -1,0 +1,20 @@
+<CodeWalkerProject>
+  <Name>New CodeWalker Project</Name>
+  <Version value="1" />
+  <YmapFilenames>
+    <Item>blokkenpark-stand.ymap</Item>
+    <Item>dt1_rd1_critical_1.ymap</Item>
+    <Item>hei_dt1_13.ymap</Item>
+    <Item>hei_dt1_13_long_0.ymap</Item>
+    <Item>hei_dt1_13_strm_0.ymap</Item>
+    <Item>hei_dt1_occl_04.ymap</Item>
+    <Item>hei_dt1_rd1_critical_1.ymap</Item>
+    <Item>hei_dt1_rd1_long_1.ymap</Item>
+    <Item>verpi_park.ymap</Item>
+  </YmapFilenames>
+  <YtypFilenames />
+  <YndFilenames />
+  <YnvFilenames />
+  <TrainsFilenames />
+  <ScenarioFilenames />
+</CodeWalkerProject>

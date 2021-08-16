@@ -580,4 +580,38 @@ Config.Doors = {
 		['Molten-Model'] = 'hei_v_ilev_bk_gate_molten',
 		['ObjCoords'] = vector3(256.88, 220.27, 106.28)
 	},
+	[33] = {
+		['DoorName'] = 'NoName Garagedeur',
+		['TextCoords'] = vector3(717.52, -767.51, 25.10),
+		['Autorized'] = {
+		 [1] = 'police',
+		 [2] = 'judge',
+		},
+		['Heavy-Door'] = true,
+		['Locking'] = false,
+		['Locked'] = true,
+		["Pickable"] = false,
+		["Distance"] = 1.5,
+		['ObjYaw'] = 90.0,
+		['ObjName'] = 'hei_v_ilev_bk_gate_pris',
+		['Molten-Model'] = 'hei_v_ilev_bk_gate_molten',
+		['ObjCoords'] = vector3(717.46950, -767.61360, 23.90097)
+	},
+	[34] = {
+		['DoorName'] = 'NoName Deur naar trap',
+		['TextCoords'] = vector3(740.42, -797.70, 19.66),
+		['Autorized'] = {
+		 [1] = 'police',
+		 [2] = 'judge',
+		},
+		['Heavy-Door'] = true,
+		['Locking'] = false,
+		['Locked'] = true,
+		["Pickable"] = false,
+		["Distance"] = 1.5,
+		['ObjYaw'] = 180.0,
+		['ObjName'] = 'v_ilev_rc_door2',
+		--['Molten-Model'] = 'hei_v_ilev_bk_gate_molten',
+		['ObjCoords'] = vector3(741.10890, -797.68630, 19.81090)
+	},
 }
