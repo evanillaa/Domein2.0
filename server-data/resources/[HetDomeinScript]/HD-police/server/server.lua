@@ -45,7 +45,7 @@ end)
 
 function IsVehicleOwned(plate)
     local val = false
-	HDCore.Functions.ExecuteSql(true, "SELECT * FROM `player_vehicles` WHERE `plate` = '"..plate.."'", function(result)
+	HDCore.Functions.ExecuteSql(true, "SELECT * FROM `characters_vehicles` WHERE `plate` = '"..plate.."'", function(result)
 		if (result[1] ~= nil) then
 			val = true
 		else
@@ -342,7 +342,7 @@ end
 
 HDCore.Functions.CreateCallback('HD-police:GetPoliceVehicles', function(source, cb)
     local vehicles = {}
-    exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE state = @state', {['@state'] = "impound"}, function(result)
+    exports['ghmattimysql']:execute('SELECT * FROM characters_vehicles WHERE state = @state', {['@state'] = "impound"}, function(result)
         if result[1] ~= nil then
             vehicles = result
         end
@@ -361,16 +361,16 @@ HDCore.Commands.Add("boei", "Boei iemand (Admin.)", {{name="id", help="Speler ID
     end
 end, "admin")
 
-HDCore.Commands.Add("maakleiding", "Geef iemand zijn leiding status", {{name="ID", help="PlayerId"}, {name="Status", help="true/false"}}, true, function(source, args)
+HDCore.Commands.Add("maakleiding", "Zet iemand zijn hoge commando status", {{name="id", help="Speler ID"}, {name="status", help="True / False"}}, true, function(source, args)
   if args ~= nil then
     local TargetPlayer = HDCore.Functions.GetPlayer(tonumber(args[1]))
     if TargetPlayer ~= nil then
       if args[2]:lower() == 'true' then
-          TargetPlayer.Functions.SetMetaData("leidinggevende", true)
+          TargetPlayer.Functions.SetMetaData("ishighcommand", true)
           TriggerClientEvent('HDCore:Notify', TargetPlayer.PlayerData.source, 'Je bent nu een leidinggevende!', 'success')
           TriggerClientEvent('HDCore:Notify', source, 'Speler is nu een leidinggevende!', 'success')
       else
-          TargetPlayer.Functions.SetMetaData("leidinggevende", false)
+          TargetPlayer.Functions.SetMetaData("ishighcommand", false)
           TriggerClientEvent('HDCore:Notify', TargetPlayer.PlayerData.source, 'Je bent geen leidinggevende meer!', 'error')
           TriggerClientEvent('HDCore:Notify', source, 'Speler is GEEN leidinggevende meer!', 'error')
       end
@@ -378,10 +378,10 @@ HDCore.Commands.Add("maakleiding", "Geef iemand zijn leiding status", {{name="ID
   end
 end, "admin")
 
-HDCore.Commands.Add("aanwervenpolitie", "Geef de politie baan aan iemand ", {{name="id", help="Speler ID"}, {name="grade", help="rang"}}, true, function(source, args)
+HDCore.Commands.Add("zetpolitie", "Neem een agent aan", {{name="id", help="Speler ID"}}, true, function(source, args)
     local Player = HDCore.Functions.GetPlayer(source)
     local TargetPlayer = HDCore.Functions.GetPlayer(tonumber(args[1]))
-    if Player.PlayerData.metadata['leidinggevende'] then
+    if Player.PlayerData.metadata['ishighcommand'] then
       if TargetPlayer ~= nil then
           TriggerClientEvent('HDCore:Notify', TargetPlayer.PlayerData.source, 'Je bent aangenomen als agent!', 'success')
           TriggerClientEvent('HDCore:Notify', Player.PlayerData.source, 'Je hebt '..TargetPlayer.PlayerData.charinfo.firstname..' '..TargetPlayer.PlayerData.charinfo.lastname..' aangenomen als agent!', 'success')
@@ -397,10 +397,10 @@ HDCore.Functions.CreateUseableItem("spikestrip", function(source, item)
     end
 end)
 
-HDCore.Commands.Add("firepolice", "Ontsla een politieagent!", {{name="id", help="Speler ID"}}, true, function(source, args)
+HDCore.Commands.Add("ontslapolitie", "Ontsla een agent", {{name="id", help="Speler ID"}}, true, function(source, args)
     local Player = HDCore.Functions.GetPlayer(source)
     local TargetPlayer = HDCore.Functions.GetPlayer(tonumber(args[1]))
-    if Player.PlayerData.metadata['leidinggevende'] then
+    if Player.PlayerData.metadata['ishighcommand'] then
       if TargetPlayer ~= nil then
           TriggerClientEvent('HDCore:Notify', TargetPlayer.PlayerData.source, 'Je bent ontslagen!', 'error')
           TriggerClientEvent('HDCore:Notify', Player.PlayerData.source, 'Je hebt '..TargetPlayer.PlayerData.charinfo.firstname..' '..TargetPlayer.PlayerData.charinfo.lastname..' ontslagen!', 'success')
@@ -421,7 +421,7 @@ HDCore.Commands.Add("dienstnummer", "Verander je dienstnummer", {{name="Nummer",
     end
 end)
 
-HDCore.Commands.Add("zetnummerplaat", "Verander je dienst kenteken", {{name="Nummer", help="Dienstnummer"}}, true, function(source, args)
+--[[HDCore.Commands.Add("setplate", "Verander je dienst kenteken", {{name="Nummer", help="Dienstnummer"}}, true, function(source, args)
     local Player = HDCore.Functions.GetPlayer(source)
     if args[1] ~= nil then
         if Player.PlayerData.job.name == 'police' or Player.PlayerData.job.name == 'ambulance' and Player.PlayerData.job.onduty then
@@ -435,7 +435,7 @@ HDCore.Commands.Add("zetnummerplaat", "Verander je dienst kenteken", {{name="Num
             TriggerClientEvent('HDCore:Notify', source, 'Dit is alleen voor hulp diensten..', 'error')
         end
     end
-end)
+end)]]
 
 HDCore.Commands.Add("kluis", "Open bewijskluis", {{"bsn", "BSN Nummer"}}, true, function(source, args)
     local Player = HDCore.Functions.GetPlayer(source)
@@ -455,7 +455,7 @@ HDCore.Commands.Add("geefpolitievoertuig", "Geef permissie voor een voertuig cat
     local TargetPlayerData = HDCore.Functions.GetPlayer(tonumber(args[1]))
     if TargetPlayerData ~= nil then
     local TargetPlayerVehicleData = TargetPlayerData.PlayerData.metadata['duty-vehicles']
-    if SelfPlayerData.PlayerData.metadata['leidinggevende'] then
+    if SelfPlayerData.PlayerData.metadata['ishighcommand'] then
        if args[2]:upper() == 'LOKAAL' then
            if args[3] == 'true' then
                VehicleList = {Standard = true, Audi = TargetPlayerVehicleData.Audi, Heli = TargetPlayerVehicleData.Heli, Motor = TargetPlayerVehicleData.Motor, Unmarked = TargetPlayerVehicleData.Unmarked, DSU = TargetPlayerVehicleData.DSU}
@@ -552,6 +552,46 @@ HDCore.Commands.Add("paylaw", "Betaal een advocaat", {{name="id", help="Speler I
         end
     else
         TriggerClientEvent('chatMessage', source, "SYSTEEM", "error", "Dit commando is alleen voor hulpdiensten!")
+    end
+end)
+
+HDCore.Commands.Add("payvab", "Betaal een VAB Medewerker", {{name="id", help="ID van een speler"}, {name="amount", help="Hoeveel?"}}, true, function(source, args)
+	local Player = HDCore.Functions.GetPlayer(source)
+    if Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "judge" then
+        local playerId = tonumber(args[1])
+        local Amount = tonumber(args[2])
+        local OtherPlayer = HDCore.Functions.GetPlayer(playerId)
+        if OtherPlayer ~= nil then
+            if OtherPlayer.PlayerData.job.name == "mechanic1" or OtherPlayer.PlayerData.job.name == "mechanic2" then
+                OtherPlayer.Functions.AddMoney("bank", Amount, "police-mechanic-paid")
+                TriggerClientEvent('chatMessage', OtherPlayer.PlayerData.source, "SYSTEM", "warning", "Je hebt €"..Amount..",- ontvangen voor je gegeven diensten!")
+                TriggerClientEvent('HDCore:Notify', source, 'Je betaalde de VAB medewerker')
+            else
+                TriggerClientEvent('HDCore:Notify', source, 'Persoon is geen medewerker van de VAB', "error")
+            end
+        end
+    else
+        TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Je hebt geen bevoegdheden tot dit commando.")
+    end
+end)
+
+HDCore.Commands.Add("paytow", "Pay a tow", {{name="id", help="ID van een speler"}, {name="amount", help="Hoeveel?"}}, true, function(source, args)
+	local Player = HDCore.Functions.GetPlayer(source)
+    if Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "judge" then
+        local playerId = tonumber(args[1])
+        local Amount = tonumber(args[2])
+        local OtherPlayer = HDCore.Functions.GetPlayer(playerId)
+        if OtherPlayer ~= nil then
+            if OtherPlayer.PlayerData.job.name == "tow" then
+                OtherPlayer.Functions.AddMoney("bank", Amount, "police-tow-paid")
+                TriggerClientEvent('chatMessage', OtherPlayer.PlayerData.source, "SYSTEM", "warning", "Je hebt €"..Amount..",- ontvangen voor je gegeven diensten!")
+                TriggerClientEvent('HDCore:Notify', source, 'Je betaalde de Takel medewerker')
+            else
+                TriggerClientEvent('HDCore:Notify', source, 'Persoon is geen medewerker van de takeldienst', "error")
+            end
+        end
+    else
+        TriggerClientEvent('chatMessage', source, "SYSTEM", "error", "Je hebt geen bevoegdheden tot dit commando.")
     end
 end)
 
@@ -773,7 +813,7 @@ AddEventHandler('HD-police:server:hardimpound', function(plate, price)
     local price = price ~= nil and price or 1000
     local state = "in"
     if IsVehicleOwned(plate) then
-            exports['ghmattimysql']:execute('UPDATE player_vehicles SET garage = "Police", state = @state, depotprice = @depotprice WHERE plate = @plate', {['@garage'] = "Police", ['@state'] = "in", ['@depotprice'] = price, ['@plate'] = plate})
+            exports['ghmattimysql']:execute('UPDATE characters_vehicles SET garage = "Police", state = @state, depotprice = @depotprice WHERE plate = @plate', {['@garage'] = "Police", ['@state'] = "in", ['@depotprice'] = price, ['@plate'] = plate})
             TriggerClientEvent('HDCore:Notify', src, "Voertuig opgenomen in depot voor €"..price.."!")
     end
 end)
@@ -795,9 +835,9 @@ end)
 
 RegisterServerEvent('HD-police:server:send:alert:gunshots')
 AddEventHandler('HD-police:server:send:alert:gunshots', function(Coords, GunType, StreetName, InVeh)
-    local AlertData = {title = "Schoten Gelost",coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = 'Schoten gelost nabij ' ..StreetName}
+    local AlertData = {title = "Shots Fired",coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = 'Shots fired nearby ' ..StreetName}
     if InVeh then
-      AlertData = {title = "Schoten Gelost",coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = 'Schoten gelost vanuit een voertuig, nabij ' ..StreetName}
+      AlertData = {title = "Shots Fired",coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = 'Shots fired out of vehicle, near ' ..StreetName}
     end
    TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
    TriggerClientEvent('HD-police:client:send:alert:gunshots', -1, Coords, GunType, StreetName, InVeh)
@@ -805,91 +845,57 @@ end)
 
 RegisterServerEvent('HD-police:server:send:alert:dead')
 AddEventHandler('HD-police:server:send:alert:dead', function(Coords, StreetName)
-   local AlertData = {title = "Gewonde Burger", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Er is een gewonde burger gemeld nabij "..StreetName}
+   local AlertData = {title = "Citizen down", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "A citizen was reported to have lose conscious near "..StreetName}
    TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
    TriggerClientEvent('HD-police:client:send:alert:dead', -1, Coords, StreetName)
 end)
 
 RegisterServerEvent('HD-police:server:send:bank:alert')
 AddEventHandler('HD-police:server:send:bank:alert', function(Coords, StreetName, CamId)
-   local AlertData = {title = "Bank Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Een fleeca bank alarm is afgegaan nabij "..StreetName}
+   local AlertData = {title = "Bank Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Fleeca bank robbery in progress at "..StreetName}
    TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
    TriggerClientEvent('HD-police:client:send:bank:alert', -1, Coords, StreetName, CamId)
 end)
 
 RegisterServerEvent('HD-police:server:send:alert:meter')
 AddEventHandler('HD-police:server:send:alert:meter', function(Coords, StreetName)
-   local AlertData = {title = "Parkeermeter Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Er is een parkeermeter diefstal gemeld nabij "..StreetName}
+   local AlertData = {title = "Parkingmeter Robbery", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Parking meter is being robbed at "..StreetName}
    TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
    TriggerClientEvent('HD-police:client:send:meter:alert', -1, Coords, StreetName)
 end)
 
 RegisterServerEvent('HD-police:server:send:alert:jewellery')
 AddEventHandler('HD-police:server:send:alert:jewellery', function(Coords, StreetName)
-   local AlertData = {title = "Juwelier Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Het vangelico juwelier alarm is zojuist afgegaan nabij "..StreetName}
+   local AlertData = {title = "Jewellery Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Jewellery robbery in progress at "..StreetName}
    TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
    TriggerClientEvent('HD-police:client:send:alert:jewellery', -1, Coords, StreetName)
 end)
 
 RegisterServerEvent('HD-police:server:send:alert:store')
 AddEventHandler('HD-police:server:send:alert:store', function(Coords, StreetName, StoreNumber)
-   local AlertData = {title = "Winkel Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Het alarm van winkel: "..StoreNumber..' is afgegaan nabij '..StreetName}
+   local AlertData = {title = "Store Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Store robbery: "..StoreNumber..' currently being robbed at '..StreetName}
    TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
    TriggerClientEvent('HD-police:client:send:alert:store', -1, Coords, StreetName, StoreNumber)
 end)
 
 RegisterServerEvent('HD-police:server:send:house:alert')
 AddEventHandler('HD-police:server:send:house:alert', function(Coords, StreetName)
-   local AlertData = {title = "Huis Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Er is een huis alarm systeem afgegaan nabij "..StreetName}
+   local AlertData = {title = "Huis Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "House alarm has been pressed at "..StreetName}
    TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
    TriggerClientEvent('HD-police:client:send:house:alert', -1, Coords, StreetName)
 end)
 
 RegisterServerEvent('HD-police:server:send:banktruck:alert')
 AddEventHandler('HD-police:server:send:banktruck:alert', function(Coords, Plate, StreetName)
-   local AlertData = {title = "Bankwagen Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Er is een bank truck alarm systeem afgegaan met het kenteken: "..Plate..'. near '..StreetName}
+   local AlertData = {title = "Bankwagen Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Bank truck robbery started. Plate: "..Plate..'. near '..StreetName}
    TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
    TriggerClientEvent('HD-police:client:send:banktruck:alert', -1, Coords, Plate, StreetName)
 end)
 
-RegisterServerEvent('HD-police:server:send:auto:alert')
-AddEventHandler('HD-police:server:send:auto:alert', function(Coords, Plate, StreetName)
-   local AlertData = {title = "Voertuig Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Er is een voertuig alarm systeem afgegaan met het kenteken: "..Plate..'. near '..StreetName}
-   TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
-   TriggerClientEvent('HD-police:client:send:auto:alert', -1, Coords, Plate, StreetName)
-end)
 
 RegisterServerEvent('HD-police:server:send:weaponrobbery:alert')
 AddEventHandler('HD-police:server:send:weaponrobbery:alert', function(Coords, Plate, StreetName)
-   local AlertData = {title = "Wapenwinkel Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Wapenwinkel alarm is zojuist afgegaan nabij "..StreetName}
+   local AlertData = {title = "Ammunation Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Ammunation is being robbed near "..StreetName}
    TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
    TriggerClientEvent('HD-police:client:send:ammunation:alert', -1, Coords, StreetName)
-end)
-
-RegisterServerEvent('HD-police:client:send:attempt:blackout:alert')
-AddEventHandler('HD-police:client:send:attempt:blackout:alert', function(Coords, StreetName)
-   local AlertData = {title = "Inbraak Elektriciteitscentrum", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Inbraak bij elektriciteitscentrum nabij "..StreetName.."."}
-   TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
-   TriggerClientEvent('HD-police:client:send:attempt:blackout:alert', -1, Coords, StreetName)
-end)
-
-RegisterServerEvent('HD-police:client:send:blackout:alert')
-AddEventHandler('HD-police:client:send:blackout:alert', function(Coords, StreetName)
-   local AlertData = {title = "Stroomuitval", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Inbraak bij elektriciteitscentrum nabij "..StreetName.." die tot stroomuitval heeft geleid."}
-   TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
-   TriggerClientEvent('HD-police:client:send:blackout:alert', -1, Coords, StreetName)
-end)
-
-RegisterServerEvent('HD-police:server:send:run:alert')
-AddEventHandler('HD-police:server:send:run:alert', function(Coords, StreetName)
-   local AlertData = {title = "Verdachte situatie", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Er is verdachte situatie gemeld nabij "..StreetName}
-   TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
-   TriggerClientEvent('HD-police:client:send:run:alert', -1, Coords, StreetName)
-end)
-
-RegisterServerEvent('HD-police:server:send:drugs:alert')
-AddEventHandler('HD-police:server:send:drugs:alert', function(Coords, StreetName)
-   local AlertData = {title = "Verdachte situatie", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Er is verdachte situatie gemeld nabij "..StreetName..". Mogelijks drugshandel."}
-   TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
-   TriggerClientEvent('HD-police:client:send:drugs:alert', -1, Coords, StreetName)
 end)

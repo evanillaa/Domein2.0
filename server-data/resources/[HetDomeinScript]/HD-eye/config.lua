@@ -192,7 +192,7 @@ Config.ObjectOptions = {
     -- Koffie
     [GetHashKey('prop_vend_coffe_01')] = {
         [1] = {
-            ['Name'] = 'Coffee Machine',
+            ['Name'] = 'Koffie Machine',
             ['EventType'] = 'Client',
             ['Logo'] = '<i class="fas fa-coffee"></i>',
             ['EventName'] = 'HD-stores:client:open:custom:store',
@@ -202,11 +202,41 @@ Config.ObjectOptions = {
     -- Vending
     [GetHashKey('prop_vend_snak_01')] = {
         [1] = {
-            ['Name'] = 'Candy Machine',
+            ['Name'] = 'Snoep Automaat',
             ['EventType'] = 'Client',
             ['Logo'] = '<i class="fas fa-candy-cane"></i>',
             ['EventName'] = 'HD-stores:client:open:custom:store',
             ['EventParameter'] = 'Vending',
+        },
+    },
+    -- Watermachine
+    [GetHashKey('prop_watercooler')] = {
+        [1] = {
+            ['Name'] = 'Watermachine',
+            ['EventType'] = 'Client',
+            ['Logo'] = '<i class="fas fa-candy-cane"></i>',
+            ['EventName'] = 'HD-stores:client:open:custom:store',
+            ['EventParameter'] = 'Watertje',
+        },
+    },
+    -- Colamachine1
+    [GetHashKey('prop_vend_soda_01')] = {
+        [1] = {
+            ['Name'] = 'Drankautomaat',
+            ['EventType'] = 'Client',
+            ['Logo'] = '<i class="fas fa-candy-cane"></i>',
+            ['EventName'] = 'HD-stores:client:open:custom:store',
+            ['EventParameter'] = 'Drankautomaat',
+        },
+    },
+    -- Colamachine2
+    [GetHashKey('prop_vend_soda_02')] = {
+        [1] = {
+            ['Name'] = 'Drankautomaat',
+            ['EventType'] = 'Client',
+            ['Logo'] = '<i class="fas fa-candy-cane"></i>',
+            ['EventName'] = 'HD-stores:client:open:custom:store',
+            ['EventParameter'] = 'Drankautomaat',
         },
     },
     -- -- Store
@@ -447,13 +477,7 @@ Config.VehicleMenu = {
         ['EventType'] = 'Client',
         ['Logo'] = '<i class="fas fa-couch"></i>',
         ['EventName'] = 'HD-eye:client:getout:trunk',
-    },
-    [4] = {
-        ['Name'] = 'Tanken',
-        ['EventType'] = 'Client',
-        ['Logo'] = '<i class="fas fa-couch"></i>',
-        ['EventName'] = 'HD-fuel:server:can:fuel',
-    },
+    },    
 }
 
 Config.CarDealerVehicleMenu = {

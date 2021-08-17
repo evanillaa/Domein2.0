@@ -4,39 +4,22 @@ TriggerEvent('HDCore:GetObject', function(obj) HDCore = obj end)
 
 -- Code
 
-HDCore.Commands.Add("jail", "Send a citizen to prison", {{name="id", help="Player ID"}, {name="tijd", help="Time in numbers to serve!"}}, true, function(source, args)
+HDCore.Commands.Add("jail", "Stop een burger in de cel", {{name="id", help="Speler ID"}, {name="tijd", help="Tijd hoelang hij moet zitten"}}, true, function(source, args)
     local Player = HDCore.Functions.GetPlayer(source)
     local JailPlayer = HDCore.Functions.GetPlayer(tonumber(args[1]))
-    if Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "judge" then
+    if Player.PlayerData.job.name == "police" then
         if JailPlayer ~= nil then
          local Time = tonumber(args[2])
          if Time > 0 then
             local Name = JailPlayer.PlayerData.charinfo.firstname..' '..JailPlayer.PlayerData.charinfo.lastname
             if JailPlayer.PlayerData.job.name ~= 'police' and JailPlayer.PlayerData.job.name ~= 'ambulance' then
-             JailPlayer.Functions.SetJob("unemployed")
-             TriggerClientEvent('HDCore:Notify', JailPlayer.PlayerData.source, "Je baan is op de hoogte gesteld en ze hebben je als werknemer verwijderd.", 'error')
+             JailPlayer.Functions.SetJob("unemployed", 1)             
+             TriggerClientEvent('HDCore:Notify', JailPlayer.PlayerData.source, "Je bent werkloos..", 'error')
             end
             JailPlayer.Functions.SetMetaData("jailtime", Time)
             TriggerClientEvent('HD-prison:client:set:in:jail', JailPlayer.PlayerData.source, Name, Time, JailPlayer.PlayerData.citizenid, os.date('%d-'..'%m-'..'%y'))
          end
       end
-    end
-end)
-
-HDCore.Commands.Add("rehab", "Send a citizen to a rehab clinic", {{name="id", help="Player ID"}, {name="tijd", help="Time in numbers to serve!"}}, true, function(source, args)
-    local src = source
-    local Player = HDCore.Functions.GetPlayer(source)
-    
-    if Player.PlayerData.job.name == "police" or Player.PlayerData.job.name == "judge" or Player.PlayerData.job.name == "ambulance" then
-        if args[1] then
-            if args[2] == true then
-                TriggerClientEvent("beginJailRehab", args[1], true)
-            else
-                TriggerClientEvent("beginJailRehab", args[1], false)
-            end
-        else
-            TriggerClientEvent('HDCore:Notify', source, 'No player found', 'error')
-        end
     end
 end)
 
@@ -89,37 +72,7 @@ AddEventHandler('HD-prison:server:find:reward', function(reward)
    TriggerClientEvent("HD-inventory:client:ItemBox", source, HDCore.Shared.Items[reward], "add")
 end)
 
-RegisterServerEvent('HD-prison:server:SecurityLockdown')
-AddEventHandler('HD-prison:server:SecurityLockdown', function()
-    local src = source
-    TriggerClientEvent("HD-prison:client:SetLockDown", -1, true)
-    for k, v in pairs(HDCore.Functions.GetPlayers()) do
-        local Player = HDCore.Functions.GetPlayer(v)
-        if Player ~= nil then 
-            if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
-                TriggerClientEvent("HD-prison:client:PrisonBreakAlert", v)
-            end
-        end
-	end
-end)
-
 RegisterServerEvent('HD-prison:server:set:alarm')
 AddEventHandler('HD-prison:server:set:alarm', function(bool)
     TriggerClientEvent('HD-prison:client:set:alarm', -1, bool)
-end)
-
-RegisterServerEvent('HD-prison:server:SetGateHit')
-AddEventHandler('HD-prison:server:SetGateHit', function(key)
-    local src = source
-    TriggerClientEvent("HD-prison:client:SetGateHit", -1, key, true)
-    if math.random(1, 100) <= 50 then
-        for k, v in pairs(HDCore.Functions.GetPlayers()) do
-            local Player = HDCore.Functions.GetPlayer(v)
-            if Player ~= nil then 
-                if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
-                    TriggerClientEvent("HD-prison:client:PrisonBreakAlert", v)
-                end
-            end
-        end
-    end
 end)

@@ -62,6 +62,12 @@ AddEventHandler('HD-stores:client:set:store:items', function(ItemData, Amount, S
     Config.Shops[ShopId]["Product"][ItemData.slot].amount = Config.Shops[ShopId]["Product"][ItemData.slot].amount - Amount
 end)
 
+RegisterNetEvent('HD-stores:client:open:custom:store')
+AddEventHandler('HD-stores:client:open:custom:store', function(ProductName)
+    local Shop = {label = ProductName, items = Config.Products[ProductName], slots = 30}
+    TriggerServerEvent("HD-inventory:server:OpenInventory", "shop", "custom", Shop)
+end)
+
 -- // Function \\ --
 
 function IsNearShop()

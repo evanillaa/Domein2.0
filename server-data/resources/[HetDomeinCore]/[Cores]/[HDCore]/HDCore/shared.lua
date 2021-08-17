@@ -193,6 +193,7 @@ Shared.Items = {
 	["phone"] 						 = {["name"] = "phone", 			 	  	  	["label"] = "Telefoon", 				["weight"] = 750, 		["type"] = "item", 		["image"] = "phone.png", 				["unique"] = false, 	["useable"] = false, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "A piece of technology"},
 	["sandwich"] 					 = {["name"] = "sandwich", 			 	  	  	["label"] = "Broodje", 					["weight"] = 125, 		["type"] = "item", 		["image"] = "bread.png", 				["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "A sandwich with toppings."},
 	["water"] 						 = {["name"] = "water", 			 	  	  	["label"] = "Water", 					["weight"] = 125, 		["type"] = "item", 		["image"] = "water.png", 				["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "Have a nice drink."},
+	["watertje"] 					 = {["name"] = "watertje", 			 	  	  	["label"] = "Watertje", 				["weight"] = 125, 		["type"] = "item", 		["image"] = "watertje.png", 			["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "Have a nice drink."},
 	["slushy"] 						 = {["name"] = "slushy", 			 	  	  	["label"] = "Slushi", 					["weight"] = 125, 		["type"] = "item", 		["image"] = "slushy.png", 				["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "Watch out for a brain freeze."},
 	["ecola"] 						 = {["name"] = "ecola", 			 	  	  	["label"] = "Cola", 					["weight"] = 125, 		["type"] = "item", 		["image"] = "ecola.png", 				["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "Can of coke."},
 	["sprunk"] 						 = {["name"] = "sprunk", 			 	  	  	["label"] = "Sprunk", 					["weight"] = 125, 		["type"] = "item", 		["image"] = "sprunk.png", 				["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "Can of sprunk?"},
@@ -307,6 +308,8 @@ Shared.Items = {
 	["tablet"] 				 		 = {["name"] = "tablet", 			 			["label"] = "Tablet", 					["weight"] = 450, 		["type"] = "item", 		["image"] = "tablet.png", 		["unique"] = false, 	["useable"] = false, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "Pretty Tablet"},
 	-- Extra ---
 	["stethoscoop"] 				 = {["name"] = "stethoscoop", 				   	["label"] = "Stethoscoop", 		    	["weight"] = 100, 		["type"] = "item", 		["image"] = "stethoscoop.png", 			["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,   ["combinable"] = nil,   ["description"] = "*Klopt klop, klop klop, klop klo..*."},
+	["coffee"] 				 		 = {["name"] = "coffee", 			  	  		["label"] = "Koffie", 					["weight"] = 200, 		["type"] = "item", 		["image"] = "coffee.png", 				["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "Lekker voor in de ochtend."},
+	["420-choco"] 				 	 = {["name"] = "420-choco", 			  	  	["label"] = "420 Chocolade", 			["weight"] = 200, 		["type"] = "item", 		["image"] = "420-choco.png", 			["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "420?"},
 
 }
 	

@@ -35,7 +35,7 @@ AddEventHandler('HDCore:Client:OnPlayerLoaded', function()
       HDCore.Functions.GetPlayerData(function(PlayerData)
       PlayerJob, onDuty = PlayerData.job, PlayerData.job.onduty 
       if PlayerJob.name == 'police' and PlayerData.job.onduty then
-       TriggerEvent('HD-radialmenu:client:update:duty:vehicles')
+       --TriggerEvent('HD-radialmenu:client:update:duty:vehicles')
        TriggerEvent('HD-police:client:set:radio')
        TriggerServerEvent("HD-police:server:UpdateBlips")
        TriggerServerEvent("HD-police:server:UpdateCurrentCops")
@@ -287,7 +287,7 @@ Citizen.CreateThread(function()
                             TriggerServerEvent("HD-outfits:server:openUI", true)
                         end
                     end
-                end
+                end]]
                 NearPoliceGarage = false
                 for k, v in pairs(Config.Locations['garage']) do 
                     local Area = GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, v['X'], v['Y'], v['Z'], true)
@@ -313,20 +313,20 @@ Citizen.CreateThread(function()
                     end
                 end
 
-                -- NearPoliceImpound = false
-                -- for k, v in pairs(Config.Locations['impound']) do 
-                --     local Area = GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, v['X'], v['Y'], v['Z'], true)
-                --     if Area < 4.0 then
-                --         NearAnything = true
-                --         NearPoliceImpound = true
-                --         GarageG = Police
-                --         DrawText3D(v['X'], v['Y'], v['Z'], "~r~E~w~ Impound")
-                --         if IsControlJustReleased(0, Config.Keys["E"]) then
+                NearPoliceImpound = false
+                for k, v in pairs(Config.Locations['impound']) do 
+                local Area = GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, v['X'], v['Y'], v['Z'], true)
+                    if Area < 4.0 then
+                        NearAnything = true
+                        NearPoliceImpound = true
+                        GarageG = Police
+                        DrawText3D(v['X'], v['Y'], v['Z'], "~r~E~w~ Impound")
+                        if IsControlJustReleased(0, Config.Keys["E"]) then
 
-                --             exports['HD-garages']:OpenImpoundGarage(GarageG)
-                --         end
-                --     end
-                -- end
+                            exports['HD-garages']:OpenImpoundGarage(GarageG)
+                        end
+                    end
+                end
 
                 for k, v in pairs(Config.Locations['personal-safe']) do 
                     local Area = GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, v['X'], v['Y'], v['Z'], true)
@@ -352,7 +352,7 @@ Citizen.CreateThread(function()
                             TriggerServerEvent("HD-inventory:server:OpenInventory", "shop", "police", Config.Items)
                         end
                     end
-                end
+            
 
 
               end
@@ -417,6 +417,31 @@ Citizen.CreateThread(function()
     end
 end)
 
+-- // Events \\ --
+
+-- Target actions
+RegisterNetEvent('HD-police:client:target:fingerscan')
+AddEventHandler('HD-police:client:target:fingerscan', function()
+    local Player = HDCore.Functions.GetClosestPlayer()
+    if Player ~= -1 then
+         TriggerServerEvent("HD-police:server:show:machine", GetPlayerServerId(Player))
+    else
+        HDCore.Functions.Notify("Niemand in de buurt!", "error")
+    end
+end)
+
+RegisterNetEvent('HD-police:client:target:wapenkluis')
+AddEventHandler('HD-police:client:target:wapenkluis', function()
+    SetWeaponSeries()
+    TriggerServerEvent("HD-inventory:server:OpenInventory", "shop", "police", Config.Items)
+end)
+
+RegisterNetEvent('HD-police:client:target:persoonlijkekluis')
+AddEventHandler('HD-police:client:target:persoonlijkekluis', function()
+    TriggerServerEvent("HD-inventory:server:OpenInventory", "stash", "personalsafe_"..HDCore.Functions.GetPlayerData().citizenid)
+    TriggerEvent("HD-inventory:client:SetCurrentStash", "personalsafe_"..HDCore.Functions.GetPlayerData().citizenid)
+end)
+-- End Target actions
 
 function format_thousand(v)
     local s = string.format("%d", math.floor(v))
@@ -428,7 +453,7 @@ end
 
 function GeneratePlate()
     local plate = tostring(GetRandomNumber(1)) .. GetRandomLetter(2) .. tostring(GetRandomNumber(3)) .. GetRandomLetter(2)
-    HDCore.Functions.ExecuteSql(true, "SELECT * FROM `player_vehicles` WHERE `plate` = '"..plate.."'", function(result)
+    HDCore.Functions.ExecuteSql(true, "SELECT * FROM `characters_vehicles` WHERE `plate` = '"..plate.."'", function(result)
         while (result[1] ~= nil) do
             plate = tostring(GetRandomNumber(1)) .. GetRandomLetter(2) .. tostring(GetRandomNumber(3)) .. GetRandomLetter(2)
         end
@@ -793,9 +818,6 @@ AddEventHandler('HD-police:client:impound:closest', function()
         HDCore.Functions.Notify("Geen voertuig in de buurt!", "error")
     end
 end)
-
-
-
 
 RegisterNetEvent('HD-police:client:ImpoundVehicle')
 AddEventHandler('HD-police:client:ImpoundVehicle', function(price)
@@ -1175,7 +1197,7 @@ function IsTargetDead(playerId)
   return IsDead
 end
 
-function GetVehicleList()
+--[[function GetVehicleList()
     local VehicleData = HDCore.Functions.GetPlayerData().metadata['duty-vehicles']
     local Vehicles = {}
     if VehicleData.Standard then
@@ -1202,6 +1224,37 @@ function GetVehicleList()
     if VehicleData.Motor then
         table.insert(Vehicles, "police:vehicle:motor")
         table.insert(Vehicles, "police:vehicle:pyamahamotor")
+    end
+    return Vehicles
+end]]
+
+function GetVehicleList()
+    local VehicleData = HDCore.Functions.GetPlayerData().metadata['duty-vehicles']
+    local Vehicles = {}
+    if VehicleData.Standard then
+        table.insert(Vehicles, "police:vehicle:lokaal:bfiets")
+        table.insert(Vehicles, "police:vehicle:lokaal:volvo")
+        table.insert(Vehicles, "police:vehicle:lokaal:lpcla45")
+        table.insert(Vehicles, "police:vehicle:lokaal:lpfocus")
+        table.insert(Vehicles, "police:vehicle:lokaal:pa6")
+        table.insert(Vehicles, "police:vehicle:lokaal:t6lpa")
+        table.insert(Vehicles, "vehicle:delete")
+    end
+    if VehicleData.Audi then
+        table.insert(Vehicles, "police:vehicle:federaal:t6fp")
+        table.insert(Vehicles, "police:vehicle:federaal:wp3")
+        table.insert(Vehicles, "police:vehicle:federaal:wpv70")
+        table.insert(Vehicles, "vehicle:delete")
+    end
+    if VehicleData.Unmarked then
+        table.insert(Vehicles, "police:vehicle:unmarked:pq7")
+    end
+    if VehicleData.Heli then 
+        table.insert(Vehicles, "police:vehicle:rago")
+    end
+    if VehicleData.Motor then
+        table.insert(Vehicles, "police:vehicle:motor:BMWMOTO")
+        table.insert(Vehicles, "police:vehicle:motor:bmwmoto2")
     end
     return Vehicles
 end
@@ -1233,3 +1286,4 @@ RegisterNUICallback('CloseNui', function()
     TaskPlayAnim(PlayerPedId(), "amb@code_human_in_bus_passenger_idles@female@tablet@base", "exit", 3.0, 3.0, -1, 49, 0, 0, 0, 0)
  end
 end)
+

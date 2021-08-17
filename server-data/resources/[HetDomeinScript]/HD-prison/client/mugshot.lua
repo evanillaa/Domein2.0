@@ -67,7 +67,7 @@ function JailIntro(Name, Months, CitizenId, Date)
     IsGoingToPhoto = false
     TriggerServerEvent("HD-prison:server:set:jail:items", Months)
     TriggerEvent('HD-prison:client:enter:prison', Months, true)
-    HDCore.Functions.Notify("You are in prison for "..Months.." month(s).", "error", 6500)
+    HDCore.Functions.Notify("Je zit in de gevangenis voor "..Months.." maanden..", "error", 6500)
 end
 
 -- // MugShot Board \\ --
@@ -98,9 +98,9 @@ function AddMugshot(Name, Months, CitizenId, Date)
  local PlayerCoords = GetEntityCoords(GetPlayerPed(-1))
  -- Set Information --
  PushScaleformMovieFunction(Scaleform, "SET_BOARD")
- PushScaleformMovieFunctionParameterString("POLICE LOS SANTOS")
+ PushScaleformMovieFunctionParameterString("POLITIE LOS SANTOS")
  PushScaleformMovieFunctionParameterString(Date) -- Datum
- PushScaleformMovieFunctionParameterString("Convicted for "..Months.." Months")  -- Veroordeeld
+ PushScaleformMovieFunctionParameterString("Veroordeeld voor "..Months.." Maand(en)")  -- Veroordeeld
  PushScaleformMovieFunctionParameterString(Name) -- Voornaam en Achternaam
  PushScaleformMovieFunctionParameterFloat(0.0)
  PushScaleformMovieFunctionParameterString(CitizenId) -- CitizenId
