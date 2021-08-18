@@ -614,4 +614,71 @@ Config.Doors = {
 		--['Molten-Model'] = 'hei_v_ilev_bk_gate_molten',
 		['ObjCoords'] = vector3(741.10890, -797.68630, 19.81090)
 	},
+		------ Bobcat Heist -------------------------------------------------
+	[35] = {
+		['DoorName'] = 'Bobcat voordeur',
+		['TextCoords'] = vector3(882.19042, -2257.908, 32.461288),
+		['Autorized'] = {
+			[1] = 'police',
+			[2] = 'judge',
+		},
+		['Heavy-Door'] = false,  
+		['Locking'] = false,
+		['Locked'] = true,
+		["Pickable"] = false,
+		["Distance"] = 2.5,
+		['Doors'] = {
+			[1] = {
+				['ObjName'] = 'apa_v_ilev_ss_door8',
+				['ObjYaw'] = -5.0,
+				['ObjCoords'] = vector3(882.77703, -2258.541, 32.441715)
+			},
+			[2] = {
+				['ObjName'] = 'apa_v_ilev_ss_door7',
+				['ObjYaw'] = -185.0,
+				['ObjCoords'] = vector3(881.64355, -2258.448, 32.441684)
+			},
+		}
+	},
+	[36] = {
+		['DoorName'] = 'Bobcat tussendeur',
+		['TextCoords'] = vector3(880.91265, -2264.487, 32.441707),
+		['Autorized'] = {
+			[1] = 'police',
+			[2] = 'judge',
+		},
+		['Heavy-Door'] = false,
+		['Locking'] = false,
+		['Locked'] = true,
+		["Pickable"] = false,
+		["Distance"] = 1.0,
+		['ObjYaw'] = 175.0,
+		['ObjName'] = 'v_ilev_cd_door2',
+		['ObjCoords'] = vector3(880.91265, -2264.487, 32.441707)
+	},
+	[37] = {
+		['DoorName'] = 'Bobcat achterste dubbeldeur',
+		['TextCoords'] = vector3(881.29302, -2267.806, 32.441703),
+		['Autorized'] = {
+			[1] = 'police',
+			[2] = 'judge',
+		},
+		['Heavy-Door'] = false,  
+		['Locking'] = false,
+		['Locked'] = true,
+		["Pickable"] = false,
+		["Distance"] = 2.5,
+		['Doors'] = {
+			[1] = {
+				['ObjName'] = 'v_ilev_ss_door03',
+				--['ObjYaw'] = 90.0,
+				['ObjCoords'] = vector3(880.02, -2268.18, 32.59)
+			},
+			[2] = {
+				['ObjName'] = 'v_ilev_ss_door03',
+				--['ObjYaw'] = 90.0,
+				['ObjCoords'] = vector3(882.61, -2268.40, 32.59)
+			},
+		}
+	},
 }

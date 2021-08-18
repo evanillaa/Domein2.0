@@ -308,19 +308,19 @@ AddEventHandler('fuze:bobcatdeur', function()
 	eersteanim()
 	Citizen.Wait(3500)
 	ExecuteCommand("fuze")
-    TriggerServerEvent('HD-doorlock:server:updateState', 33, false)
+    TriggerServerEvent('HD-doorlock:server:updateState', 35, false)
 end)
 
 RegisterCommand("fuze", function()
-    TriggerServerEvent('HD-doorlock:server:updateState', 33, false)
+    TriggerServerEvent('HD-doorlock:server:updateState', 35, false)
 end)
 
 RegisterCommand("fuze2", function()
-	TriggerServerEvent('HD-doorlock:server:updateState', 34, false)
+	TriggerServerEvent('HD-doorlock:server:updateState', 36, false)
 end)
 
 RegisterCommand("fuze3", function()
-	TriggerServerEvent('HD-doorlock:server:updateState', 35, false)
+	TriggerServerEvent('HD-doorlock:server:updateState', 37, false)
 end)
 
 --[[RegisterCommand("fuze4", function()
