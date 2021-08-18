@@ -119,24 +119,3 @@ AddEventHandler('HD-burgershot:server:sell:tickets', function()
     end
     TriggerClientEvent('HD-inventory:client:ItemBox', Player.PlayerData.source, HDCore.Shared.Items['burger-ticket'], "remove")
 end)
-
-
- -- burger-potato burger-raw
- RegisterServerEvent('HD-burgershot:job:goods')
- AddEventHandler('HD-burgershot:job:goods', function()
-     local src = source
-     local Player = HDCore.Functions.GetPlayer(src)
-         TriggerClientEvent('HD-inventory:client:ItemBox', src, HDCore.Shared.Items['burger-potato'], "add")
-         Player.Functions.AddItem('burger-potato', math.random(3, 8))
- 
-         TriggerClientEvent('HD-inventory:client:ItemBox', src, HDCore.Shared.Items['burger-raw'], "add")
-         Player.Functions.AddItem('burger-raw', math.random(3, 9))
- 
-         TriggerClientEvent('HD-inventory:client:ItemBox', src, HDCore.Shared.Items['burger-bun'], "add")
-         Player.Functions.AddItem('burger-bun', math.random(13, 19))
- 
-         
-         TriggerClientEvent('HD-inventory:client:ItemBox', src, HDCore.Shared.Items['burger-lettuce'], "add")
-         Player.Functions.AddItem('burger-lettuce', math.random(3, 8))
- end)
- 

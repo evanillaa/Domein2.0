@@ -372,6 +372,30 @@ AddEventHandler('HD-police:client:send:blackout:alert', function(Coords, StreetN
  end
 end)
 
+RegisterNetEvent('HD-police:client:send:parkeermeter:alert')
+AddEventHandler('HD-police:client:send:parkeermeter:alert', function(Coords, StreetName)
+ if (HDCore.Functions.GetPlayerData().job.name == "police") and HDCore.Functions.GetPlayerData().job.onduty then 
+    TriggerEvent('HD-alerts:client:send:alert', {
+        timeOut = 15000,
+        alertTitle = "Parkeermeter Diefstal",
+        priority = 0,
+        coords = {
+            x = Coords.x,
+            y = Coords.y,
+            z = Coords.z,
+        },
+        details = {
+            [1] = {
+                icon = '<i class="fas fa-globe-europe"></i>',
+                detail = StreetName,
+            },
+        },
+        dienstnummer = 'CIC',
+    }, true)
+    AddAlert('Parkeermeter Diefstal', 164, 250, Coords, false)
+ end
+end)
+
 RegisterNetEvent('HD-police:client:send:tracker:alert')
 AddEventHandler('HD-police:client:send:tracker:alert', function(Coords, Name)
     if (HDCore.Functions.GetPlayerData().job.name == "police") and HDCore.Functions.GetPlayerData().job.onduty then

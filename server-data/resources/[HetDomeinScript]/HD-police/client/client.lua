@@ -287,7 +287,7 @@ Citizen.CreateThread(function()
                             TriggerServerEvent("HD-outfits:server:openUI", true)
                         end
                     end
-                end]]
+                end
                 NearPoliceGarage = false
                 for k, v in pairs(Config.Locations['garage']) do 
                     local Area = GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, v['X'], v['Y'], v['Z'], true)
@@ -313,20 +313,20 @@ Citizen.CreateThread(function()
                     end
                 end
 
-                NearPoliceImpound = false
-                for k, v in pairs(Config.Locations['impound']) do 
-                local Area = GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, v['X'], v['Y'], v['Z'], true)
-                    if Area < 4.0 then
-                        NearAnything = true
-                        NearPoliceImpound = true
-                        GarageG = Police
-                        DrawText3D(v['X'], v['Y'], v['Z'], "~r~E~w~ Impound")
-                        if IsControlJustReleased(0, Config.Keys["E"]) then
+                -- NearPoliceImpound = false
+                -- for k, v in pairs(Config.Locations['impound']) do 
+                --     local Area = GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, v['X'], v['Y'], v['Z'], true)
+                --     if Area < 4.0 then
+                --         NearAnything = true
+                --         NearPoliceImpound = true
+                --         GarageG = Police
+                --         DrawText3D(v['X'], v['Y'], v['Z'], "~r~E~w~ Impound")
+                --         if IsControlJustReleased(0, Config.Keys["E"]) then
 
-                            exports['HD-garages']:OpenImpoundGarage(GarageG)
-                        end
-                    end
-                end
+                --             exports['HD-garages']:OpenImpoundGarage(GarageG)
+                --         end
+                --     end
+                -- end
 
                 for k, v in pairs(Config.Locations['personal-safe']) do 
                     local Area = GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, v['X'], v['Y'], v['Z'], true)
@@ -349,10 +349,11 @@ Citizen.CreateThread(function()
                         DrawMarker(2, v['X'], v['Y'], v['Z'], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, 1, false, false, false)
                         if IsControlJustReleased(0, Config.Keys["E"]) then
                             SetWeaponSeries()
-                            TriggerServerEvent("HD-inventory:server:OpenInventory", "shop", "police", Config.Items)
+                            --TriggerServerEvent("HD-inventory:server:OpenInventory", "shop", "police", Config.Items)
+                            TriggerServerEvent("HD-wapenkluis:enter:code")
                         end
                     end
-            
+                end
 
 
               end
@@ -453,7 +454,7 @@ end
 
 function GeneratePlate()
     local plate = tostring(GetRandomNumber(1)) .. GetRandomLetter(2) .. tostring(GetRandomNumber(3)) .. GetRandomLetter(2)
-    HDCore.Functions.ExecuteSql(true, "SELECT * FROM `characters_vehicles` WHERE `plate` = '"..plate.."'", function(result)
+    HDCore.Functions.ExecuteSql(true, "SELECT * FROM `player_vehicles` WHERE `plate` = '"..plate.."'", function(result)
         while (result[1] ~= nil) do
             plate = tostring(GetRandomNumber(1)) .. GetRandomLetter(2) .. tostring(GetRandomNumber(3)) .. GetRandomLetter(2)
         end

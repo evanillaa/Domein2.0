@@ -45,7 +45,7 @@ end)
 
 function IsVehicleOwned(plate)
     local val = false
-	HDCore.Functions.ExecuteSql(true, "SELECT * FROM `characters_vehicles` WHERE `plate` = '"..plate.."'", function(result)
+	HDCore.Functions.ExecuteSql(true, "SELECT * FROM `player_vehicles` WHERE `plate` = '"..plate.."'", function(result)
 		if (result[1] ~= nil) then
 			val = true
 		else
@@ -342,7 +342,7 @@ end
 
 HDCore.Functions.CreateCallback('HD-police:GetPoliceVehicles', function(source, cb)
     local vehicles = {}
-    exports['ghmattimysql']:execute('SELECT * FROM characters_vehicles WHERE state = @state', {['@state'] = "impound"}, function(result)
+    exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE state = @state', {['@state'] = "impound"}, function(result)
         if result[1] ~= nil then
             vehicles = result
         end
@@ -782,6 +782,15 @@ AddEventHandler('HD-police:server:rob:player', function(playerId)
     Player.Functions.SetMetaData("lockpickrep", Player.PlayerData.metadata["lockpickrep"]+1)
 end)
 
+--[[RegisterServerEvent('HD-police:server:send:call:alert')
+AddEventHandler('HD-police:server:send:call:alert', function(Coords, Message)
+ local Player = HDCore.Functions.GetPlayer(source)
+ local Name = Player.PlayerData.charinfo.firstname..' '..Player.PlayerData.charinfo.lastname
+ local AlertData = {title = "112 Melding - "..Player.PlayerData.charinfo.firstname .. " " .. Player.PlayerData.charinfo.lastname .. " ("..source..")", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = Message}
+ TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
+ TriggerClientEvent('HD-police:client:send:message', -1, Coords, Message, Name)
+end)]]
+
 RegisterServerEvent('HD-police:server:send:call:alert')
 AddEventHandler('HD-police:server:send:call:alert', function(Coords, Message)
  local Player = HDCore.Functions.GetPlayer(source)
@@ -813,7 +822,7 @@ AddEventHandler('HD-police:server:hardimpound', function(plate, price)
     local price = price ~= nil and price or 1000
     local state = "in"
     if IsVehicleOwned(plate) then
-            exports['ghmattimysql']:execute('UPDATE characters_vehicles SET garage = "Police", state = @state, depotprice = @depotprice WHERE plate = @plate', {['@garage'] = "Police", ['@state'] = "in", ['@depotprice'] = price, ['@plate'] = plate})
+            exports['ghmattimysql']:execute('UPDATE player_vehicles SET garage = "Police", state = @state, depotprice = @depotprice WHERE plate = @plate', {['@garage'] = "Police", ['@state'] = "in", ['@depotprice'] = price, ['@plate'] = plate})
             TriggerClientEvent('HDCore:Notify', src, "Voertuig opgenomen in depot voor €"..price.."!")
     end
 end)
@@ -892,10 +901,16 @@ AddEventHandler('HD-police:server:send:banktruck:alert', function(Coords, Plate,
    TriggerClientEvent('HD-police:client:send:banktruck:alert', -1, Coords, Plate, StreetName)
 end)
 
-
 RegisterServerEvent('HD-police:server:send:weaponrobbery:alert')
 AddEventHandler('HD-police:server:send:weaponrobbery:alert', function(Coords, Plate, StreetName)
    local AlertData = {title = "Ammunation Alarm", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Ammunation is being robbed near "..StreetName}
    TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
    TriggerClientEvent('HD-police:client:send:ammunation:alert', -1, Coords, StreetName)
+end)
+
+RegisterServerEvent('HD-police:server:send:parkeermeter:alert')
+AddEventHandler('HD-police:server:send:parkeermeter:alert', function(Coords, StreetName)
+   local AlertData = {title = "Parkeermeter Diefstal", coords = {x = Coords.x, y = Coords.y, z = Coords.z}, description = "Er is een parkeermeter diefstal gemeld nabij "..StreetName}
+   TriggerClientEvent("HD-phone:client:addPoliceAlert", -1, AlertData)
+   TriggerClientEvent('HD-police:client:send:parkeermeter:alert', -1, Coords, StreetName)
 end)

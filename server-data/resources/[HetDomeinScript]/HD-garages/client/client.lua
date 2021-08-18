@@ -123,12 +123,12 @@ RegisterNUICallback('TakeOutVehicle', function(data)
         end, data.Plate)
       end, CoordTable, true, false)
     else
-        HDCore.Functions.Notify("Uw voertuig is in het Depot.", "info", 3500)
+        HDCore.Functions.Notify("Staat je voertuig in het depot??", "info", 3500)
     end
   elseif IsNearDepot() then
     HDCore.Functions.TriggerCallback('HD-garage:server:pay:depot', function(DidPayment)
       if DidPayment then
-        local CoordTable = {x = 491.59, y = -1314.14, z = 29.25, a = 299.67}
+        local CoordTable = {x = -187.44, y = -1173.89, z = 22.87, a = 197.61}
         HDCore.Functions.SpawnVehicle(data.Model, function(Vehicle)
         HDCore.Functions.TriggerCallback('HD-garage:server:get:vehicle:mods', function(Mods)
         HDCore.Functions.SetVehicleProperties(Vehicle, Mods)
@@ -251,8 +251,8 @@ end
 
 function IsNearDepot()
   local PlayerCoords = GetEntityCoords(PlayerPedId())
-  local Distance = GetDistanceBetweenCoords(PlayerCoords, 491.03, -1313.82, 29.25, true) 
-  if Distance < 10.0 then
+  local Distance = GetDistanceBetweenCoords(PlayerCoords, -192.0, -1162.48, 23.67, true) 
+  if Distance < 30.0 then
     return true
   end
 end
@@ -323,30 +323,9 @@ function OpenHouseGarage(HouseId)
           Citizen.InvokeNative(0xFC695459D4D0E219, 0.9, 0.25)
           SendNUIMessage({action = "OpenGarage", garagevehicles = VehicleTable})
       else
-        HDCore.Functions.Notify("Je hebt geen voertuigen in deze garage..", "error", 5000)
+        HDCore.Functions.Notify("You have no vehicles or boats in this garage", "error", 5000)
       end
   end, HouseId)
-end
-
-
-function OpenImpoundGarage(Station)
-  local VehicleTable = {}
-  PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
-  HDCore.Functions.TriggerCallback("HD-garage:server:GetPoliceVehicles", function(result)
-      if result ~= nil then
-          for k, v in pairs(result) do
-              local Vehicle = {}
-              local MetaData = json.decode(v.metadata)
-              Vehicle = {['Name'] = HDCore.Shared.Vehicles[v.vehicle]['name'], ['Model'] = v.vehicle, ['Plate'] = v.plate, ['Garage'] = v.garage, ['State'] = v.state, ['Fuel'] = MetaData.Fuel, ['Motor'] = math.ceil(MetaData.Engine), ['Body'] = math.ceil(MetaData.Body)}
-              table.insert(VehicleTable, Vehicle)
-          end
-          SetNuiFocus(true, true)
-          Citizen.InvokeNative(0xFC695459D4D0E219, 0.9, 0.25)
-          SendNUIMessage({action = "OpenGarage", garagevehicles = VehicleTable})
-      else
-        HDCore.Functions.Notify("Het depot is leeg..", "error", 5000)
-      end
-  end, Station)
 end
 
 function SetVehicleInHouseGarage(HouseId)

@@ -23,6 +23,5 @@ exports {
  'IsNearBoatDepot',
  'IsNearGarage',
  'OpenHouseGarage',
- 'OpenImpoundGarage',
  'SetVehicleInHouseGarage',
 }

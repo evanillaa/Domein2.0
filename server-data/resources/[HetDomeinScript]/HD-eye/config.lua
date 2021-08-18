@@ -16,7 +16,7 @@ Config.ObjectOptions = {
             ['Name'] = 'Openbreken',
             ['EventType'] = 'Client',
             ['Logo'] = '<i class="far fa-credit-card"></i>',
-            ['EventName'] = 'HD-parkmeter:client:open',
+            ['EventName'] = 'HD-items:client:use:lockpick',
         },
     },
     [GetHashKey('prop_parknmeter_01')] = {
@@ -24,7 +24,7 @@ Config.ObjectOptions = {
             ['Name'] = 'Openbreken',
             ['EventType'] = 'Client',
             ['Logo'] = '<i class="far fa-credit-card"></i>',
-            ['EventName'] = 'HD-parkmeter:client:open',
+            ['EventName'] = 'HD-items:client:use:lockpick',
         },
     },
     [GetHashKey('prop_atm_02')] = {
@@ -51,21 +51,13 @@ Config.ObjectOptions = {
             ['EventName'] = 'HD-banking:client:open:atm',
         },
     },
-    [GetHashKey('v_ind_cs_bucket')] = {
+    [GetHashKey('P_Notepad_01_S')] = {
         ['Job'] = 'police',
         [1] = {
             ['Name'] = 'In / Out Duty',
             ['EventType'] = 'Server',
             ['Logo'] = '<i class="fas fa-user-clock"></i>',
             ['EventName'] = 'HDCore:ToggleDuty',
-        },
-    },
-    [GetHashKey('vw_prop_casino_roulette_01')] = {
-        [1] = {
-            ['Name'] = 'Play',
-            ['EventType'] = 'Client',
-            ['Logo'] = '<i class="fas fa-comments"></i>',
-            ['EventName'] = 'route68_ruletka:start',
         },
     },
     [GetHashKey('p_amb_clipboard_01')] = {
@@ -211,6 +203,16 @@ Config.ObjectOptions = {
     },
     -- Watermachine
     [GetHashKey('prop_watercooler')] = {
+        [1] = {
+            ['Name'] = 'Watermachine',
+            ['EventType'] = 'Client',
+            ['Logo'] = '<i class="fas fa-candy-cane"></i>',
+            ['EventName'] = 'HD-stores:client:open:custom:store',
+            ['EventParameter'] = 'Watertje',
+        },
+    },
+    -- Watermachine
+    [GetHashKey('prop_watercooler_dark')] = {
         [1] = {
             ['Name'] = 'Watermachine',
             ['EventType'] = 'Client',
@@ -455,6 +457,15 @@ Config.ObjectOptions = {
             ['EventType'] = 'Client',
             ['Logo'] = '<i class="fas fa-receipt"></i>',
             ['EventName'] = 'HD-illegal:client:talk:to:npc',
+        },
+    },
+    -- Bobcatheist
+    [GetHashKey('cs_drfriedlander')] = {
+        [1] = {
+            ['Name'] = 'Kaboem',
+            ['EventType'] = 'Client',
+            ['Logo'] = '<i class="fas fa-bomb"></i>',
+            ['EventName'] = 'fuze:pedwalk',
         },
     },
 }

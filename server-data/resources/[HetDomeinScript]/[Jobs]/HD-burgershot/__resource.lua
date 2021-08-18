@@ -5,7 +5,6 @@ ui_page {'html/index.html'}
 client_scripts {
  'config.lua',
  'client/client.lua',
- 'client/job.lua',
 }
 
 server_scripts {

@@ -41,6 +41,7 @@ AddEventHandler('HD-items:client:drink', function(ItemName, PropName)
     				 TriggerEvent("HD-inventory:client:ItemBox", HDCore.Shared.Items[ItemName], "remove")
     				 StopAnimTask(PlayerPedId(), 'amb@world_human_drinking@coffee@male@idle_a', "idle_c", 1.0)
     				 TriggerServerEvent("HDCore:Server:SetMetaData", "thirst", HDCore.Functions.GetPlayerData().metadata["thirst"] + math.random(20, 35))
+				 
     			 end, function()
 					DoingSomething = false
     				exports['HD-assets']:RemoveProp()
