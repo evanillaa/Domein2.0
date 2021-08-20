@@ -128,25 +128,6 @@ AddEventHandler('HD-radialmenu:client:force:close', function()
   })
 end)
 
-
-RegisterNetEvent('HD-radialmenu:client:refresh')
-AddEventHandler('HD-radialmenu:client:refresh', function()
-    HDCore.Functions.Progressbar("reset-f1", "F1 wordt gereset..", 1200, false, true, {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {}, {}, {}, function() -- Done
-        showMenu = false
-        SetNuiFocus(false, false)
-        SendNUIMessage({
-            state = 'destroy'
-        })
-    end, function() -- Cancel
-    end)
-end)
-
-
 RegisterNUICallback('closemenu', function(data, cb)
  showMenu = false
  SetNuiFocus(false, false)

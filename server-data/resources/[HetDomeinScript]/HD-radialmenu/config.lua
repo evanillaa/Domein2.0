@@ -4,7 +4,7 @@ HasHandCuffs = false
 Config = Config or {}
 
 Config.Keys = {["F1"] = 288}
-Config.Locale = "en"
+
 Config.Menu = {
  [1] = {
     id = "citizen",
@@ -15,11 +15,11 @@ Config.Menu = {
             return true
         end
     end,
-    subMenus = {"citizen:escort", 'citizen:steal', 'citizen:contact', 'citizen:vehicle:getout', 'citizen:vehicle:getin', 'citizen:corner:selling', 'favo:radio:one'}
+    subMenus = {"citizen:escort", 'citizen:steal', 'citizen:contact', 'citizen:vehicle:getout', 'citizen:vehicle:getin', 'citizen:corner:selling'}
  },
  [2] = {
     id = "animations",
-    displayName = "Walkstyles",
+    displayName = "Walkstyle",
     icon = "#walking",
     enableMenu = function()
        if not exports['HD-hospital']:GetDeathStatus() then
@@ -30,7 +30,7 @@ Config.Menu = {
  },
  [3] = {
      id = "expressions",
-     displayName = "Expressions",
+     displayName = "Facial Expressions",
      icon = "#expressions",
      enableMenu = function()
          if not exports['HD-hospital']:GetDeathStatus() then
@@ -48,7 +48,7 @@ Config.Menu = {
             return true
         end
     end,
-    subMenus = {"police:panic", "police:search", "police:tablet", "police:impound", "police:impoundhard", "police:resetdoor", "police:enkelband", "police:checkstatus"}
+    subMenus = {"police:checkstatus", "police:panic", "police:search", "police:tablet", "police:impound", "police:impoundhard", "police:resetdoor", "police:enkelband", "police:badge"}
  },
  [5] = {
     id = "police",
@@ -112,12 +112,15 @@ Config.Menu = {
             end
         end
     end,
-    subMenus = {"vehicle:flip", "vehicle:key", "vehicle:extra", "vehicle:extra2", "vehicle:extra3", "vehicle:extra4"}
+    subMenus = {"vehicle:flip", "vehicle:key", "vehicle:extra", "vehicle:extra2", "vehicle:extra3", "vehicle:extra4", "vehicle:extra5", "vehicle:extra6",}
  },
  [10] = {
     id = "vehicle-doors",
     displayName = "Vehicle Doors",
     icon = "#citizen-action-vehicle",
+    close = true,
+    functiontype = "client",
+    functionName = "veh:options",
     enableMenu = function()
         if not exports['HD-hospital']:GetDeathStatus() then
             if IsPedSittingInAnyVehicle(PlayerPedId()) and not IsPedInAnyBoat(PlayerPedId()) and not IsPedInAnyHeli(PlayerPedId()) and not IsPedOnAnyBike(PlayerPedId()) then
@@ -125,7 +128,6 @@ Config.Menu = {
             end
         end
     end,
-    subMenus = {"vehicle:door:motor", "vehicle:door:left:front", "vehicle:door:right:front", "vehicle:door:trunk", "vehicle:door:right:back", "vehicle:door:left:back"}
  },
  [11] = {
     id = "police-garage",
@@ -153,22 +155,7 @@ Config.Menu = {
     end,
     subMenus = {"garage:putin", "garage:getout"}
  },
- --[[[13] = {
-    id = "door",
-    displayName = "Doorlock",
-    icon = "#global-doors",
-    close = true,
-    functiontype = "client",
-    functionName = "HD-doorlock:client:toggle:locks",
-    enableMenu = function()
-        if not exports['HD-hospital']:GetDeathStatus() then
-            if exports['HD-doorlock']:CanOpenDoor() then
-                return true
-            end
-        end
-  end,
- },]]
- [14] = {
+ [13] = {
     id = "atm",
     displayName = "ATM",
     icon = "#global-card",
@@ -183,7 +170,7 @@ Config.Menu = {
         end
   end,
  },
- [15] = {
+ [14] = {
     id = "atm",
     displayName = "Bank",
     icon = "#global-bank",
@@ -198,9 +185,9 @@ Config.Menu = {
         end
   end,
  },
- [16] = {
+ [15] = {
     id = "shop",
-    displayName = "Store",
+    displayName = "Shop",
     icon = "#global-store",
     close = true,
     functiontype = "client",
@@ -213,7 +200,7 @@ Config.Menu = {
         end
   end,
  },
- [17] = {
+ [16] = {
     id = "appartment",
     displayName = "Go Inside",
     icon = "#global-appartment",
@@ -229,7 +216,7 @@ Config.Menu = {
         end
   end,
  },
- [18] = {
+ [17] = {
     id = "depot",
     displayName = "Depot",
     icon = "#global-depot",
@@ -245,7 +232,7 @@ Config.Menu = {
         end
   end,
  },
- [19] = {
+ [18] = {
     id = "housing",
     displayName = "Go Inside",
     icon = "#global-appartment",
@@ -261,7 +248,7 @@ Config.Menu = {
         end
   end,
  },
- [20] = {
+ [19] = {
     id = "housing-options",
     displayName = "House Options",
     icon = "#citizen-action-garage",
@@ -274,7 +261,7 @@ Config.Menu = {
     end,
     subMenus = {"house:setstash", "house:setlogout", "house:setclothes", "house:givekey", "house:decorate" }
  },
- [21] = {
+ [20] = {
     id = "judge-actions",
     displayName = "Judge",
     icon = "#judge-actions",
@@ -285,7 +272,7 @@ Config.Menu = {
     end,
     subMenus = {"judge:tablet", "judge:job", "police:tablet"}
  },
- [22] = {
+ [21] = {
     id = "ambulance-garage",
     displayName = "Ambulance Garage",
     icon = "#citizen-action-garage",
@@ -298,7 +285,7 @@ Config.Menu = {
     end,
     subMenus = {"ambulance:garage:sprinter", "ambulance:garage:touran", "ambulance:garage:heli", "vehicle:delete"}
  },
- [23] = {
+ [22] = {
     id = "scrapyard",
     displayName = "Scrap Vehicle",
     icon = "#police-action-vehicle-spawn",
@@ -313,9 +300,9 @@ Config.Menu = {
         end
   end,
  },
- [24] = {
+ [23] = {
     id = "trash",
-    displayName = "Trashbins",
+    displayName = "Search Bin",
     icon = "#global-trash",
     close = true,
     functiontype = "client",
@@ -328,7 +315,7 @@ Config.Menu = {
         end
   end,
  },
-  [25] = {
+  [24] = {
     id = "cityhall",
     displayName = "Cityhall",
     icon = "#global-cityhall",
@@ -343,9 +330,9 @@ Config.Menu = {
         end
   end,
  },
- [26] = {
+ [25] = {
     id = "dealer",
-    displayName = "Dealer",
+    displayName = "Dealer Shop",
     icon = "#global-dealer",
     close = true,
     functiontype = "client",
@@ -358,7 +345,7 @@ Config.Menu = {
         end
   end,
  },
- [27] = {
+ [26] = {
     id = "traphouse",
     displayName = "Traphouse",
     icon = "#global-appartment",
@@ -373,9 +360,9 @@ Config.Menu = {
         end
   end,
  },
- [28] = {
+ [27] = {
     id = "tow-menu",
-    displayName = "Tow",
+    displayName = "Tow Actions",
     icon = "#citizen-action-garage",
     enableMenu = function()
         if not exports['HD-hospital']:GetDeathStatus() and HDCore.Functions.GetPlayerData().job.name == 'tow' then
@@ -383,32 +370,21 @@ Config.Menu = {
         end
     end,
     subMenus = {"tow:hook", "tow:npc"}
---  },
---  [29] = {
---     id = "police-impound",
---     displayName = "Police Impound",
---     icon = "#citizen-action-garage",
---     enableMenu = function()
---         if not exports['HD-hospital']:GetDeathStatus() then
---             if exports['HD-police']:GetImpoundStatus() then
---                 return true
---             end
---         end
---     end,
---     subMenus = {}
  },
- [29] = {
-    id = "taxi",
-    displayName = "Taxi",
-    icon = "#taxi-action",
+ [28] = {
+    id = "police-impound",
+    displayName = "Police Impound",
+    icon = "#citizen-action-garage",
     enableMenu = function()
-        if not exports['HD-hospital']:GetDeathStatus() and HDCore.Functions.GetPlayerData().job.name == 'taxi' and HDCore.Functions.GetPlayerData().job.onduty then
-            return true
+        if not exports['HD-hospital']:GetDeathStatus() then
+            if exports['HD-police']:GetImpoundStatus() then
+                return true
+            end
         end
     end,
-    subMenus = {"taxi:togglemeter", "taxi:start", "taxi:npcmission"}
+    subMenus = {}
  },
- [30] = {
+ [29] = {
     id = "cuff",
     displayName = "Cuff",
     icon = "#citizen-action-cuff",
@@ -421,22 +397,33 @@ Config.Menu = {
         end
   end,
  },
- [31] = {
-    id = "recycle",
-    displayName = "Recycle",
+ [30] = {
+    id = "taxi",
+    displayName = "Taxi",
+    icon = "#taxi-action",
+    enableMenu = function()
+        if HDCore.Functions.GetPlayerData().job.name == 'taxi' then
+            return true
+        end
+    end,
+    subMenus = {"taxi:togglemeter", "taxi:mouse", "taxi:npc"}
+ },
+ --[[31] = {
+    id = "door",
+    displayName = "Doorlock",
     icon = "#global-doors",
     close = true,
     functiontype = "client",
-    functionName = "HD-recycle:openrecycle",
+    functionName = "HD-doorlock:client:toggle:locks",
     enableMenu = function()
         if not exports['HD-hospital']:GetDeathStatus() then
-            if exports['HD-recycle']:RecycleStatus() then
+            if exports['HD-doorlock']:CanOpenDoor() then
                 return true
             end
         end
   end,
- },
- [32] = {
+ },]]
+[32] = {
     id = "mechanic",
     displayName = "Mechanic",
     icon = "#citizen-action-vehicle",
@@ -447,517 +434,23 @@ Config.Menu = {
     end,
     subMenus = {"mechanic:repair"}
  },
- [33] = {
-    id = "police",
-    displayName = "Radio",
-    icon = "#police-radio-channel",
-    enableMenu = function()
-        if not exports['HD-hospital']:GetDeathStatus() and HDCore.Functions.GetPlayerData().job.name == 'police' and HDCore.Functions.GetPlayerData().job.onduty then
-            return true
-        end
-    end,
-    subMenus = {"police:radio:one", "police:radio:two", "police:radio:three", "police:radio:four", "police:radio:five"}
- },
- [34] = {
-    id = "boat",
-    displayName = "Depot",
-    icon = "#global-boat",
-    close = true,
-    functiontype = "client",
-    functionParameters = false,
-    functionName = "HD-garages:client:open:depot",
-    enableMenu = function()
-        if not exports['HD-hospital']:GetDeathStatus() then
-            if exports['HD-garages']:IsNearBoatDepot() then
-                return true
-            end
-        end
-  end,
- },
- [35] = {
-    id = "blips",
-    displayName = "Blips",
-    icon = "#global-blips",
-    enableMenu = function()
-        if not exports['HD-hospital']:GetDeathStatus() then
-            return true
-        end
-    end,
-    subMenus = {"blips:tattooshop", "blips:barbershop", "blips:clothing", "blips:deleteblips"}
- },
---  [36] = {
---     id = "police-camera",
---     displayName = "Camera",
---     icon = "#police-cameras",
---     close = true,
---     functiontype = "",
---     functionParameters = '',
---     functionName = "",
---     enableMenu = function()
---         if HDCore.Functions.GetPlayerData().job.name == 'police' and HDCore.Functions.GetPlayerData().job.onduty then
---             return true
---         end
---     end,
---     subMenus = {"camera:een", "camera:twee", "camera:drie", "camera:vier", "camera:vijf"}
---  },
-
-[36] = {
-    id = "police-cameraz",
-    displayName = "Camera",
-    icon = "#police-cameras",
-    enableMenu = function()
-        if HDCore.Functions.GetPlayerData().job.name == 'police' and HDCore.Functions.GetPlayerData().job.onduty then
-            return true
-        end
-    end,
-    subMenus = {"camera:een", "camera:twee", "camera:drie", "camera:vier", "camera:vijf", "camera:zes", "camera:zeven", "camera:acht", "camera:negen", "camera:tien", "camera:11", "camera:12", "camera:13", "camera:14", "camera:15", "camera:17", "camera:18", "camera:19", "camera:20", "camera:21", "camera:22", "camera:23", "camera:24", "camera:25", "camera:26", "camera:27", "camera:28", "camera:29", "camera:30"}
- },
- [37] = {
-     id = "global-makelaar",
-     displayName = "Makelaar",
-     icon = "#global-makelaar",
-     enableMenu = function()
-         if HDCore.Functions.GetPlayerData().job.name == 'realestate' then
-             return true
-         end
-     end,
-     subMenus = {"makelaar:blips", "makelaar:duty"}
-  },
 }
 
 Config.SubMenus = {
-    ["makelaar:blips"] = {
-        title = "Blips",
-        icon = "makelaar-blips",
-        close = true,
-        functiontype = "client",
-        functionName = "ToggleHouseBlips",
-        -- functionParameters = true,
-    },
-    ["makelaar:duty"] = {
-        title = "Dienstklokker",
-        icon = "makelaar-duty",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-housing:client:duty:checker",
-        -- functionParameters = true,
-    },
-    ["camera:een"] = {
-        title = "Camera 1",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-        functionParameters = 1,
-    },
-
-    ["camera:twee"] = {
-        title = "Camera 2",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-
-        functionParameters = 2,
-    },
-    
-    ["camera:drie"] = {
-        title = "Camera 3",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-
-        functionParameters = 3,
-    },
-  
-    ["camera:vier"] = {
-        title = "Camera 4",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-
-        functionParameters = 4,
-    },
-
-    ["camera:vijf"] = {
-        title = "Camera 5",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 5,
-    },
-
-    ["camera:zes"] = {
-        title = "Camera 6",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 6,
-    },
-    
-    ["camera:zeven"] = {
-        title = "Camera 7",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 7,
-    },
-    
-    ["camera:acht"] = {
-        title = "Camera 8",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 8,
-    },
-    
-    ["camera:negen"] = {
-        title = "Camera 9",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 9,
-    },
-    
-    ["camera:tien"] = {
-        title = "Camera 10",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 10,
-    },
-    
-    ["camera:11"] = {
-        title = "Camera 11",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 11,
-    },
-    
-    ["camera:12"] = {
-        title = "Camera 12",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 12,
-    },
-    
-    ["camera:13"] = {
-        title = "Camera 13",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 13,
-    },
-    
-    ["camera:14"] = {
-        title = "Camera 14",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 14,
-    },
-    
-    ["camera:15"] = {
-        title = "Camera 15",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 15,
-    },
-    
-    ["camera:16"] = {
-        title = "Camera 16",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 16,
-    },
-    ["camera:17"] = {
-        title = "Camera 17",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 17,
-    },
-    ["camera:18"] = {
-        title = "Camera 18",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 18,
-    },
-    ["camera:19"] = {
-        title = "Camera 19",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 19,
-    },
-    
-    ["camera:20"] = {
-        title = "Camera 20",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 20,
-    },
-    
-    ["camera:21"] = {
-        title = "Camera 21",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 21,
-    },
-    
-    ["camera:22"] = {
-        title = "Camera 22",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 22,
-    },
-    
-    ["camera:23"] = {
-        title = "Camera 23",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 23,
-    },
-    
-    ["camera:24"] = {
-        title = "Camera 24",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 24,
-    },
-    
-    ["camera:25"] = {
-        title = "Camera 25",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 25,
-    },
-    
-    ["camera:26"] = {
-        title = "Camera 26",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 26,
-    },
-    
-    ["camera:27"] = {
-        title = "Camera 27",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 27,
-    },
-    
-    ["camera:28"] = {
-        title = "Camera 28",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 28,
-    },
-    
-    ["camera:29"] = {
-        title = "Camera 29",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 29,
-    },
-    
-    ["camera:30"] = {
-        title = "Camera 30",
-        icon = "police-camera",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:CameraCommand",
-   
-        functionParameters = 30,
-    },
-
-    --blips
-    ["blips:tattooshop"] = {
-        title = "Tattooshop",
-        icon = "global-tattoo",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-radialmenu:client:tattooshop",
-    },
-
-    ["blips:barbershop"] = {
-        title = "Barber",
-        icon = "#global-kapper",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-radialmenu:client:barbershop",
-    },
-    ["blips:garage"] = {
-        title = "Garage",
-        icon = "global-garage",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-radialmenu:client:garage",
-    },
-    ["blips:gas"] = {
-        title = "Gas Station",
-        icon = "global-gas",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-radialmenu:client:benzine",
-    },
-    ["blips:clothing"] = {
-        title = "Clothing Store",
-        icon = "global-kleren",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-radialmenu:client:clothing",
-    },
-    
-    ['favo:radio:one'] = {
-        title = "Fav. Radio",
-        icon = "#player-radio-channel",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-radialmenu:client:enter:playerradio"
-       },
-    ['police:radio:one'] = {
-        title = "Radio #1",
-        icon = "#police-radio",
-        close = true,
-        functionParameters = 1,
-        functiontype = "client",
-        functionName = "HD-radialmenu:client:enter:radio"
-       },
-       ['police:radio:two'] = {
-        title = "Radio #2",
-        icon = "#police-radio",
-        close = true,
-        functionParameters = 2,
-        functiontype = "client",
-        functionName = "HD-radialmenu:client:enter:radio"
-       },
-       ['police:radio:three'] = {
-        title = "Radio #3",
-        icon = "#police-radio",
-        close = true,
-        functionParameters = 3,
-        functiontype = "client",
-        functionName = "HD-radialmenu:client:enter:radio"
-       },
-       ['police:radio:four'] = {
-        title = "Radio #4",
-        icon = "#police-radio",
-        close = true,
-        functionParameters = 4,
-        functiontype = "client",
-        functionName = "HD-radialmenu:client:enter:radio"
-       },
-       ['police:radio:five'] = {
-        title = "Radio #5",
-        icon = "#police-radio",
-        close = true,
-        functionParameters = 5,
-        functiontype = "client",
-        functionName = "HD-radialmenu:client:enter:radio"
-       },
-    ["taxi:togglemeter"] = {
-        title = "Show/Hide Meter",
-        icon = "#taxi-meter",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-taxi:client:toggleMeter",
-    },
-    ["taxi:start"] = {
-        title = "Start/Stop Meter",
-        icon = "#taxi-start",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-taxi:client:enableMeter",
-    },
-    ["taxi:npcmission"] = {
-        title = "Toggle NPC",
-        icon = "#taxi-npc",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-taxi:client:DoTaxiNpc",
-    },
     ['police:checkstatus'] = {
-     title = "Check",
-     icon = "#police-action-status",
+     title = "Status",
+     icon = "#police-action-search",
      close = true,
      functiontype = "client",
-     functionName = "HD-police:client:CheckStatus"
+     functionName = "police:client:CheckStatus"
     },
     ['police:panic'] = {
-     title = "Emergency",
-     icon = "#police-action-panic",
-     close = true,
-     functiontype = "client",
-     functionName = "HD-radialmenu:client:send:panic:button"
-    },
+        title = "Emergency",
+        icon = "#police-action-panic",
+        close = true,
+        functiontype = "client",
+        functionName = "HD-radialmenu:client:send:panic:button"
+       },
     ['police:tablet'] = {
      title = "MEOS Tablet",
      icon = "#police-action-tablet",
@@ -966,28 +459,28 @@ Config.SubMenus = {
      functionName = "HD-police:client:show:tablet"
     },
     ['police:impound'] = {
-     title = "Delete Vehicle",
-     icon = "#police-action-vehicle",
-     close = true,
-     functiontype = "client",
-     functionName = "HD-police:client:impound:closest"
+    title = "Remove Vehicle",
+    icon = "#police-action-vehicle",
+    close = true,
+    functiontype = "client",
+    functionName = "HD-police:client:impound:closest"
     },
     ['police:impoundhard'] = {
-        title = "Impound",
-        icon = "#police-action-vehicle",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-police:client:impound:hard:closest"
-       },
+    title = "Impound",
+    icon = "#police-action-vehicle",
+    close = true,
+    functiontype = "client",
+    functionName = "HD-police:client:impound:hard:closest"
+    },
     ['police:search'] = {
-     title = "Frisk",
+     title = "Search",
      icon = "#police-action-search",
      close = true,
      functiontype = "client",
      functionName = "HD-police:client:search:closest"
     },
     ['police:resetdoor'] = {
-     title = "Reset Door",
+     title = "Reset House Door",
      icon = "#global-appartment",
      close = true,
      functiontype = "client",
@@ -1000,293 +493,172 @@ Config.SubMenus = {
      functiontype = "client",
      functionName = "HD-police:client:enkelband:closest"
     },
-    -- ['police:vehicle:touran'] = {
-    --     title = "Police Touran",
-    --     icon = "#police-action-vehicle-spawn",
-    --     close = true,
-    --     functionParameters = 'PolitieTouran',
-    --     functiontype = "client",
-    --     functionName = "HD-police:client:spawn:vehicle"
-    --    },
-    --    ['police:vehicle:klasse'] = {
-    --     title = "Police B-Klasse",
-    --     icon = "#police-action-vehicle-spawn",
-    --     close = true,
-    --     functionParameters = 'PolitieKlasse',
-    --     functiontype = "client",
-    --     functionName = "HD-police:client:spawn:vehicle"
-    --    },
-    --    ['police:vehicle:vito'] = {
-    --     title = "Police Vito",
-    --     icon = "#police-action-vehicle-spawn-bus",
-    --     close = true,
-    --     functionParameters = 'PolitieVito',
-    --     functiontype = "client",
-    --     functionName = "HD-police:client:spawn:vehicle"
-    --    },
-    --    ['police:vehicle:audi'] = {
-    --     title = "Police Audi",
-    --     icon = "#police-action-vehicle-spawn",
-    --     close = true,
-    --     functionParameters = 'PolitieRS6',
-    --     functiontype = "client",
-    --     functionName = "HD-police:client:spawn:vehicle"
-    --    },
-    --    ['police:vehicle:velar'] = {
-    --     title = "Police Unmarked Velar",
-    --     icon = "#police-action-vehicle-spawn",
-    --     close = true,
-    --     functionParameters = 'PolitieVelar',
-    --     functiontype = "client",
-    --     functionName = "HD-police:client:spawn:vehicle"
-    --    },
-    --    ['police:vehicle:bmw'] = {
-    --     title = "Police Unmarked M5",
-    --     icon = "#police-action-vehicle-spawn",
-    --     close = true,
-    --     functionParameters = 'PolitieBmw',
-    --     functiontype = "client",
-    --     functionName = "HD-police:client:spawn:vehicle"
-    --    },
-    --    ['police:vehicle:unmaked:audi'] = {
-    --     title = "Police Unmarked A6",
-    --     icon = "#police-action-vehicle-spawn",
-    --     close = true,
-    --     functionParameters = 'PolitieAudiUnmarked',
-    --     functiontype = "client",
-    --     functionName = "HD-police:client:spawn:vehicle"
-    --    },
-    --    ['police:vehicle:heli'] = {
-    --     title = "Police Zulu",
-    --     icon = "#police-action-vehicle-spawn-heli",
-    --     close = true,
-    --     functionParameters = 'PolitieZulu',
-    --     functiontype = "client",
-    --     functionName = "HD-police:client:spawn:vehicle"
-    --    },
-    --    ['police:vehicle:motor'] = {
-    --     title = "Police Motor",
-    --     icon = "#police-action-vehicle-spawn-motor",
-    --     close = true,
-    --     functionParameters = 'PolitieMotor',
-    --     functiontype = "client",
-    --     functionName = "HD-police:client:spawn:vehicle"
-    --    },
-    --[[['police:vehicle:touran'] = {
-     title = "Volkswagen Touran",
+    ['police:badge'] = {
+        title = "Show Badge",
+        icon = "#police-action-tablet",
+        close = true,
+        functiontype = "client",
+        functionName = "HD-badge:openPD"
+    },
+    ['police:vehicle:touran'] = {
+     title = "Ford Tauros",
      icon = "#police-action-vehicle-spawn",
      close = true,
-     functionParameters = 'ptouran',
+     functionParameters = 'code3fpis',
      functiontype = "client",
      functionName = "HD-police:client:spawn:vehicle"
     },
     ['police:vehicle:klasse'] = {
-     title = "Mercedes B-Klasse",
+     title = "Ford Crown Vic",
      icon = "#police-action-vehicle-spawn",
      close = true,
-     functionParameters = 'pbklasse',
+     functionParameters = 'code3cvpi',
      functiontype = "client",
      functionName = "HD-police:client:spawn:vehicle"
     },
     ['police:vehicle:vito'] = {
-     title = "Volkswagen Amarok",
+     title = "Chevy Tahoe '14",
      icon = "#police-action-vehicle-spawn-bus",
      close = true,
-     functionParameters = 'pamarok',
+     functionParameters = 'code314tahoe',
      functiontype = "client",
      functionName = "HD-police:client:spawn:vehicle"
     },
-    ['police:vehicle:phyun'] = {
-     title = "Kia Niro",
-     icon = "#police-action-vehicle-spawn",
-     close = true,
-     functionParameters = 'pniro',
-     functiontype = "client",
-     functionName = "HD-police:client:spawn:vehicle"
+    ['police:vehicle:charger'] = {
+        title = "Dodge Charger '18",
+        icon = "#police-action-vehicle-spawn-bus",
+        close = true,
+        functionParameters = 'code318charg',
+        functiontype = "client",
+        functionName = "HD-police:client:spawn:vehicle"
     },
     ['police:vehicle:audi'] = {
-     title = "Audi A6",
+     title = "Ford Explorer",
      icon = "#police-action-vehicle-spawn",
      close = true,
-     functionParameters = 'paudi',
+     functionParameters = 'code316fpiu',
      functiontype = "client",
      functionName = "HD-police:client:spawn:vehicle"
     },
     ['police:vehicle:velar'] = {
-     title = "Oracle Unmarked",
+     title = "Ford Expedition",
      icon = "#police-action-vehicle-spawn",
      close = true,
-     functionParameters = 'poracle',
-     functiontype = "client",
-     functionName = "HD-police:client:spawn:vehicle"
-    },
-    ['police:vehicle:bmw'] = {
-     title = "Masertati Unmarked",
-     icon = "#police-action-vehicle-spawn",
-     close = true,
-     functionParameters = 'pmas',
-     functiontype = "client",
-     functionName = "HD-police:client:spawn:vehicle"
-    },
-    ['police:vehicle:dsimerc'] = {
-     title = "Mercedes (DSI)",
-     icon = "#police-action-vehicle-spawn",
-     close = true,
-     functionParameters = 'dsimerc',
-     functiontype = "client",
-     functionName = "HD-police:client:spawn:vehicle"
-    },
-    ['police:vehicle:pyamahamotor'] = {
-     title = "Yamaha Motor",
-     icon = "#police-action-vehicle-spawn",
-     close = true,
-     functionParameters = 'pyamahamotor',
-     functiontype = "client",
-     functionName = "HD-police:client:spawn:vehicle"
-    },
-    ['police:vehicle:dsimerc'] = {
-     title = "Mercedes (DSI)",
-     icon = "#police-action-vehicle-spawn",
-     close = true,
-     functionParameters = 'dsimerc',
+     functionParameters = 'code320exp',
      functiontype = "client",
      functionName = "HD-police:client:spawn:vehicle"
     },
     ['police:vehicle:unmaked:audi'] = {
-     title = "Unmarked Golf 7",
+        title = "Ford Mustang GT",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'code3mustang',
+        functiontype = "client",
+        functionName = "HD-police:client:spawn:vehicle"
+    },
+    ['police:vehicle:bmw'] = {
+     title = "Ford Mustang GT",
      icon = "#police-action-vehicle-spawn",
      close = true,
-     functionParameters = 'pgolf7',
+     functionParameters = 'code3mustang',
      functiontype = "client",
      functionName = "HD-police:client:spawn:vehicle"
     },
     ['police:vehicle:heli'] = {
-     title = "Zulu",
+     title = "G-POLA Helicopter",
      icon = "#police-action-vehicle-spawn-heli",
      close = true,
-     functionParameters = 'pzulu',
+     functionParameters = 'polmav',
      functiontype = "client",
      functionName = "HD-police:client:spawn:vehicle"
     },
     ['police:vehicle:motor'] = {
-     title = "BMW Motor",
+     title = "Harley Bike",
      icon = "#police-action-vehicle-spawn-motor",
      close = true,
-     functionParameters = 'pbmwmotor2',
+     functionParameters = 'code3harley',
      functiontype = "client",
      functionName = "HD-police:client:spawn:vehicle"
-    },]]
-    ['police:vehicle:lokaal:bfiets'] = {
-    title = "Politie Fiets",
-    icon = "#police-action-vehicle-spawn",
-    close = true,
-    functionParameters = 'bfiets',
-    functiontype = "client",
-    functionName = "HD-police:client:spawn:vehicle"
     },
-    ['police:vehicle:lokaal:volvo'] = {
-    title = "Politie Volvo",
-    icon = "#police-action-vehicle-spawn",
-    close = true,
-    functionParameters = 'volvo',
-    functiontype = "client",
-    functionName = "HD-police:client:spawn:vehicle"
+    ['police:vehicle:motor2'] = {
+        title = "BMW Bike",
+        icon = "#police-action-vehicle-spawn-motor",
+        close = true,
+        functionParameters = 'code3bmw',
+        functiontype = "client",
+        functionName = "HD-police:client:spawn:vehicle"
     },
-    ['police:vehicle:lokaal:lpcla45'] = {
-    title = "Politie Mercedes A45",
-    icon = "#police-action-vehicle-spawn",
-    close = true,
-    functionParameters = 'lpcla45',
-    functiontype = "client",
-    functionName = "HD-police:client:spawn:vehicle"
+    ['police:vehicle:valorfpiu'] = {
+        title = "Sheriff FPIU",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'valor20fpiu',
+        functiontype = "client",
+        functionName = "HD-police:client:spawn:vehicle"
     },
-    ['police:vehicle:lokaal:lpfocus'] = {
-    title = "Politie Focus",
-    icon = "#police-action-vehicle-spawn",
-    close = true,
-    functionParameters = 'lpfocus',
-    functiontype = "client",
-    functionName = "HD-police:client:spawn:vehicle"
+    ['police:vehicle:valorcharger'] = {
+        title = "Sheriff '18 Charger",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'valor18charg',
+        functiontype = "client",
+        functionName = "HD-police:client:spawn:vehicle"
     },
-    ['police:vehicle:lokaal:pa6'] = {
-    title = "Politie Audi",
-    icon = "#police-action-vehicle-spawn",
-    close = true,
-    functionParameters = 'pa6',
-    functiontype = "client",
-    functionName = "HD-police:client:spawn:vehicle"
+    ['police:vehicle:valor18tahoe'] = {
+        title = "Sheriff '18 Tahoe",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'valor18tahoe',
+        functiontype = "client",
+        functionName = "HD-police:client:spawn:vehicle"
     },
-    ['police:vehicle:lokaal:t6lpa'] = {
-    title = "Politie VW T6",
-    icon = "#police-action-vehicle-spawn",
-    close = true,
-    functionParameters = 't6lpa',
-    functiontype = "client",
-    functionName = "HD-police:client:spawn:vehicle"
+    ['police:vehicle:valor18tahoe'] = {
+        title = "Sheriff '18 Tahoe",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'valor18tahoe',
+        functiontype = "client",
+        functionName = "HD-police:client:spawn:vehicle"
     },
-    ['police:vehicle:federaal:t6fp'] = {
-    title = "Politie T6",
-    icon = "#police-action-vehicle-spawn",
-    close = true,
-    functionParameters = 't6fp',
-    functiontype = "client",
-    functionName = "HD-police:client:spawn:vehicle"
+    ['police:vehicle:valorsilv'] = {
+        title = "Sheriff Silverado",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'valor19silv',
+        functiontype = "client",
+        functionName = "HD-police:client:spawn:vehicle"
     },
-    ['police:vehicle:federaal:wp3'] = {
-    title = "Politie BMW M3",
-    icon = "#police-action-vehicle-spawn",
-    close = true,
-    functionParameters = 'wp3',
-    functiontype = "client",
-    functionName = "HD-police:client:spawn:vehicle"
+    ['police:vehicle:valorcvpi'] = {
+        title = "Sheriff Crown Vic",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'valorcvpi',
+        functiontype = "client",
+        functionName = "HD-police:client:spawn:vehicle"
     },
-    ['police:vehicle:federaal:wpv70'] = {
-    title = "Politie Volvo V70",
-    icon = "#police-action-vehicle-spawn",
-    close = true,
-    functionParameters = 'wpv70',
-    functiontype = "client",
-    functionName = "HD-police:client:spawn:vehicle"
+    ['police:vehicle:valor13tahoe'] = {
+        title = "Sheriff '13 Tahoe",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'valor13tahoe',
+        functiontype = "client",
+        functionName = "HD-police:client:spawn:vehicle"
     },
-    ['police:vehicle:unmarked:pq7'] = {
-    title = "Unmarked Audi Q7",
-    icon = "#police-action-vehicle-spawn",
-    close = true,
-    functionParameters = 'pq7',
-    functiontype = "client",
-    functionName = "HD-police:client:spawn:vehicle"
-    },
-    ['police:vehicle:rago'] = {
-    title = "Politie Rago",
-    icon = "#police-action-vehicle-spawn-heli",
-    close = true,
-    functionParameters = 'polmav',
-    functiontype = "client",
-    functionName = "HD-police:client:spawn:vehicle"
-    },
-    ['police:vehicle:motor:BMWMOTO'] = {
-    title = "BMW Lichte Motor",
-    icon = "#police-action-vehicle-spawn-motor",
-    close = true,
-    functionParameters = 'BMWMOTO',
-    functiontype = "client",
-    functionName = "HD-police:client:spawn:vehicle"
-    },
-    ['police:vehicle:motor:bmwmoto2'] = {
-    title = "BMW Zware Motor",
-    icon = "#police-action-vehicle-spawn-motor",
-    close = true,
-    functionParameters = 'bmwmoto2',
-    functiontype = "client",
-    functionName = "HD-police:client:spawn:vehicle"
+    ['police:vehicle:valor14charg'] = {
+        title = "Sheriff '14 Charger",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'valor14charg',
+        functiontype = "client",
+        functionName = "HD-police:client:spawn:vehicle"
     },
     ['police:object:cone'] = {
-    title = "Pion",
-    icon = "#global-box",
-    close = true,
-    functionParameters = 'cone',
-    functiontype = "client",
-    functionName = "HD-police:client:spawn:object"
+     title = "Cone",
+     icon = "#global-box",
+     close = true,
+     functionParameters = 'cone',
+     functiontype = "client",
+     functionName = "HD-police:client:spawn:object"
     },
     ['police:object:barrier'] = {
      title = "Barrier",
@@ -1297,7 +669,7 @@ Config.SubMenus = {
      functionName = "HD-police:client:spawn:object"
     },
     ['police:object:schot'] = {
-     title = "Gate",
+     title = "Fence",
      icon = "#global-box",
      close = true,
      functionParameters = 'schot',
@@ -1313,7 +685,7 @@ Config.SubMenus = {
      functionName = "HD-police:client:spawn:object"
     },
     ['police:object:light'] = {
-     title = "Lamps",
+     title = "Light",
      icon = "#global-box",
      close = true,
      functionParameters = 'light',
@@ -1326,6 +698,13 @@ Config.SubMenus = {
      close = false,
      functiontype = "client",
      functionName = "HD-police:client:delete:object"
+    },
+    ["mechanic:repair"] = {
+        title = "Repair Vehicle",
+        icon = "#citizen-action-vehicle",
+        close = true,
+        functiontype = "client",
+        functionName = "ft-repair:client:triggerMenu",
     },
     ['ambulance:heal'] = {
       title = "Heal",
@@ -1349,26 +728,34 @@ Config.SubMenus = {
       functionName = "HD-hospital:client:take:blood:closest"
     },
     ['ambulance:garage:heli'] = {
-      title = "Ambulance Heli",
+      title = "Augusta Westland 139",
       icon = "#police-action-vehicle-spawn",
       close = true,
-      functionParameters = 'alifeliner',
+      functionParameters = 'aw139',
       functiontype = "client",
       functionName = "HD-hospital:client:spawn:vehicle"
     },
     ['ambulance:garage:touran'] = {
-     title = "Mercedes Klasse B",
+     title = "Command One Chevy",
      icon = "#police-action-vehicle-spawn",
      close = true,
-     functionParameters = 'aeklasse',
+     functionParameters = 'command2',
      functiontype = "client",
      functionName = "HD-hospital:client:spawn:vehicle"
     },
+    ['ambulance:garage:touran'] = {
+        title = "Ambulance Engine One",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = '20ramambo',
+        functiontype = "client",
+        functionName = "HD-hospital:client:spawn:vehicle"
+       },
     ['ambulance:garage:sprinter'] = {
-     title = "Ambulance Sprinter",
+     title = "Command Two Ford",
      icon = "#police-action-vehicle-spawn",
      close = true,
-     functionParameters = 'asprinter',
+     functionParameters = 'command1',
      functiontype = "client",
      functionName = "HD-hospital:client:spawn:vehicle"
     },
@@ -1387,7 +774,7 @@ Config.SubMenus = {
      functionName = "HD-judge:client:toggle"
     },
     ['judge:job'] = {
-     title = "Rent lawyer",
+     title = "Hire Lawyer",
      icon = "#judge-actions",
      close = true,
      functiontype = "client",
@@ -1428,6 +815,13 @@ Config.SubMenus = {
      functiontype = "client",
      functionName = "HD-police:client:PutPlayerInVehicle"
     },
+    ['citizen:corner:selling'] = {
+        title = "Cornersell",
+        icon = "#animation-shady",
+        close = true,
+        functiontype = "client",
+        functionName = "HD-illegal:client:toggle:corner:selling"
+    },
     ['vehicle:flip'] = {
      title = "Flip Vehicle",
      icon = "#citizen-action-vehicle",
@@ -1442,9 +836,57 @@ Config.SubMenus = {
      functiontype = "client",
      functionName = "HD-vehiclekeys:client:give:key"
     },
+    ['vehicle:extra'] = {
+        title = "Extra1",
+        icon = "#citizen-action-vehicle",
+        close = false,
+        functionParameters = 1,
+        functiontype = "client",
+        functionName = "HD-radialmenu:client:setExtra"
+    },
+    ['vehicle:extra2'] = {
+        title = "Extra2",
+        icon = "#citizen-action-vehicle",
+        close = false,
+        functionParameters = 2,
+        functiontype = "client",
+        functionName = "HD-radialmenu:client:setExtra"
+    },
+    ['vehicle:extra3'] = {
+        title = "Extra3",
+        icon = "#citizen-action-vehicle",
+        close = false,
+        functionParameters = 3,
+        functiontype = "client",
+        functionName = "HD-radialmenu:client:setExtra"
+    },
+    ['vehicle:extra4'] = {
+        title = "Extra4",
+        icon = "#citizen-action-vehicle",
+        close = false,
+        functionParameters = 4,
+        functiontype = "client",
+        functionName = "HD-radialmenu:client:setExtra"
+    },
+    ['vehicle:extra5'] = {
+        title = "Extra5",
+        icon = "#citizen-action-vehicle",
+        close = false,
+        functionParameters = 5,
+        functiontype = "client",
+        functionName = "HD-radialmenu:client:setExtra"
+    },
+    ['vehicle:extra6'] = {
+        title = "Extra6",
+        icon = "#citizen-action-vehicle",
+        close = false,
+        functionParameters = 5,
+        functiontype = "client",
+        functionName = "HD-radialmenu:client:setExtra"
+    },
 
     ['vehicle:door:left:front'] = {
-     title = "Front Left",
+     title = "Left Front",
      icon = "#global-arrow-left",
      close = true,
      functionParameters = 0,
@@ -1452,7 +894,7 @@ Config.SubMenus = {
      functionName = "HD-radialmenu:client:open:door"
     },
     ['vehicle:door:motor'] = {
-     title = "Bonnet",
+     title = "Hood",
      icon = "#global-arrow-up",
      close = true,
      functionParameters = 4,
@@ -1460,7 +902,7 @@ Config.SubMenus = {
      functionName = "HD-radialmenu:client:open:door"
     },
     ['vehicle:door:right:front'] = {
-     title = "Front Right",
+     title = "Right Front",
      icon = "#global-arrow-right",
      close = true,
      functionParameters = 1,
@@ -1468,7 +910,7 @@ Config.SubMenus = {
      functionName = "HD-radialmenu:client:open:door"
     },
     ['vehicle:door:right:back'] = {
-     title = "Rear Right",
+     title = "Right Back",
      icon = "#global-arrow-right",
      close = true,
      functionParameters = 3,
@@ -1484,20 +926,15 @@ Config.SubMenus = {
      functionName = "HD-radialmenu:client:open:door"
     },
     ['vehicle:door:left:back'] = {
-     title = "Rear Left",
+     title = "Left Back",
      icon = "#global-arrow-left",
      close = true,
      functionParameters = 2,
      functiontype = "client",
      functionName = "HD-radialmenu:client:open:door"
     },
-    ["mechanic:repair"] = {
-        title = "Repair",
-        icon = "#citizen-action-vehicle",
-        close = true,
-        functiontype = "client",
-        functionName = "HD-repair:client:triggerMenu",
-    },
+
+
     ['tow:hook'] = {
      title = "Tow Vehicle",
      icon = "#citizen-action-vehicle",
@@ -1512,22 +949,39 @@ Config.SubMenus = {
      functiontype = "client",
      functionName = "HD-tow:client:toggle:npc"
     },
-    ['citizen:corner:selling'] = {
-        title = "Cornersell",
-        icon = "#citizen-action-cornerselling",
+    ['taxi:togglemeter'] = {
+        title = "Show/Hide Meter",
+        icon = "#taxi-meter",
         close = true,
         functiontype = "client",
-        functionName = "HD-illegal:client:toggle:corner:selling"
+        functionName = "HD-taxi:client:toggleMeter"
        },
+       ['taxi:mouse'] = {
+        title = "Start/Stop Meter",
+        icon = "#taxi-start",
+        close = true,
+        functiontype = "client",
+        functionName = "HD-taxi:client:enableMeter"
+       },
+       ['taxi:npc'] = {
+        title = "NPC Missions",
+        icon = "#taxi-npc",
+        close = true,
+        functiontype = "client",
+       functionName = "HD-taxi:client:DoTaxiNpc"
+    },
+
+
+
     ['garage:putin'] = {
-     title = "In Garage",
+     title = "Park Vehicle",
      icon = "#citizen-put-in-veh",
      close = true,
      functiontype = "client",
      functionName = "HD-garages:client:check:owner"
     },
     ['garage:getout'] = {
-     title = "Out Garage",
+     title = "Take Vehicle",
      icon = "#citizen-put-out-veh",
      close = true,
      functiontype = "client",
@@ -1550,7 +1004,7 @@ Config.SubMenus = {
      functionName = "HD-housing:client:set:location"
     },
     ['house:setclothes'] = {
-     title = "Set Closet",
+     title = "Set Wardrobe",
      icon = "#citizen-put-out-veh",
      close = true,
      functionParameters = 'clothes',
@@ -1849,39 +1303,7 @@ Config.SubMenus = {
         functionName = "expressions",
         functionParameters = { "effort_3" },
         functiontype = "client",
-    },
-    ['vehicle:extra'] = {
-        title = "Extra1",
-        icon = "#vehicle-plus",
-        close = false,
-        functionParameters = 1,
-        functiontype = "client",
-        functionName = "HD-radialmenu:client:setExtra"
-    },
-    ['vehicle:extra2'] = {
-        title = "Extra2",
-        icon = "#vehicle-plus",
-        close = false,
-        functionParameters = 2,
-        functiontype = "client",
-        functionName = "HD-radialmenu:client:setExtra"
-    },   
-    ['vehicle:extra3'] = {
-        title = "Extra3",
-        icon = "#vehicle-plus",
-        close = false,
-        functionParameters = 3,
-        functiontype = "client",
-        functionName = "HD-radialmenu:client:setExtra"
-    },
-    ['vehicle:extra4'] = {
-        title = "Extra4",
-        icon = "#vehicle-plus",
-        close = false,
-        functionParameters = 4,
-        functiontype = "client",
-        functionName = "HD-radialmenu:client:setExtra"
-    },
+    }
 }
 
 RegisterNetEvent('HD-radialmenu:client:update:duty:vehicles')

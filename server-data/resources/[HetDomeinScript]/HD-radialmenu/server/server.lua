@@ -13,7 +13,3 @@ HDCore.Functions.CreateCallback('HD-radialmenu:server:HasItem', function(source,
         end
 	end
 end)
-
-HDCore.Commands.Add("f1reset", "Reset the F1.", {}, false, function(source, args)
-  TriggerClientEvent('HD-radialmenu:client:refresh', source)
-end)

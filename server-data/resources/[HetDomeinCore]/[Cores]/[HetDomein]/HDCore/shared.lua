@@ -445,12 +445,11 @@ Shared.Items = {
 }
 	
 Shared.StarterItems = {
-	["phone"] = {amount = 1, item = "Telefoon"},
-	["id-card"] = {amount = 1, item = "Paspoort"},
-	["drive-card"] = {amount = 1, item = "Rijbewijs"},
-	["water"] = {amount = 3, item = "water"},
-	["sandwich"] = {amount = 3, item = "sandwich"},
-}
+	["phone"] = {amount = 1, item = "phone"},
+	["id-card"] = {amount = 1, item = "id-card"},
+	["water"] = {amount = 5, item = "water"},
+	["sandwich"] = {amount = 5, item = "sandwich"},
+  }
 
 Shared.Jobs = {
 	["unemployed"] = {
