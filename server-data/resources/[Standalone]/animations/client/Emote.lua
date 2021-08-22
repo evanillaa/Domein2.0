@@ -285,7 +285,7 @@ function OnEmotePlay(EmoteName)
       IsInAnimation = true
     return end 
   end
-  exports['HD-assets']:RequestAnimationDict(ChosenDict)
+  exports['cb-assets']:RequestAnimationDict(ChosenDict)
     if EmoteName.AnimationOptions then
       if EmoteName.AnimationOptions.EmoteLoop then
         MovementType = 1

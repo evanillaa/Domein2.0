@@ -500,7 +500,7 @@ Config.SubMenus = {
         functiontype = "client",
         functionName = "HD-badge:openPD"
     },
-    ['police:vehicle:touran'] = {
+    --[['police:vehicle:touran'] = {
      title = "Ford Tauros",
      icon = "#police-action-vehicle-spawn",
      close = true,
@@ -651,6 +651,110 @@ Config.SubMenus = {
         functionParameters = 'valor14charg',
         functiontype = "client",
         functionName = "HD-police:client:spawn:vehicle"
+    },]]
+    ['police:vehicle:lokaal:bfiets'] = {
+        title = "Politie Fiets",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'bfiets',
+        functiontype = "client",
+        functionName = "cb-police:client:spawn:vehicle"
+    },
+    ['police:vehicle:lokaal:volvo'] = {
+        title = "Politie Volvo",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'volvo',
+        functiontype = "client",
+        functionName = "cb-police:client:spawn:vehicle"
+    },
+    ['police:vehicle:lokaal:lpcla45'] = {
+        title = "Politie Mercedes A45",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'lpcla45',
+        functiontype = "client",
+        functionName = "cb-police:client:spawn:vehicle"
+    },
+    ['police:vehicle:lokaal:lpfocus'] = {
+        title = "Politie Focus",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'lpfocus',
+        functiontype = "client",
+        functionName = "cb-police:client:spawn:vehicle"
+    },
+    ['police:vehicle:lokaal:pa6'] = {
+        title = "Politie Audi",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'pa6',
+        functiontype = "client",
+        functionName = "cb-police:client:spawn:vehicle"
+    },
+    ['police:vehicle:lokaal:t6lpa'] = {
+        title = "Politie VW T6",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 't6lpa',
+        functiontype = "client",
+        functionName = "cb-police:client:spawn:vehicle"
+    },
+    ['police:vehicle:federaal:t6fp'] = {
+        title = "Politie T6",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 't6fp',
+        functiontype = "client",
+        functionName = "cb-police:client:spawn:vehicle"
+    },
+    ['police:vehicle:federaal:wp3'] = {
+        title = "Politie BMW M3",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'wp3',
+        functiontype = "client",
+        functionName = "cb-police:client:spawn:vehicle"
+    },
+    ['police:vehicle:federaal:wpv70'] = {
+        title = "Politie Volvo V70",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'wpv70',
+        functiontype = "client",
+        functionName = "cb-police:client:spawn:vehicle"
+    },
+    ['police:vehicle:unmarked:pq7'] = {
+        title = "Unmarked Audi Q7",
+        icon = "#police-action-vehicle-spawn",
+        close = true,
+        functionParameters = 'pq7',
+        functiontype = "client",
+        functionName = "cb-police:client:spawn:vehicle"
+    },
+    ['police:vehicle:rago'] = {
+        title = "Politie Rago",
+        icon = "#police-action-vehicle-spawn-heli",
+        close = true,
+        functionParameters = 'polmav',
+        functiontype = "client",
+        functionName = "cb-police:client:spawn:vehicle"
+    },
+    ['police:vehicle:motor:BMWMOTO'] = {
+        title = "BMW Lichte Motor",
+        icon = "#police-action-vehicle-spawn-motor",
+        close = true,
+        functionParameters = 'BMWMOTO',
+        functiontype = "client",
+        functionName = "cb-police:client:spawn:vehicle"
+    },
+    ['police:vehicle:motor:bmwmoto2'] = {
+        title = "BMW Zware Motor",
+        icon = "#police-action-vehicle-spawn-motor",
+        close = true,
+        functionParameters = 'bmwmoto2',
+        functiontype = "client",
+        functionName = "cb-police:client:spawn:vehicle"
     },
     ['police:object:cone'] = {
      title = "Cone",

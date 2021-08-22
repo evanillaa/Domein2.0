@@ -442,6 +442,9 @@ Shared.Items = {
 	-- // Hunting \\ --
 	["leather"] 					 = {["name"] = "leather", 			 	  		["label"] = "leather", 		    		["weight"] = 0, 		["type"] = "item", 		["image"] = "leather.png", 		    	["unique"] = true, 		["useable"] = true, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "Dit word een mooie jas!"},
 
+	-- // Copper Rob \\ --
+	["betonschaar"] 			 	 = {["name"] = "betonschaar", 			  	    ["label"] = "Betonschaar", 				["weight"] = 200, 		["type"] = "item", 		["image"] = "betonschaar.png", 		    ["unique"] = false, 	["useable"] = false, 	["shouldClose"] = true,    ["combinable"] = nil,   ["description"] = "Een schaar voor mensen met een leuke hobby.."},
+
 }
 	
 Shared.StarterItems = {

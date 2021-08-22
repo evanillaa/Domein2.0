@@ -11,8 +11,7 @@ local ClothingLocation = nil
 local LogoutLocation = nil
 local Other = nil
 local LoggedIn = false
-PlayerJob = {}
-onDuty = false
+
 HDCore = nil
 
 RegisterNetEvent('HDCore:Client:OnPlayerLoaded')
@@ -25,15 +24,6 @@ AddEventHandler('HDCore:Client:OnPlayerLoaded', function()
         end)
         Citizen.Wait(145)
         AddBlipForHouse()
-        
-      HDCore.Functions.GetPlayerData(function(PlayerData)
-        
-    if (PlayerJob ~= nil) and PlayerJob.name ~= "realestate" then
-        PlayerJob, onDuty = PlayerData.job, PlayerData.job.onduty 
-        print("Job realestate")
-    end
-    end)
-
         LoggedIn = true
     end)
 end)
@@ -47,15 +37,6 @@ AddEventHandler('HDCore:Client:OnPlayerUnload', function()
     LoggedIn = false
 end)
 
-RegisterNetEvent('HDCore:Client:OnJobUpdate')
-AddEventHandler('HDCore:Client:OnJobUpdate', function(JobInfo)
-    PlayerJob = JobInfo
-end)
-
-RegisterNetEvent('HDCore:Client:SetDuty')
-AddEventHandler('HDCore:Client:SetDuty', function(Onduty)
- onDuty = Onduty
-end)
 -- Code
 
 -- // Loops \\
@@ -67,10 +48,9 @@ Citizen.CreateThread(function()
             if not IsInHouse then
                  IsNearHouse = false
                  for k, v in pairs(Config.Houses) do
-                     local PlayerCoords = GetEntityCoords(PlayerPedId())
+                     local PlayerCoords = GetEntityCoords(GetPlayerPed(-1))
                      local Distance = GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, v['Coords']['Enter']['X'], v['Coords']['Enter']['Y'], v['Coords']['Enter']['Z'], true)
-                     if Distance < 10.5 then
-                       -- if Distance < 14.5 then
+                     if Distance < 14.5 then
                          IsNearHouse = true
                          Currenthouse = k
                          HDCore.Functions.TriggerCallback('HD-housing:server:has:house:key', function(HasHouseKey)
@@ -94,11 +74,11 @@ Citizen.CreateThread(function()
         if LoggedIn then
             if Currenthouse ~= nil then
 
-                local PlayerCoords = GetEntityCoords(PlayerPedId())
+                local PlayerCoords = GetEntityCoords(GetPlayerPed(-1))
                 
                 if not IsInHouse then
                     if not Config.Houses[Currenthouse]['Owned'] then
-                      if (GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, Config.Houses[Currenthouse]['Coords']['Enter']['X'], Config.Houses[Currenthouse]['Coords']['Enter']['Y'], Config.Houses[Currenthouse]['Coords']['Enter']['Z'], true) < 2.0) then
+                      if (GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, Config.Houses[Currenthouse]['Coords']['Enter']['X'], Config.Houses[Currenthouse]['Coords']['Enter']['Y'], Config.Houses[Currenthouse]['Coords']['Enter']['Z'], true) < 3.0) then
                         DrawText3D(Config.Houses[Currenthouse]['Coords']['Enter']['X'], Config.Houses[Currenthouse]['Coords']['Enter']['Y'], Config.Houses[Currenthouse]['Coords']['Enter']['Z'], '~g~E~w~ - Huis Bezichtigen')
                         if IsControlJustReleased(0, 38) then
                             TriggerServerEvent('HD-housing:server:view:house', Currenthouse)
@@ -113,15 +93,15 @@ Citizen.CreateThread(function()
                                 DrawMarker(2, Config.Houses[Currenthouse]['Garage']['X'], Config.Houses[Currenthouse]['Garage']['Y'], Config.Houses[Currenthouse]['Garage']['Z'], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, 1, false, false, false)
                                 DrawText3D(Config.Houses[Currenthouse]['Garage']['X'], Config.Houses[Currenthouse]['Garage']['Y'], Config.Houses[Currenthouse]['Garage']['Z'] + 0.12, '~g~E~w~ - Garage')
                                 if IsControlJustReleased(0, 38) then
-                                    local Vehicle = GetVehiclePedIsIn(PlayerPedId())
-                                    if not IsPedInAnyVehicle(PlayerPedId()) then
+                                    local Vehicle = GetVehiclePedIsIn(GetPlayerPed(-1))
+                                    if not IsPedInAnyVehicle(GetPlayerPed(-1)) then
                                       exports['HD-garages']:OpenHouseGarage(Currenthouse)
                                     else
                                         HDCore.Functions.TriggerCallback('HD-materials:server:is:vehicle:owned', function(IsOwned)
                                             if IsOwned then
                                                 exports['HD-garages']:SetVehicleInHouseGarage(Currenthouse)
                                             else
-                                                HDCore.Functions.Notify("Deze wagen is van niemand..", "error")
+                                                HDCore.Functions.Notify("Dit voertuig is van niemand..", "error")
                                             end
                                         end, GetVehicleNumberPlateText(Vehicle))
                                     end
@@ -154,7 +134,7 @@ Citizen.CreateThread(function()
                 if CurrentBell ~= nil then
                     if (GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, Config.Houses[Currenthouse]['Coords']['Enter']['X'] - OffSets.exit.x, Config.Houses[Currenthouse]['Coords']['Enter']['Y'] - OffSets.exit.y, Config.Houses[Currenthouse]['Coords']['Enter']['Z'] - OffSets.exit.z, true) < 2.0) then
                         DrawMarker(2, Config.Houses[Currenthouse]['Coords']['Enter']['X'] - OffSets.exit.x, Config.Houses[Currenthouse]['Coords']['Enter']['Y'] - OffSets.exit.y, Config.Houses[Currenthouse]['Coords']['Enter']['Z'] - OffSets.exit.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, 1, false, false, false)
-                        DrawText3D(Config.Houses[Currenthouse]['Coords']['Enter']['X'] - OffSets.exit.x, Config.Houses[Currenthouse]['Coords']['Enter']['Y'] - OffSets.exit.y, Config.Houses[Currenthouse]['Coords']['Enter']['Z'] - OffSets.exit.z + 0.32, '~g~G~s~ - Deur openen')
+                        DrawText3D(Config.Houses[Currenthouse]['Coords']['Enter']['X'] - OffSets.exit.x, Config.Houses[Currenthouse]['Coords']['Enter']['Y'] - OffSets.exit.y, Config.Houses[Currenthouse]['Coords']['Enter']['Z'] - OffSets.exit.z + 0.32, '~g~G~s~ - Open Doen')
                         if IsControlJustReleased(0, 47) then
                             TriggerServerEvent("HD-housing:server:open:door", CurrentBell, Currenthouse)
                             CurrentBell = nil
@@ -179,8 +159,7 @@ Citizen.CreateThread(function()
                      DrawMarker(2, ClothingLocation['X'], ClothingLocation['Y'], ClothingLocation['Z'], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.1, 0.05, 255, 255, 255, 255, false, false, false, 1, false, false, false)
                      DrawText3D(ClothingLocation['X'], ClothingLocation['Y'], ClothingLocation['Z'], '~g~E~s~ - Kleding')
                         if IsControlJustReleased(0, 38) then
-                            --TriggerEvent('HD-clothing:client:openOutfitMenu') // Old QB Menu
-                            TriggerServerEvent("HD-outfits:server:openUI", true)
+                            TriggerEvent('HD-clothing:client:openOutfitMenu')
                         end
                     end
                 end
@@ -211,7 +190,7 @@ end)
 RegisterNetEvent('HD-housing:client:enter:house')
 AddEventHandler('HD-housing:client:enter:house', function()
     local Housing = {}
-    local PlayerCoords = GetEntityCoords(PlayerPedId())
+    local PlayerCoords = GetEntityCoords(GetPlayerPed(-1))
     local CoordsTable = {x = Config.Houses[Currenthouse]['Coords']['Enter']['X'], y = Config.Houses[Currenthouse]['Coords']['Enter']['Y'], z = Config.Houses[Currenthouse]['Coords']['Enter']['Z'] - 35.0}
     IsInHouse = true
     TriggerEvent("HD-sound:client:play", "house-door-open", 0.1)
@@ -219,40 +198,40 @@ AddEventHandler('HD-housing:client:enter:house', function()
     Citizen.Wait(350)
     SetHouseLocations()
     if Config.Houses[Currenthouse]['Tier'] == 1 then
-        Other = {maxweight = 11200000, slots = 25}
+        Other = {maxweight = 650000, slots = 25}
         Housing = exports['HD-interiors']:HouseTierOne(CoordsTable)
     elseif Config.Houses[Currenthouse]['Tier'] == 2 then
-        Other = {maxweight = 1650000, slots = 25}
+        Other = {maxweight = 650000, slots = 25}
         Housing = exports['HD-interiors']:HouseTierTwo(CoordsTable)
     elseif Config.Houses[Currenthouse]['Tier'] == 3 then
-        Other = {maxweight = 1650000, slots = 25}
+        Other = {maxweight = 650000, slots = 25}
         Housing = exports['HD-interiors']:HouseTierThree(CoordsTable)
     elseif Config.Houses[Currenthouse]['Tier'] == 4 then
-        Other = {maxweight = 1950000, slots = 35}
+        Other = {maxweight = 950000, slots = 35}
         Housing = exports['HD-interiors']:HouseTierFour(CoordsTable)
     elseif Config.Houses[Currenthouse]['Tier'] == 5 then
-        Other = {maxweight = 11200000, slots = 50}
+        Other = {maxweight = 1200000, slots = 45}
         Housing = exports['HD-interiors']:HouseTierFive(CoordsTable)
     elseif Config.Houses[Currenthouse]['Tier'] == 6 then
-        Other = {maxweight = 11200000, slots = 50}
+        Other = {maxweight = 1200000, slots = 45}
         Housing = exports['HD-interiors']:HouseTierSix(CoordsTable)
     elseif Config.Houses[Currenthouse]['Tier'] == 7 then
-        Other = {maxweight = 11200000, slots = 50}
+        Other = {maxweight = 1200000, slots = 45}
         Housing = exports['HD-interiors']:HouseTierSeven(CoordsTable)
     elseif Config.Houses[Currenthouse]['Tier'] == 8 then
-        Other = {maxweight = 11200000, slots = 50}
+        Other = {maxweight = 1200000, slots = 45}
         Housing = exports['HD-interiors']:HouseTierEight(CoordsTable)
     elseif Config.Houses[Currenthouse]['Tier'] == 9 then
-        Other = {maxweight = 11200000, slots = 50}
+        Other = {maxweight = 1200000, slots = 45}
         Housing = exports['HD-interiors']:HouseTierNine(CoordsTable)
     elseif Config.Houses[Currenthouse]['Tier'] == 10 then
-        Other = {maxweight = 11200000, slots = 50}
+        Other = {maxweight = 1200000, slots = 45}
         Housing = exports['HD-interiors']:HouseTierTen(CoordsTable)
     elseif Config.Houses[Currenthouse]['Tier'] == 11 then
-        Other = {maxweight = 3350000, slots = 80}
+        Other = {maxweight = 1350000, slots = 50}
         Housing = exports['HD-interiors']:GarageTierOne(CoordsTable)
     elseif Config.Houses[Currenthouse]['Tier'] == 12 then
-        Other = {maxweight = 3550000, slots = 85}
+        Other = {maxweight = 1550000, slots = 55}
         Housing = exports['HD-interiors']:GarageTierTwo(CoordsTable)
     end
     LoadDecorations(Currenthouse)
@@ -296,8 +275,8 @@ end)
 
 RegisterNetEvent('HD-housing:client:create:house')
 AddEventHandler('HD-housing:client:create:house', function(Price, Tier)
-    local PlayerCoords = GetEntityCoords(PlayerPedId())
-    local PlayerHeading = GetEntityHeading(PlayerPedId())
+    local PlayerCoords = GetEntityCoords(GetPlayerPed(-1))
+    local PlayerHeading = GetEntityHeading(GetPlayerPed(-1))
     local StreetNative = Citizen.InvokeNative(0x2EB41072B4C1E4C0, PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, Citizen.PointerValueInt(), Citizen.PointerValueInt())
     local StreetName = GetStreetNameFromHashKey(StreetNative)
     local CoordsTable = {['Enter'] = {['X'] = PlayerCoords.x, ['Y'] = PlayerCoords.y, ['Z'] = PlayerCoords.z, ['H'] = PlayerHeading}, ['Cam'] = {['X'] = PlayerCoords.x, ['Y'] = PlayerCoords.y, ['Z'] = PlayerCoords.z, ['H'] = PlayerHeading, ['Yaw'] = -10.0}}
@@ -315,19 +294,19 @@ AddEventHandler('HD-housing:client:delete:house', function()
     if Currenthouse ~= nil then 
         TriggerServerEvent('HD-housing:server:detlete:house', Currenthouse)
     else
-        HDCore.Functions.Notify("Geen woning in de buurt", "error")
+        HDCore.Functions.Notify("Geen huis in de buurt..", "error")
     end
 end)
 
 RegisterNetEvent('HD-housing:client:add:garage')
 AddEventHandler('HD-housing:client:add:garage', function()
     if Currenthouse ~= nil then 
-        local PlayerCoords = GetEntityCoords(PlayerPedId())
-        local PlayerHeading = GetEntityHeading(PlayerPedId())
+        local PlayerCoords = GetEntityCoords(GetPlayerPed(-1))
+        local PlayerHeading = GetEntityHeading(GetPlayerPed(-1))
         local CoordsTable = {['X'] = PlayerCoords.x, ['Y'] = PlayerCoords.y, ['Z'] = PlayerCoords.z, ['H'] = PlayerHeading}
         TriggerServerEvent('HD-housing:server:add:garage', Currenthouse, Config.Houses[Currenthouse]['Adres'], CoordsTable)
     else
-        HDCore.Functions.Notify("Geen woning in de buurt", "error")
+        HDCore.Functions.Notify("Geen huis in de buurt..", "error")
     end
 end)
 
@@ -349,42 +328,9 @@ AddEventHandler('HD-housing:client:view:house', function(houseprice, brokerfee, 
     })
 end)
 
-
-local toggleblips, toggleblipsdata = false, {}
-RegisterNetEvent('ToggleHouseBlips')
-AddEventHandler('ToggleHouseBlips', function()
-    if toggleblips then
-        toggleblips = false
-        for k, v in pairs(toggleblipsdata) do
-            RemoveBlip(v)
-        end
-        toggleblipsdata = {}
-    else
-        toggleblips = true
-        CreateThread(function()
-            for k, house in pairs(Config.Houses) do
-                local HouseBlips = AddBlipForCoord(Config.Houses[k]['Coords']['Enter']['X'], Config.Houses[k]['Coords']['Enter']['Y'], Config.Houses[k]['Coords']['Enter']['Z'])
-
-                SetBlipSprite (HouseBlips, 40)
-                SetBlipDisplay(HouseBlips, 4)
-                SetBlipScale  (HouseBlips, 0.65)
-                SetBlipAsShortRange(HouseBlips, true)
-                SetBlipColour(HouseBlips, 3)
-
-                BeginTextCommandSetBlipName("STRING")
-                AddTextComponentSubstringPlayerName(house.adress)
-                EndTextCommandSetBlipName(HouseBlips)
-
-                table.insert(toggleblipsdata, HouseBlips)
-            end
-        end)
-    end
-end)
-
-
 RegisterNetEvent('HD-housing:client:set:location')
 AddEventHandler('HD-housing:client:set:location', function(Type)
- local PlayerCoords = GetEntityCoords(PlayerPedId())
+ local PlayerCoords = GetEntityCoords(GetPlayerPed(-1))
  local CoordsTable = {['X'] = PlayerCoords.x, ['Y'] = PlayerCoords.y, ['Z'] = PlayerCoords.z}
  if IsInHouse then
      if HasKey then
@@ -422,21 +368,12 @@ AddEventHandler('HD-housing:client:give:keys', function()
       if Config.Houses[Currenthouse]['Owner'] == PlayerData.citizenid then
          TriggerServerEvent('HD-housing:server:give:keys', Currenthouse, GetPlayerServerId(Player))
       else
-        HDCore.Functions.Notify("Jij bent niet de eigenaar van deze woning.", "error")
+        HDCore.Functions.Notify("Je bent niet de eigenaar van dit huis..", "error")
       end
     end)
   else
-    HDCore.Functions.Notify("Niemand gevonden", "error")
+    HDCore.Functions.Notify("Niemand gevonden?", "error")
   end
-end)
-
-RegisterNetEvent('HD-housing:client:duty:checker')
-AddEventHandler('HD-housing:client:duty:checker', function()
-        if not onDuty then
-                TriggerServerEvent("HDCore:ToggleDuty", true)
-        else
-                TriggerServerEvent("HDCore:ToggleDuty", false)
-        end
 end)
 
 RegisterNetEvent('HD-housing:client:ring:door')
@@ -451,13 +388,13 @@ AddEventHandler('HD-housing:client:ringdoor', function(Player, HouseId)
     if Currenthouse == HouseId and IsInHouse then
         CurrentBell = Player
         TriggerEvent("HD-sound:client:play", "house-doorbell", 0.1)
-        HDCore.Functions.Notify("Er staat iemand aan de deur.")
+        HDCore.Functions.Notify("Er staat iemand aan de deur..")
     end
 end)
 
 RegisterNetEvent('HD-housing:client:set:in:house')
 AddEventHandler('HD-housing:client:set:in:house', function(House)
-    local PlayerCoords = GetEntityCoords(PlayerPedId())
+    local PlayerCoords = GetEntityCoords(GetPlayerPed(-1))
     if (GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, Config.Houses[House]['Coords']['Enter']['X'], Config.Houses[House]['Coords']['Enter']['Y'], Config.Houses[House]['Coords']['Enter']['Z'], true) < 5.0) then
         TriggerEvent('HD-housing:client:enter:house')
     end
@@ -481,10 +418,10 @@ AddEventHandler('HD-housing:client:reset:house:door', function()
             TriggerServerEvent('HD-sound:server:play:source', 'doorlock-keys', 0.4)
             TriggerServerEvent('HD-housing:server:set:house:door', Currenthouse, true)
         else
-            HDCore.Functions.Notify("Deze deur is al gesloten.", 'error')
+            HDCore.Functions.Notify("Deur is al dicht..", 'error')
         end
     else
-        HDCore.Functions.Notify("Geen huis.", 'error')
+        HDCore.Functions.Notify("Geen huis?!?", 'error')
     end
 end)
 
@@ -505,10 +442,10 @@ AddEventHandler('HD-housing:client:breaking:door', function()
                 RamAnimation(false)
             end)
         else
-            HDCore.Functions.Notify("Deur is al open.", 'error')
+            HDCore.Functions.Notify("Deur is al open..", 'error')
         end
     else
-        HDCore.Functions.Notify("Geen huis.", 'error')
+        HDCore.Functions.Notify("Geen huis?!?", 'error')
     end
 end)
 
@@ -522,7 +459,7 @@ function LeaveHouse()
         Citizen.Wait(10)
     end
     exports['HD-interiors']:DespawnInterior(HouseData, function()
-        SetEntityCoords(PlayerPedId(), Config.Houses[Currenthouse]['Coords']['Enter']['X'], Config.Houses[Currenthouse]['Coords']['Enter']['Y'], Config.Houses[Currenthouse]['Coords']['Enter']['Z'])
+        SetEntityCoords(GetPlayerPed(-1), Config.Houses[Currenthouse]['Coords']['Enter']['X'], Config.Houses[Currenthouse]['Coords']['Enter']['Y'], Config.Houses[Currenthouse]['Coords']['Enter']['Z'])
         TriggerEvent('HD-weathersync:client:EnableSync')
         exports['HD-houseplants']:UnloadHousePlants(Currenthouse)
         UnloadDecorations()
@@ -544,7 +481,7 @@ function LogoutPlayer()
         Citizen.Wait(10)
     end
     exports['HD-interiors']:DespawnInterior(HouseData, function()
-        SetEntityCoords(PlayerPedId(), Config.Houses[Currenthouse]['Coords']['Enter']['X'], Config.Houses[Currenthouse]['Coords']['Enter']['Y'], Config.Houses[Currenthouse]['Coords']['Enter']['Z'])
+        SetEntityCoords(GetPlayerPed(-1), Config.Houses[Currenthouse]['Coords']['Enter']['X'], Config.Houses[Currenthouse]['Coords']['Enter']['Y'], Config.Houses[Currenthouse]['Coords']['Enter']['Z'])
         TriggerEvent('HD-weathersync:client:EnableSync')
         UnloadDecorations()
         Citizen.Wait(1000)
@@ -580,15 +517,15 @@ end
 function RamAnimation(bool)
     if bool then
       exports['HD-assets']:RequestAnimationDict("missheistfbi3b_ig7")
-      TaskPlayAnim(PlayerPedId(), "missheistfbi3b_ig7", "lift_fibagent_loop", 8.0, 8.0, -1, 1, -1, false, false, false)
+      TaskPlayAnim(GetPlayerPed(-1), "missheistfbi3b_ig7", "lift_fibagent_loop", 8.0, 8.0, -1, 1, -1, false, false, false)
     else
       exports['HD-assets']:RequestAnimationDict("missheistfbi3b_ig7")
-      TaskPlayAnim(PlayerPedId(), "missheistfbi3b_ig7", "exit", 8.0, 8.0, -1, 1, -1, false, false, false)
+      TaskPlayAnim(GetPlayerPed(-1), "missheistfbi3b_ig7", "exit", 8.0, 8.0, -1, 1, -1, false, false, false)
     end
 end
 
 function EnterNearHouse()
-    local PlayerCoords = GetEntityCoords(PlayerPedId())
+    local PlayerCoords = GetEntityCoords(GetPlayerPed(-1))
     if Currenthouse ~= nil then
         local Area = GetDistanceBetweenCoords(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, Config.Houses[Currenthouse]['Coords']['Enter']['X'], Config.Houses[Currenthouse]['Coords']['Enter']['Y'], Config.Houses[Currenthouse]['Coords']['Enter']['Z'], true)
         if Area < 2.0 and HasKey or Area < 2.0 and not Config.Houses[Currenthouse]['Door-Lock'] then
@@ -607,9 +544,9 @@ end
 
 function OpenDoorAnim()
   exports['HD-assets']:RequestAnimationDict('anim@heists@keycard@')
-  TaskPlayAnim( PlayerPedId(), "anim@heists@keycard@", "exit", 5.0, 1.0, -1, 16, 0, 0, 0, 0 )
+  TaskPlayAnim( GetPlayerPed(-1), "anim@heists@keycard@", "exit", 5.0, 1.0, -1, 16, 0, 0, 0, 0 )
   Citizen.Wait(400)
-  ClearPedTasks(PlayerPedId())
+  ClearPedTasks(GetPlayerPed(-1))
 end
 
 function SetHouseCam(coords, h, yaw)

@@ -8,7 +8,7 @@ Config.IsDeath = false
 Config.IsInBed = false
 Config.Timer = 300
 
-Config.RespawnPrice = 2000 
+Config.RespawnPrice = 750
 
 Config.OnOxy = false
 

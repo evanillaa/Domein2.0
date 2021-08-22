@@ -70,9 +70,9 @@ Citizen.CreateThread(function()
 		Citizen.Wait(5)
         if Config.IsDeath then
             if Config.Timer > 0 then
-                DrawTxt(0.93, 1.44, 1.0,1.0,0.6, "RESPAWN: ~r~" .. math.ceil(Config.Timer) .. "~w~ SECONDS", 255, 255, 255, 255)
+                DrawTxt(0.93, 1.44, 1.0,1.0,0.6, "BEWUSTELOOS OVER ~r~" .. math.ceil(Config.Timer) .. "~w~ SECONDEN", 255, 255, 255, 255)
             else
-                DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "~w~ HOLD ~r~[E] ("..Holding..")~w~ TE RESPAWN ~r~(€2000)~w~", 255, 255, 255, 255)
+                DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, "~w~ HOU ~r~[E] ("..Holding..")~w~ OM WAKKER TE WORDEN ~r~(€750)~w~", 255, 255, 255, 255)
             end
         else
             Citizen.Wait(450)

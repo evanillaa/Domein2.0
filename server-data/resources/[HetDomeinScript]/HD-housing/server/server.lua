@@ -174,13 +174,13 @@ AddEventHandler('HD-housing:server:buy:house', function(HouseId)
   local HousePrice = math.ceil(Config.Houses[HouseId]['Price'] * 1.21)
   if Player.PlayerData.money['bank'] >= HousePrice then
     HDCore.Functions.ExecuteSql(true, "UPDATE `player_houses` SET citizenid='"..Player.PlayerData.citizenid.."', owned='true', keyholders = '[\""..Player.PlayerData.citizenid.."\"]' WHERE `name` = '"..HouseId.."'")
-    Player.Functions.RemoveMoney('bank', HousePrice, "Huis gekocht")
+    Player.Functions.RemoveMoney('bank', HousePrice, "Bought House")
     Config.Houses[HouseId]['Key-Holders'] = {
         [1] = Player.PlayerData.citizenid
     }
     Config.Houses[HouseId]['Owned'] = true
     Config.Houses[HouseId]['Owner'] = Player.PlayerData.citizenid
-    TriggerClientEvent('HDCore:Notify', src, "U bent eigenaar van het volgende huis: "..Config.Houses[HouseId]['Adres'], 'success', 8500)
+    TriggerClientEvent('HDCore:Notify', src, "Je hebt een huis gekocht: "..Config.Houses[HouseId]['Adres'], 'success', 8500)
     TriggerClientEvent('HD-housing:client:set:owned', -1, HouseId, true, Player.PlayerData.citizenid)
   end
 end)
@@ -205,12 +205,8 @@ AddEventHandler('HD-housing:server:add:new:house', function(StreetName, CoordsTa
         ['Key-Holders'] = {},
         ['Decorations'] = {}
     }
-    
-    TriggerEvent("HD-logs:server:SendLog", "housing", "Loaded", "green", "**".. GetPlayerName(src) .. "** Heeft een huis gemaakt aan de " ..Label.. "(" ..Name.. ") Tier " ..Tier.. " voor "..Price.."")
     TriggerClientEvent('HD-housing:client:add:to:config', -1, Name, nil, CoordsTable, false, Tier, Price, true, {}, Label)
-    TriggerClientEvent('HDCore:Notify', src, "Vastgoed: Huis aangemaakt:"..Label, 'info', 8500)
-    
-    TriggerEvent("HD-bossmenu:server:addAccountMoney", "realestate", (Price / 100) * math.random(1, 2))
+    TriggerClientEvent('HDCore:Notify', src, "Je hebt een huis toegevoegd: "..Label, 'info', 8500)
 end)
 
 RegisterServerEvent('HD-housing:server:add:garage')
@@ -219,7 +215,7 @@ AddEventHandler('HD-housing:server:add:garage', function(HouseId, HouseName, Coo
 	HDCore.Functions.ExecuteSql(false, "UPDATE `player_houses` SET `garage` = '"..json.encode(Coords).."', `hasgarage` = 'true' WHERE `name` = '"..HouseId.."'")
     Config.Houses[HouseId]['Garage'] = Coords
     TriggerClientEvent('HD-housing:client:set:garage', -1, HouseId, Coords)
-	TriggerClientEvent('HDCore:Notify', src, "Vastgoed: Garage toegevoegd aan huis: "..HouseName)
+	TriggerClientEvent('HDCore:Notify', src, "Je hebt een garage toegevoegd bij: "..HouseName)
 end)
 
 RegisterServerEvent('HD-housing:server:save:decorations')
@@ -234,7 +230,7 @@ AddEventHandler('HD-housing:server:give:keys', function(HouseId, Target)
     local Player = HDCore.Functions.GetPlayer(src)
     local TargetPlayer = HDCore.Functions.GetPlayer(Target)
     if TargetPlayer ~= nil then
-        TriggerClientEvent('HDCore:Notify', TargetPlayer.PlayerData.source, "U heeft de sleutels van huis ontvangen: "..Config.Houses[HouseId]['Adres'], 'success', 8500)
+        TriggerClientEvent('HDCore:Notify', TargetPlayer.PlayerData.source, "Je hebt huis sleutels ontvangen: "..Config.Houses[HouseId]['Adres'], 'success', 8500)
         table.insert(Config.Houses[HouseId]['Key-Holders'], TargetPlayer.PlayerData.citizenid)
         HDCore.Functions.ExecuteSql(false, "UPDATE `player_houses` SET `keyholders` = '"..json.encode(Config.Houses[HouseId]['Key-Holders']).."' WHERE `name` = '"..HouseId.."'")
     end
@@ -297,7 +293,7 @@ AddEventHandler('HD-housing:server:remove:house:key', function(HouseId, CitizenI
     end
     Config.Houses[HouseId]['Key-Holders'] = NewKeyHolders
 	TriggerClientEvent('HD-housing:client:set:new:key:holders', -1, HouseId, NewKeyHolders)
-	TriggerClientEvent('HDCore:Notify', src, "Sleutels zijn verwijderd ...", 'error', 3500)
+	TriggerClientEvent('HDCore:Notify', src, "sleutels zijn verwijderd..", 'error', 3500)
 	HDCore.Functions.ExecuteSql(false, "UPDATE `player_houses` SET `keyholders` = '"..json.encode(NewKeyHolders).."' WHERE `name` = '"..HouseId.."'")
 end)
 
@@ -315,7 +311,7 @@ AddEventHandler('HD-housing:server:detlete:house', function(HouseId)
     TriggerClientEvent('HD-housing:client:delete:successful', -1, HouseId)
 end)
 
-HDCore.Commands.Add("huistoevoegen", "Maak een huis aan als makelaar", {{name="price", help="Price of Property"}, {name="tier", help="Houses: [1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9 / 10] Warehouses: [11 / 12]"}}, true, function(source, args)
+HDCore.Commands.Add("createhouse", "Maak een huis aan als makelaar", {{name="price", help="Prijs van het huis"}, {name="tier", help="Huizen: [1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9 / 10] Garages: [11 / 12]"}}, true, function(source, args)
 	local Player = HDCore.Functions.GetPlayer(source)
 	local price = tonumber(args[1])
 	local tier = tonumber(args[2])
@@ -323,28 +319,28 @@ HDCore.Commands.Add("huistoevoegen", "Maak een huis aan als makelaar", {{name="p
         if tier <= 12 then
 		    TriggerClientEvent("HD-housing:client:create:house", source, price, tier)
         else
-            TriggerClientEvent('HDCore:Notify', source, "Dit niveau bestaat niet ...", "error")
+            TriggerClientEvent('HDCore:Notify', source, "Deze tier bestaat niet..", "error")
         end
 	end
 end)
 
-HDCore.Commands.Add("huisverwijderen", "Verwijder het huidige huis op deze locatie", {}, false, function(source, args)
+HDCore.Commands.Add("deletehouse", "Verwijder het huis waar je nu staat", {}, false, function(source, args)
 	local Player = HDCore.Functions.GetPlayer(source)
 	if Player.PlayerData.job.name == "realestate" then
 		TriggerClientEvent("HD-housing:client:delete:house", source)
     else
-        TriggerClientEvent('HDCore:Notify', source, "Dit niveau bestaat niet...", "error")
+        TriggerClientEvent('HDCore:Notify', source, "Deze tier bestaat niet..", "error")
 	end
 end)
 
-HDCore.Commands.Add("garagetoevoegen", "Garage toevoegen aan huis", {}, false, function(source, args)
+HDCore.Commands.Add("addgarage", "Garage toevoegen bij het huis waar ", {}, false, function(source, args)
 	local Player = HDCore.Functions.GetPlayer(source)
 	if Player.PlayerData.job.name == "realestate" then
 		TriggerClientEvent("HD-housing:client:add:garage", source)
 	end
 end)
 
-HDCore.Commands.Add("aanbellen", "aanbellen bij de deur", {}, false, function(source, args)
+HDCore.Commands.Add("ring", "Aanbellen bij huis", {}, false, function(source, args)
     TriggerClientEvent('HD-housing:client:ring:door', source)
 end)
 
@@ -353,7 +349,7 @@ HDCore.Functions.CreateUseableItem("police_stormram", function(source, item)
 	if (Player.PlayerData.job.name == "police" and Player.PlayerData.job.onduty) then
 		TriggerClientEvent("HD-housing:client:breaking:door", source)
 	else
-		TriggerClientEvent('HDCore:Notify', source, "Dit is alleen voor noodpersoneel.", "error")
+		TriggerClientEvent('HDCore:Notify', source, "Dit is alleen mogelijk voor hulpdiensten!", "error")
 	end
 end)
 

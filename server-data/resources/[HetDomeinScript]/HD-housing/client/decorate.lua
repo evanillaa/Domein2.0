@@ -117,7 +117,7 @@ Citizen.CreateThread(function()
 			if GetDistanceBetweenCoords(camPos.x, camPos.y, camPos.z, Config.Houses[Currenthouse]['Coords']['Enter']['X'], Config.Houses[Currenthouse]['Coords']['Enter']['Y'], Config.Houses[Currenthouse]['Coords']['Enter']['Z'], false) > 50.0 then
 				DisableEditMode()
 				closeDecorateUI()
-				HDCore.Functions.Notify("Je bent buiten het gebied gegaan.")
+				HDCore.Functions.Notify("Je bent buiten de range gegaan!")
 			end
 		end
 	end
@@ -134,10 +134,10 @@ AddEventHandler("HD-housing:client:decorate", function()
 				openDecorateUI()
 			end
 		else
-			HDCore.Functions.Notify("Je moet de sleutels van het huis hebben.", "error")
+			HDCore.Functions.Notify("Je moet de sleutels van het huis hebben!", "error")
 		end
 	else
-		HDCore.Functions.Notify("Je bent niet in een huis.", "error")
+		HDCore.Functions.Notify("Je bent niet in een huis!", "error")
 	end
 end)
 
@@ -335,20 +335,20 @@ RegisterNUICallback("chooseobject", function(data, cb)
 end)
 
 function EnableEditMode()
-	local pos = GetEntityCoords(PlayerPedId(), true)
+	local pos = GetEntityCoords(GetPlayerPed(-1), true)
 	curPos = {x = pos.x, y = pos.y, z = pos.z}
-	SetEntityVisible(PlayerPedId(), false)
-	FreezeEntityPosition(PlayerPedId(), true)
-	SetEntityCollision(PlayerPedId(), false, false)
+	SetEntityVisible(GetPlayerPed(-1), false)
+	FreezeEntityPosition(GetPlayerPed(-1), true)
+	SetEntityCollision(GetPlayerPed(-1), false, false)
 	CreateEditCamera()
 	DecoMode = true
 end
 
 function DisableEditMode()
 	SaveDecorations()
-	SetEntityVisible(PlayerPedId(), true)
-	FreezeEntityPosition(PlayerPedId(), false)
-	SetEntityCollision(PlayerPedId(), true, true)
+	SetEntityVisible(GetPlayerPed(-1), true)
+	FreezeEntityPosition(GetPlayerPed(-1), false)
+	SetEntityCollision(GetPlayerPed(-1), true, true)
 	SetDefaultCamera()
 	EnableAllControlActions(0)
 	ObjectList = nil
@@ -521,7 +521,7 @@ function CheckMovementInput()
 		if curSpeed > getTableLength(speeds) then
 			curSpeed = 1
 		end
-		HDCore.Functions.Notify("Snelheid is ".. tostring(speeds[curSpeed]))
+		HDCore.Functions.Notify("Speed is ".. tostring(speeds[curSpeed]))
 	end
 
 	local xVect = speeds[curSpeed] * math.sin( degToRad( rotation.z ) ) * -1.0
@@ -544,8 +544,8 @@ function CheckMovementInput()
 end
 
 function CreateEditCamera()
-	local rot = GetEntityRotation(PlayerPedId())
-	local pos = GetEntityCoords(PlayerPedId(), true)
+	local rot = GetEntityRotation(GetPlayerPed(-1))
+	local pos = GetEntityCoords(GetPlayerPed(-1), true)
 	MainCamera = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, 60.00, false, 0)
 	SetCamActive(MainCamera, true)
 	RenderScriptCams(true, false, 1, true, true)

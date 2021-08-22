@@ -4,7 +4,7 @@ local OnWeed = false
 RegisterNetEvent('HD-items:client:use:joint')
 AddEventHandler('HD-items:client:use:joint', function()
   Citizen.SetTimeout(1000, function()
-    HDCore.Functions.Progressbar("smoke-joint", "Joint opsteken...", 4500, false, true, {
+    HDCore.Functions.Progressbar("smoke-joint", "Smoking joint..", 4500, false, true, {
      disableMovement = false,
      disableCarMovement = false,
      disableMouse = false,
@@ -23,25 +23,29 @@ AddEventHandler('HD-items:client:use:joint', function()
   end)
 end)
 
-RegisterNetEvent('HD-items:client:use:superjoint')
-AddEventHandler('HD-items:client:use:superjoint', function()
+RegisterNetEvent("HD-items:client:use:oxy")
+AddEventHandler("HD-items:client:use:oxy", function()
   Citizen.SetTimeout(1000, function()
-    HDCore.Functions.Progressbar("smoke-joint", "Een Dikke Dikke Joint opsteken...", 2500, false, true, {
-     disableMovement = false,
-     disableCarMovement = false,
-     disableMouse = false,
-     disableCombat = true,
-     }, {}, {}, {}, function() -- Done
-        TriggerServerEvent('HDCore:Server:RemoveItem', 'superjoint', 1)
-        TriggerEvent("HD-inventory:client:ItemBox", HDCore.Shared.Items["superjoint"], "remove")
-        TriggerEvent('HD-items:client:superjoint:effect')
-        TriggerEvent("HD-items:client:onWeed")
-        TriggerEvent("HD-police:client:SetStatus", "weedsmell", 200)
-        if IsPedInAnyVehicle(PlayerPedId(), false) then
-            TriggerEvent('animations:client:EmoteCommandStart', {"smoke3"})
-        else
-            TriggerEvent('animations:client:EmoteCommandStart', {"smokeweed"})
-        end
+    HDCore.Functions.Progressbar("snort_coke", "Taking Oxy..", 1500, false, true, {
+        disableMovement = false,
+        disableCarMovement = false,
+        disableMouse = false,
+        disableCombat = true,
+    }, {
+       animDict = "mp_suicide",
+       anim = "pill",
+       flags = 49,
+    },  {}, {}, function() -- Done
+        StopAnimTask(PlayerPedId(), "mp_suicide", "pill", 1.0)
+        TriggerServerEvent("HDCore:Server:RemoveItem", "oxy", 1)
+        TriggerEvent("HD-inventory:client:ItemBox", HDCore.Shared.Items["oxy"], "remove")
+        TriggerEvent("HD-police:client:SetStatus", "widepupils", 200)
+        TriggerEvent('HD-items:client:joint:effect')
+        SetEntityHealth(PlayerPedId(), GetEntityHealth(PlayerPedId()) + 25)
+        --Effectlsd()
+    end, function() -- Cancel
+        StopAnimTask(PlayerPedId(), "mp_suicide", "pill", 1.0)
+        HDCore.Functions.Notify("Canceled..", "error")
     end)
   end)
 end)
@@ -49,7 +53,7 @@ end)
 RegisterNetEvent("HD-items:client:use:coke")
 AddEventHandler("HD-items:client:use:coke", function()
   Citizen.SetTimeout(1000, function()
-    HDCore.Functions.Progressbar("snort_coke", "Sleutel Puntje...", math.random(5000, 8000), false, true, {
+    HDCore.Functions.Progressbar("snort_coke", "Snorting coke..", math.random(5000, 8000), false, true, {
         disableMovement = false,
         disableCarMovement = false,
         disableMouse = false,
@@ -66,56 +70,20 @@ AddEventHandler("HD-items:client:use:coke", function()
    }, {}, function() -- Done
         StopAnimTask(PlayerPedId(), "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 1.0)
         TriggerServerEvent("HDCore:Server:RemoveItem", "coke-bag", 1)
-        TriggerEvent("inventory:client:ItemBox", HDCore.Shared.Items["coke-bag"], "remove")
+        TriggerEvent("HD-inventory:client:ItemBox", HDCore.Shared.Items["coke-bag"], "remove")
         TriggerEvent("HD-police:client:SetStatus", "widepupils", 200)
         CokeBagEffect()
     end, function() -- Cancel
         StopAnimTask(PlayerPedId(), "switch@trevor@trev_smoking_meth", "trev_smoking_meth_loop", 1.0)
-        HDCore.Functions.Notify("Geannuleerd.", "error")
+        HDCore.Functions.Notify("Canceled..", "error")
     end)
   end)
 end)
 
-
-RegisterNetEvent("HD-items:client:use:Oxy")
-AddEventHandler("HD-items:client:use:Oxy", function(itemName)
-    HDCore.Functions.Progressbar("drink_something", "Huts Oxys in de Muts!", 4500, false, true, {
-        disableMovement = false,
-        disableCarMovement = false,
-		disableMouse = false,
-		disableCombat = true,
-    }, {}, {}, {}, function() -- Done
-        TriggerEvent("HD-inventory:client:ItemBox", HDCore.Shared.Items[itemName], "remove")
-        OxyEffect()
-    end)
-end)
-
-function OxyEffect()
-    if not onOxy then
-        local RelieveOdd = math.random(35, 45)
-        onOxy = true
-        local OxyTime = 60
-        Citizen.CreateThread(function()
-            while onOxy do 
-                SetPlayerHealthRechargeMultiplier(PlayerId(), 1.8)
-                Citizen.Wait(1000)
-                oxyTime = oxyTime - 1
-                if oxyTime == RelieveOdd then
-                    TriggerServerEvent('HD-hud:Server:RelieveStress', math.random(14, 18))
-                    TriggerEvent("HD-police:client:SetStatus", "widepupils", 10)
-                end
-                if oxyTime <= 0 then
-                    onOxy = false
-                end
-            end
-        end)
-    end
-end
-
 RegisterNetEvent("HD-items:client:use:lsd")
 AddEventHandler("HD-items:client:use:lsd", function()
   Citizen.SetTimeout(1000, function()
-    HDCore.Functions.Progressbar("snort_coke", "Lekker Likken...", 3000, false, true, {
+    HDCore.Functions.Progressbar("snort_coke", "Using LSD..", 3000, false, true, {
         disableMovement = false,
         disableCarMovement = false,
         disableMouse = false,
@@ -127,12 +95,12 @@ AddEventHandler("HD-items:client:use:lsd", function()
     },  {}, {}, function() -- Done
         StopAnimTask(PlayerPedId(), "mp_suicide", "pill", 1.0)
         TriggerServerEvent("HDCore:Server:RemoveItem", "lsd-strip", 1)
-        TriggerEvent("inventory:client:ItemBox", HDCore.Shared.Items["lsd-strip"], "remove")
+        TriggerEvent("HD-inventory:client:ItemBox", HDCore.Shared.Items["lsd-strip"], "remove")
         TriggerEvent("HD-police:client:SetStatus", "widepupils", 200)
         Effectlsd()
     end, function() -- Cancel
         StopAnimTask(PlayerPedId(), "mp_suicide", "pill", 1.0)
-        HDCore.Functions.Notify("Geannuleerd.", "error")
+        HDCore.Functions.Notify("Canceled..", "error")
     end)
   end)
 end)
@@ -146,118 +114,13 @@ AddEventHandler('HD-items:client:joint:effect', function()
     if Time > 0 then
      Citizen.Wait(1000)
      Time = Time - 1
-     TriggerServerEvent('HD-hud:Server:RelieveStress', math.random(2, 6))
+     TriggerServerEvent('HD-hud:server:remove:stress', math.random(2, 6))
     end
      if Time <= 0 then
       OnWeed = false
      end 
   end
 end)
-
-RegisterNetEvent('HD-items:client:superjoint:effect')
-AddEventHandler('HD-items:client:superjoint:effect', function()
-  OnWeed = true
-  Time = 15
-  while OnWeed do
-    if Time > 0 then
-     Citizen.Wait(1000)
-     Time = Time - 1
-     TriggerServerEvent('HD-hud:Server:RelieveStress', math.random(20, 46))
-    end
-     if Time <= 0 then
-      OnWeed = false
-     end 
-  end
-end)
-
-
-RegisterNetEvent('HD-items:client:drinkbeer')
-AddEventHandler('HD-items:client:drinkbeer', function(ItemName, PropName)
-	TriggerServerEvent('HDCore:Server:RemoveItem', ItemName, 1)
- Citizen.SetTimeout(1000, function()
- 	TriggerEvent('HD-assets:addprop:with:anim', PropName, 'amb@world_human_drinking@coffee@male@idle_a', "idle_c", 10000)
- 	HDCore.Functions.Progressbar("drink", "Aan het drinken...", 1000, false, true, {
-		disableMovement = true,
-		disableCarMovement = false,
-		disableMouse = false,
-		disableCombat = true,
-	 }, {}, {}, {}, function() -- Done
-		 exports['HD-assets']:RemoveProp()
-		 TriggerServerEvent("HDCore:Server:SetMetaData", "thirst", HDCore.Functions.GetPlayerData().metadata["thirst"] + math.random(25, 45))
-     TriggerServerEvent('HD-hud:Server:RelieveStress', math.random(2, 6))
-		 TriggerEvent("HD-police:client:SetStatus", "alcohol", math.random(1, 2))
-		 TriggerServerEvent("HDCore:Server:SetMetaData", "alcohol", HDCore.Functions.GetPlayerData().metadata["alcohol"] + math.random(19, 77))
-     TriggerEvent("HD-items:client:Biertjuh")
-     SetPedIsDrunk(PlayerPedId(), true)
-	 end, function()
-		exports['HD-assets']:RemoveProp()
- 		HDCore.Functions.Notify("Geannuleerd.", "error")
-		 TriggerServerEvent('HDCore:Server:AddItem', ItemName, 1)
- 	end)
- end)
-end)
-
-
-
-RegisterNetEvent('HD-items:client:Biertjuh')
-AddEventHandler('HD-items:client:Biertjuh', function()
-  
-  local playerPed = PlayerPedId()
-  local playerPed = PlayerPedId()
-  
-    RequestAnimSet("move_m@hobo@a") 
-    while not HasAnimSetLoaded("move_m@hobo@a") do
-      Citizen.Wait(0)
-    end    
-    Citizen.Wait(1000)
-    ClearPedTasksImmediately(playerPed)
-    SetTimecycleModifier("spectator3")
-    SetPedMotionBlur(playerPed, true)
-    SetPedMovementClipset(playerPed, "move_m@hobo@a", true)
-    SetPedIsDrunk(playerPed, true)
-    AnimpostfxPlay("HeistCelebPass", 10000001, true)
-    ShakeGameplayCam("DRUNK_SHAKE", 3.0)
-    Citizen.Wait(7000)
-    SetPedMoveRateOverride(PlayerId(),1.0)
-    SetRunSprintMultiplierForPlayer(PlayerId(),1.0)
-    SetPedIsDrunk(PlayerPedId(), false)		
-    SetPedMotionBlur(playerPed, false)
-    ResetPedMovementClipset(PlayerPedId())
-    AnimpostfxStopAll()
-    ShakeGameplayCam("DRUNK_SHAKE", 0.0)
-    SetTimecycleModifierStrength(0.0)
-end)
-
-RegisterNetEvent('HD-items:client:onWeed')
-AddEventHandler('HD-items:client:onWeed', function()
-  
-  local playerPed = PlayerPedId()
-  local playerPed = PlayerPedId()
-  
-    RequestAnimSet("MOVE_M@DRUNK@VERYDRUNK") 
-    while not HasAnimSetLoaded("MOVE_M@DRUNK@VERYDRUNK") do
-      Citizen.Wait(0)
-    end    
-    TaskStartScenarioInPlace(playerPed, "WORLD_HUMAN_SMOKING_POT", 0, 1)
-    Citizen.Wait(3000)
-    ClearPedTasksImmediately(playerPed)
-    SetTimecycleModifier("spectator6")
-    SetPedMotionBlur(playerPed, true)
-    SetPedMovementClipset(playerPed, "MOVE_M@DRUNK@VERYDRUNK", true)
-    SetPedIsDrunk(playerPed, true)
-    AnimpostfxPlay("ChopVision", 10000001, true)
-    ShakeGameplayCam("DRUNK_SHAKE", 1.0)
-    Citizen.Wait(10000)
-    SetPedMoveRateOverride(PlayerId(),1.0)
-    SetRunSprintMultiplierForPlayer(PlayerId(),1.0)
-    SetPedIsDrunk(PlayerPedId(), false)		
-    SetPedMotionBlur(playerPed, false)
-    ResetPedMovementClipset(PlayerPedId())
-    AnimpostfxStopAll()
-    ShakeGameplayCam("DRUNK_SHAKE", 0.0)
-    SetTimecycleModifierStrength(0.0)
-end)
-
 
 function CokeBagEffect()
   local startStamina = 20
@@ -547,7 +410,7 @@ TrackEnt = function()
 
       if IsPedRagdoll(EvilPed) then
         while IsPedRagdoll(EvilPed) do Wait(0); end
-        ClearPedTasksImmediately(EvilPed)
+        ClearPedTasks(EvilPed)
         Wait(10)
       end
       Wait(0)
@@ -687,6 +550,10 @@ PointOnSphere = function(alt,azu,radius,orgX,orgY,orgZ)
       )
   end
 end
+
+
+
+
 
 --TriggerEvent('fullsatan:GetDrunk')
 local drunkDriving 	 		 = false
