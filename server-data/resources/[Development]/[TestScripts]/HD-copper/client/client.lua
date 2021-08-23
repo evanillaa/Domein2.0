@@ -40,6 +40,7 @@ Citizen.CreateThread(function()
             for k, v in pairs(Config.Plants["planten"]) do
                 local PlantDistance = GetDistanceBetweenCoords(SpelerCoords.x, SpelerCoords.y, SpelerCoords.z, Config.Plants["planten"][k]['x'], Config.Plants["planten"][k]['y'], Config.Plants["planten"][k]['z'], true)
                 if PlantDistance < 1.2 then
+                DrawText3D(Config.Plants["planten"][k]['x'], Config.Plants["planten"][k]['y'], Config.Plants["planten"][k]['z'] + 1.0, "~g~E~w~ - Pak Doos")    
                 NearAnything = true
                  if IsControlJustPressed(0, Config.Keys['E']) then
                     if not Config.Plants['planten'][k]['IsBezig'] then
