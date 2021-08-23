@@ -17,6 +17,22 @@ Config.WeedSoorten = {
 }
 
 Config.Plants = {
+    ['drogen'] = {
+    [1] = {
+        ['x'] = 90.26,
+        ['y'] = 3745.43,
+        ['z'] = 40.77,
+        ['IsBezig'] = false,
+        },
+    },
+    ['verwerk'] = {
+    [1] = {
+        ['x'] = 1456.39,
+        ['y'] = 3753.87,
+        ['z'] = 31.93,
+        ['IsBezig'] = false,
+        },
+    },
     ['planten'] = {
         [1] = {
             ['x'] = 2536.92,

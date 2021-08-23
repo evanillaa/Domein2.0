@@ -23,12 +23,12 @@ end)
 
 RegisterNetEvent('HD-copper:client:set:plant:busy')
 AddEventHandler('HD-copper:client:set:plant:busy',function(PlantId, bool)
-    Config.Plants['planten']['IsBezig'] = bool
+    Config.Plants['planten'][PlantId]['IsBezig'] = bool
 end)
 
 RegisterNetEvent('HD-copper:client:set:picked:state')
 AddEventHandler('HD-copper:client:set:picked:state',function(PlantId, bool)
-    Config.Plants['planten']['Geplukt'] = bool
+    Config.Plants['planten'][PlantId]['Geplukt'] = bool
 end)
 
 Citizen.CreateThread(function()
@@ -60,6 +60,7 @@ Citizen.CreateThread(function()
         end
     end
 end)
+
 
 -- Functions 
 
@@ -94,7 +95,7 @@ function PickPlant(PlantId)
 end
 
 function DrawText3D(x, y, z, text)
-	SetTextScale(0.35, 0.35)
+    SetTextScale(0.35, 0.35)
     SetTextFont(4)
     SetTextProportional(1)
     SetTextColour(255, 255, 255, 215)
@@ -103,5 +104,7 @@ function DrawText3D(x, y, z, text)
     AddTextComponentString(text)
     SetDrawOrigin(x,y,z, 0)
     DrawText(0.0, 0.0)
+    local factor = (string.len(text)) / 370
+    DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
     ClearDrawOrigin()
-end
+  end
