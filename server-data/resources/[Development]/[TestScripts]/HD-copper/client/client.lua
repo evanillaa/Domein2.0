@@ -28,7 +28,7 @@ end)
 
 RegisterNetEvent('HD-copper:client:set:picked:state')
 AddEventHandler('HD-copper:client:set:picked:state',function(PlantId, bool)
-    Config.Plants['planten'][PlantId]['Geplukt'] = bool
+    Config.Plants['planten'][PlantId]['Geknipt'] = bool
 end)
 
 Citizen.CreateThread(function()
@@ -40,17 +40,19 @@ Citizen.CreateThread(function()
             for k, v in pairs(Config.Plants["planten"]) do
                 local PlantDistance = GetDistanceBetweenCoords(SpelerCoords.x, SpelerCoords.y, SpelerCoords.z, Config.Plants["planten"][k]['x'], Config.Plants["planten"][k]['y'], Config.Plants["planten"][k]['z'], true)
                 if PlantDistance < 1.2 then
-                DrawText3D(Config.Plants["planten"][k]['x'], Config.Plants["planten"][k]['y'], Config.Plants["planten"][k]['z'] + 1.0, "~g~E~w~ - Pak Doos")    
+                if not active then
+                DrawText3D(Config.Plants["planten"][k]['x'], Config.Plants["planten"][k]['y'], Config.Plants["planten"][k]['z'] + 1.0, "~g~E~w~ - Knippen")
+                end    
                 NearAnything = true
                  if IsControlJustPressed(0, Config.Keys['E']) then
                     if not Config.Plants['planten'][k]['IsBezig'] then
-                        if not Config.Plants['planten'][k]['Geplukt'] then
+                        if not Config.Plants['planten'][k]['Geknipt'] then
                           PickPlant(k)
                         else
-                          HDCore.Functions.Notify("Het lijkt erop dat deze al geplukt is..", "error")
+                          HDCore.Functions.Notify("Het lijkt erop dat deze al geknipt is..", "error")
                       end
                     else
-                     HDCore.Functions.Notify("Het lijkt erop dat iemand deze plant al aan het plukken is..", "error")
+                     HDCore.Functions.Notify("Het lijkt erop dat iemand deze al aan het knippen is..", "error")
                  end
             end
             end

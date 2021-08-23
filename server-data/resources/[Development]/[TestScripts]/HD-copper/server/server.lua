@@ -22,28 +22,9 @@ end)
 
 RegisterServerEvent('HD-copper:server:set:picked:state')
 AddEventHandler('HD-copper:server:set:picked:state', function(PlantId, bool)
-    Config.Plants['planten'][PlantId]['Geplukt'] = bool
+    Config.Plants['planten'][PlantId]['Geknipt'] = bool
     TriggerClientEvent('HD-copper:client:set:picked:state', -1, PlantId, bool)
 end)
-
---[[RegisterServerEvent('HD-copper:server:set:dry:busy')
-AddEventHandler('HD-copper:server:set:dry:busy', function(DryRackId, bool)
-    Config.Plants['drogen'][DryRackId]['IsBezig'] = bool
-    TriggerClientEvent('HD-copper:client:set:dry:busy', -1, DryRackId, bool)
-end)
-
-RegisterServerEvent('HD-copper:server:set:pack:busy')
-AddEventHandler('HD-copper:server:set:pack:busy', function(PackerId, bool)
-    Config.Plants['verwerk'][PackerId]['IsBezig'] = bool
-    TriggerClientEvent('HD-copper:client:set:pack:busy', -1, PackerId, bool)
-end)
-
-RegisterServerEvent('HD-copper:server:add:cash')
-AddEventHandler('HD-copper:server:add:cash', function()
-    local Speler = HDCore.Functions.GetPlayer(source)
-    local RandomAmount = math.random(10,34)
-    Speler.Functions.AddMoney('cash', RandomAmount, "dried-bud-sell")
-end)]]
 
 RegisterServerEvent('HD-copper:server:give:tak')
 AddEventHandler('HD-copper:server:give:tak', function()
@@ -59,20 +40,13 @@ AddEventHandler('HD-copper:server:add:item', function(Item, Amount)
     TriggerClientEvent('HD-inventory:client:ItemBox', source, HDCore.Shared.Items[Item], "add")
 end)
 
-RegisterServerEvent('HD-copper:server:remove:item')
-AddEventHandler('HD-copper:server:remove:item', function(Item, Amount)
-    local Player = HDCore.Functions.GetPlayer(source)
-    Player.Functions.RemoveItem(Item, Amount)
-    TriggerClientEvent('HD-inventory:client:ItemBox', source, HDCore.Shared.Items[Item], "remove")
-end)
-
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(4)
         for k, v in pairs(Config.Plants['planten']) do
-         if Config.Plants['planten'][k]['Geplukt'] then
+         if Config.Plants['planten'][k]['Geknipt'] then
              Citizen.Wait(300000)
-             Config.Plants['planten'][k]['Geplukt'] = false
+             Config.Plants['planten'][k]['Geknipt'] = false
              TriggerClientEvent('HD-copper:client:set:picked:state', -1, k, false)
          end
       end
