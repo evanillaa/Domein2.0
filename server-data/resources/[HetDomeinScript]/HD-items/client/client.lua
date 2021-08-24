@@ -385,3 +385,25 @@ AddEventHandler('HD-items:client:smoke:effect', function()
      end 
   end
 end)
+
+RegisterNetEvent('HD-items:client:use:joint')
+AddEventHandler('HD-items:client:use:joint', function()
+  Citizen.SetTimeout(1000, function()
+    HDCore.Functions.Progressbar("smoke-joint", "Joint opsteken..", 4500, false, true, {
+     disableMovement = false,
+     disableCarMovement = false,
+     disableMouse = false,
+     disableCombat = true,
+     }, {}, {}, {}, function() -- Done
+        TriggerServerEvent('HDCore:Server:RemoveItem', 'joint', 1)
+        TriggerEvent("HD-inventory:client:ItemBox", HDCore.Shared.Items["joint"], "remove")
+        TriggerEvent('HD-items:client:joint:effect')
+        if IsPedInAnyVehicle(GetPlayerPed(-1), false) then
+            TriggerEvent('animations:client:EmoteCommandStart', {"smoke3"})
+        else
+            TriggerEvent('animations:client:EmoteCommandStart', {"smokeweed"})
+        end
+        TriggerEvent("cb-police:client:SetStatus", "weedsmell", 200)
+    end)
+  end)
+end)

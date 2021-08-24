@@ -27,6 +27,13 @@ HDCore.Functions.CreateUseableItem("water", function(source, item)
     end
 end)
 
+HDCore.Functions.CreateUseableItem("watertje", function(source, item)
+	local Player = HDCore.Functions.GetPlayer(source)
+	if Player.Functions.GetItemBySlot(item.slot) ~= nil then
+        TriggerClientEvent('HD-items:client:drink', source, 'water', 'water')
+    end
+end)
+
 HDCore.Functions.CreateUseableItem("ecola", function(source, item)
 	local Player = HDCore.Functions.GetPlayer(source)
 	if Player.Functions.GetItemBySlot(item.slot) ~= nil then

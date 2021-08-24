@@ -1,7 +1,7 @@
 local Time = 15
 local OnWeed = false
 
-RegisterNetEvent('HD-items:client:use:joint')
+--[[RegisterNetEvent('HD-items:client:use:joint')
 AddEventHandler('HD-items:client:use:joint', function()
   Citizen.SetTimeout(1000, function()
     HDCore.Functions.Progressbar("smoke-joint", "Smoking joint..", 4500, false, true, {
@@ -21,7 +21,7 @@ AddEventHandler('HD-items:client:use:joint', function()
         TriggerEvent("HD-police:client:SetStatus", "weedsmell", 200)
     end)
   end)
-end)
+end)]]
 
 RegisterNetEvent("HD-items:client:use:oxy")
 AddEventHandler("HD-items:client:use:oxy", function()
