@@ -4,7 +4,7 @@ TriggerEvent('HDCore:GetObject', function(obj) HDCore = obj end)
 local ItemTable = {
     "metalscrap",
     "plastic",
-    "copper",
+    --"copper",
     "iron",
     "aluminum",
     "steel",

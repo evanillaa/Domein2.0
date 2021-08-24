@@ -29,7 +29,7 @@ Config.Dumpsters = {
 Config.BinItems = {
  'plastic',  
  'metalscrap',  
- 'copper', 
+ --'copper', 
  'aluminum',
  'iron',
  'steel',
@@ -40,7 +40,7 @@ Config.BinItems = {
 Config.CarItems = {
   'plastic',  
   'metalscrap',  
-  'copper', 
+  --'copper', 
   'aluminum',
   'iron',
   'steel',

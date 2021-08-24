@@ -12,28 +12,8 @@ Config.Keys = {
     ["NENTER"] = 201, ["N4"] = 108, ["N5"] = 60, ["N6"] = 107, ["N+"] = 96, ["N-"] = 97, ["N7"] = 117, ["N8"] = 61, ["N9"] = 118
 }
 
-Config.WeedSoorten = {
-    'copper',
-}
-
-Config.Plants = {
-    ['drogen'] = {
-    [1] = {
-        ['x'] = 90.26,
-        ['y'] = 3745.43,
-        ['z'] = 40.77,
-        ['IsBezig'] = false,
-        },
-    },
-    ['verwerk'] = {
-    [1] = {
-        ['x'] = 1456.39,
-        ['y'] = 3753.87,
-        ['z'] = 31.93,
-        ['IsBezig'] = false,
-        },
-    },
-    ['planten'] = {
+Config.Places = {
+    ['palen'] = {
         [1] = {
             ['x'] = 2536.92,
             ['y'] = 2845.44,

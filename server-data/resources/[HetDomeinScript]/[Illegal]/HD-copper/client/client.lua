@@ -21,14 +21,14 @@ end)
 
 -- Code
 
-RegisterNetEvent('HD-copper:client:set:plant:busy')
-AddEventHandler('HD-copper:client:set:plant:busy',function(PlantId, bool)
-    Config.Plants['planten'][PlantId]['IsBezig'] = bool
+RegisterNetEvent('HD-copper:client:set:palen:busy')
+AddEventHandler('HD-copper:client:set:palen:busy',function(PlantId, bool)
+    Config.Places['palen'][PlantId]['IsBezig'] = bool
 end)
 
 RegisterNetEvent('HD-copper:client:set:picked:state')
 AddEventHandler('HD-copper:client:set:picked:state',function(PlantId, bool)
-    Config.Plants['planten'][PlantId]['Geknipt'] = bool
+    Config.Places['palen'][PlantId]['Geknipt'] = bool
 end)
 
 Citizen.CreateThread(function()
@@ -37,16 +37,16 @@ Citizen.CreateThread(function()
         if LoggedIn then
          local SpelerCoords = GetEntityCoords(GetPlayerPed(-1))
             NearAnything = false
-            for k, v in pairs(Config.Plants["planten"]) do
-                local PlantDistance = GetDistanceBetweenCoords(SpelerCoords.x, SpelerCoords.y, SpelerCoords.z, Config.Plants["planten"][k]['x'], Config.Plants["planten"][k]['y'], Config.Plants["planten"][k]['z'], true)
+            for k, v in pairs(Config.Places["palen"]) do
+                local PlantDistance = GetDistanceBetweenCoords(SpelerCoords.x, SpelerCoords.y, SpelerCoords.z, Config.Places["palen"][k]['x'], Config.Places["palen"][k]['y'], Config.Places["palen"][k]['z'], true)
                 if PlantDistance < 1.2 then
                 if not active then
-                DrawText3D(Config.Plants["planten"][k]['x'], Config.Plants["planten"][k]['y'], Config.Plants["planten"][k]['z'] + 1.0, "~g~E~w~ - Knippen")
+                DrawText3D(Config.Places["palen"][k]['x'], Config.Places["palen"][k]['y'], Config.Places["palen"][k]['z'] + 1.0, "~g~E~w~ - Knippen")
                 end    
                 NearAnything = true
                  if IsControlJustPressed(0, Config.Keys['E']) then
-                    if not Config.Plants['planten'][k]['IsBezig'] then
-                        if not Config.Plants['planten'][k]['Geknipt'] then
+                    if not Config.Places['palen'][k]['IsBezig'] then
+                        if not Config.Places['palen'][k]['Geknipt'] then
                           PickPlant(k)
                         else
                           HDCore.Functions.Notify("Het lijkt erop dat deze al geknipt is..", "error")
@@ -70,7 +70,7 @@ end)
 function PickPlant(PlantId)
     HDCore.Functions.TriggerCallback('HD-copper:server:HasItem', function(HasItem)
         if HasItem then
-            TriggerServerEvent('HD-copper:server:set:plant:busy', PlantId, true)
+            TriggerServerEvent('HD-copper:server:set:palen:busy', PlantId, true)
             HDCore.Functions.Progressbar("pick_plant", "Knippen..", math.random(3500, 6500), false, true, {
                 disableMovement = true,
                 disableCarMovement = true,
@@ -81,13 +81,13 @@ function PickPlant(PlantId)
                 anim = "idle_d",
                 flags = 16,
             }, {}, {}, function() -- Done
-                TriggerServerEvent('HD-copper:server:set:plant:busy', PlantId, false)
+                TriggerServerEvent('HD-copper:server:set:palen:busy', PlantId, false)
                 TriggerServerEvent('HD-copper:server:set:picked:state', PlantId, true)
-                TriggerServerEvent('HD-copper:server:give:tak')
+                TriggerServerEvent('HD-copper:server:give:copper')
                 StopAnimTask(GetPlayerPed(-1), "amb@prop_human_bum_bin@idle_b", "idle_d", 1.0)
                 HDCore.Functions.Notify("Gelukt", "success")
             end, function() -- Cancel
-                TriggerServerEvent('HD-copper:server:set:plant:busy', PlantId, false)
+                TriggerServerEvent('HD-copper:server:set:palen:busy', PlantId, false)
                 StopAnimTask(GetPlayerPed(-1), "amb@prop_human_bum_bin@idle_b", "idle_d", 1.0)
                 HDCore.Functions.Notify("Geannuleerd..", "error")
             end)
